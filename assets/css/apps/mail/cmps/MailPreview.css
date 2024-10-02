@@ -1,0 +1,30 @@
+.mail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 10px 0;
+  text-align: start;
+  font-size: 14px;
+
+  box-shadow: rgba(100, 121, 143, 0.12) 0px -1px 0px 0px inset;
+}
+
+.is-stared {
+  display: flex;
+  align-items: center;
+}
+
+.mail > *,
+.is-stared > * {
+  padding-inline-end: 10px;
+}
+
+.unread {
+  background-color: white;
+}
+
+.read {
+  font-weight: 400;
+  background-color: #f2f6fc;
+}
