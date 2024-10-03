@@ -11,7 +11,7 @@ import { MailDetails } from './apps/mail/pages/MailDetails.jsx'
 export function App() {
   return (
     <Router>
-      <section className='app'>
+      <main className='app main-laoyut'>
         <AppHeader />
         <Routes>
           <Route path='/' element={<Home />} />
@@ -20,7 +20,7 @@ export function App() {
           <Route path='/mail/:mailId' element={<MailDetails />} />
           <Route path='/note' element={<NoteIndex />} />
         </Routes>
-      </section>
+      </main>
     </Router>
   )
 }

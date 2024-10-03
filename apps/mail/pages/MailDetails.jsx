@@ -23,7 +23,8 @@ export function MailDetails() {
           mailSevice.save(updatedMail).then(() => {
             setMail(updatedMail)
           })
-          return setMail(mail)
+        } else {
+          setMail(mail)
         }
       })
       .catch((err) => {
