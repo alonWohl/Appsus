@@ -20,6 +20,22 @@
   padding-inline-end: 10px;
 }
 
+.mail-info {
+  text-align: start;
+  display: flex;
+  align-items: center;
+}
+
+.mail-body {
+  margin: 0;
+  color: #5f6368;
+  margin-inline-start: 1em;
+}
+
+.mai-preview {
+  cursor: pointer;
+}
+
 .unread {
   background-color: white;
 }
