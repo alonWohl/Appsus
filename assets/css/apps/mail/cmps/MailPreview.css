@@ -10,13 +10,13 @@
   box-shadow: rgba(100, 121, 143, 0.12) 0px -1px 0px 0px inset;
 }
 
-.is-stared {
+.is-starred {
   display: flex;
   align-items: center;
 }
 
 .mail > *,
-.is-stared > * {
+.is-starred > * {
   padding-inline-end: 10px;
 }
 

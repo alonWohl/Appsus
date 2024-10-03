@@ -34,3 +34,11 @@ li {
   padding: 0;
   list-style-type: none;
 }
+
+button {
+  cursor: pointer;
+}
+.star-btn {
+  background-color: inherit;
+  border: none;
+}
