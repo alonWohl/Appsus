@@ -38,3 +38,13 @@ li {
 button {
   cursor: pointer;
 }
+
+.btn {
+  padding: 0.5em;
+  border: none;
+  background: none;
+}
+.btn:hover {
+  border-radius: 50%;
+  background-color: #f2f2f2;
+}

@@ -18,20 +18,8 @@
 }
 
 .star-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
   margin-inline-end: 15px;
   flex-shrink: 0;
-}
-
-.star-btn svg {
-  fill: #e8eaed;
-  transition: fill 0.3s ease;
-}
-
-.star-btn svg:hover {
-  fill: yellow;
 }
 
 .mail-content {
@@ -81,4 +69,16 @@
 .read {
   font-weight: 400;
   background-color: #f2f6fc;
+}
+
+.star-btn svg {
+  fill: #e8eaed;
+  transition: fill 0.3s ease;
+}
+.star-btn:hover svg:not(.starred) {
+  fill: #1e1e1e;
+}
+
+.star-btn svg.starred {
+  fill: yellow;
 }

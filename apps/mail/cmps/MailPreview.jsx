@@ -14,12 +14,12 @@ export function MailPreview({ mail, onToggleStarred }) {
   }
 
   const contactName = from.split('@')[0]
-  const starredStyle = mail.isStarred ? { fill: 'yellow', stroke: 'yellow' } : { fill: '#e8eaed', stroke: 'none' }
+  const isStarredDynamicClass = mail.isStarred ? 'starred' : ''
 
   return (
     <li className={`mail-preview ${isRead ? 'read' : 'unread'}`}>
-      <button onClick={() => onToggleStarred(mail.id)} className='star-btn'>
-        <svg height='24px' viewBox='0 -960 960 960' width='24px' style={starredStyle}>
+      <button className='btn star-btn' onClick={() => onToggleStarred(mail.id)}>
+        <svg className={isStarredDynamicClass} height='24px' viewBox='0 -960 960 960' width='24px'>
           <path d='m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-120l65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-350Z' />
         </svg>
       </button>
