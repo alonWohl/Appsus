@@ -5,6 +5,20 @@
   gap: 1em;
 }
 
+.details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.deatils-header .btn-group {
+  display: flex;
+}
+
+.btn-group:hover svg {
+  fill: black;
+}
+
 .details-contact {
   display: inline-flex;
   align-items: center;

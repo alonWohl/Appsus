@@ -11,8 +11,8 @@ import { MailDetails } from './apps/mail/pages/MailDetails.jsx'
 export function App() {
   return (
     <Router>
-      <main className='app main-laoyut'>
-        <AppHeader />
+      <AppHeader />
+      <main className='app main-layout'>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<About />} />

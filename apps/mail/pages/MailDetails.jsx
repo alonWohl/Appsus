@@ -39,8 +39,16 @@ export function MailDetails() {
 
   return (
     <section className='mail-details'>
-      <div className='details-subject'>
+      <div className='details-header'>
         <h2>{subject}</h2>
+
+        <section className='btn-group'>
+          <button className='btn back-btn' onClick={() => navigate('/mail')}>
+            <svg height='24px' viewBox='0 -960 960 960' width='24px' fill='#e8eaed'>
+              <path d='m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z' />
+            </svg>
+          </button>
+        </section>
       </div>
 
       <div className='details-contact'>
