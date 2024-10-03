@@ -5,16 +5,14 @@
 
 /* Basics */
 
+@import './basics/layout.css';
 @import './basics/base.css';
 @import './basics/helpers.css';
-/* @import './basics/layout.css'; */
 
 /* Pages */
 @import './pages/home.css';
 
 /* @import './apps/note/pages/NoteIndex.css'; */
-
-/* @import './apps/mail/pages/MailIndex.css'; */
 
 /* Cmps */
 
@@ -22,5 +20,6 @@
 @import './cmps/AppHeader.css';
 @import './cmps/AppLoader.css';
 
+@import './apps/mail/pages/MailIndex.css';
 @import '../css/apps/mail/cmps/MailPreview.css';
 @import '../css/apps/mail/pages/MailDetails.css';
