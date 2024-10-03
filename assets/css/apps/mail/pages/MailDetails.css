@@ -1,0 +1,19 @@
+.mail-details {
+  display: flex;
+  flex-direction: column;
+
+  gap: 1em;
+}
+
+.details-contact {
+  display: inline-flex;
+  align-items: center;
+}
+
+.details-contact > * {
+  margin-inline-end: 0.5em;
+}
+
+.contact-address {
+  color: var(--mail-gray-color);
+}
