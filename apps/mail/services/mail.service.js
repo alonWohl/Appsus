@@ -99,7 +99,7 @@ function _createInboxMails() {
         subject: subjects[utilService.getRandomIntInclusive(0, 4)],
         body: mailBodies[utilService.getRandomIntInclusive(0, 4)],
         isRead: false,
-        isStared: false,
+        isStarred: false,
         sentAt: utilService.getRandomTimestamp(),
         removedAt: null,
         from: fromAddresses[utilService.getRandomIntInclusive(0, 4)],
