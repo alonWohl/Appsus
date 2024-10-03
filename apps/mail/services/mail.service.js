@@ -14,14 +14,15 @@ export const mailSevice = {
   query,
   get,
   remove,
-  save
+  save,
+  getFilterFromSearchParams
 }
 
 function query(filterBy = {}) {
   return storageService.query(MAIL_KEY).then((mails) => {
     if (filterBy.txt) {
       const regex = new RegExp(filterBy.txt, 'i')
-      mails = mails.filter((mail) => regex.test(mail.subject))
+      mails = mails.filter((mail) => regex.test(mail.subject) || regex.test(mail.from))
     }
     if (filterBy.createdAt) {
       mails = mails.filter((mail) => mail.createdAt >= filterBy.createdAt)
@@ -109,4 +110,14 @@ function _createInboxMails() {
     }
     utilService.saveToStorage(MAIL_KEY, mails)
   }
+}
+
+function getFilterFromSearchParams(searchParams) {
+  const status = searchParams.get('status') || ''
+  const txt = searchParams.get('txt') || ''
+  const isRead = searchParams.get('isRead')
+  const isStarred = searchParams.get('isStarred')
+  const labels = searchParams.get('labels')
+
+  return { status, txt, isRead, isStarred, labels }
 }
