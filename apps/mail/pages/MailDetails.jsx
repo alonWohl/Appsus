@@ -44,7 +44,7 @@ export function MailDetails() {
 
         <section className='btn-group'>
           <button className='btn back-btn' onClick={() => navigate('/mail')}>
-            <span class='material-symbols-outlined'>arrow_back</span>
+            <span className='material-symbols-outlined'>arrow_back</span>
           </button>
         </section>
       </div>
