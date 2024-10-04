@@ -1,13 +1,29 @@
 import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service.js'
 import { mailSevice } from '../services/mail.service.js'
 
-const { useState } = React
+const { useState, useEffect } = React
 const { useNavigate } = ReactRouterDOM
 
 export function MailCompose() {
   const [mailToSend, setMailToSend] = useState(mailSevice.getEmptyMail())
-
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const autoSaveDraft = setInterval(() => {
+      saveDraft()
+    }, 5000)
+
+    return () => clearInterval(autoSaveDraft)
+  }, [mailToSend])
+
+  function saveDraft() {
+    if (!mailToSend.to && !mailToSend.subject && !mailToSend.body) return
+    const draftMail = { ...mailToSend, isDraft: true, sentAt: null }
+    mailSevice
+      .save(draftMail)
+      .then(() => console.log('Draft saved'))
+      .catch((err) => console.log('Error saving draft:', err))
+  }
 
   function handleChange({ target }) {
     const field = target.name

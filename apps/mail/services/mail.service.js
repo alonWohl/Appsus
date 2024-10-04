@@ -28,9 +28,10 @@ function query(filterBy = {}) {
       mails = mails.filter((mail) => mail.removedAt !== null)
     } else if (filterBy.txt === 'in:sent') {
       mails = mails.filter((mail) => mail.sentAt && mail.from === loggedinUser.mail)
-    } else if (filterBy.txt === 'in:inbox' || '') {
-      mails = mails.filter((mail) => mail.to === 'user@appsus.com' && mail.removedAt === null)
-    } else if (filterBy.txt) {
+    } else if (filterBy.txt === 'in:inbox' || filterBy.txt === '') {
+      mails = mails.filter((mail) => mail.to === loggedinUser.mail && mail.removedAt === null)
+    } else if (filterBy.txt === 'in:drafts') {
+      mails = mails.filter((mail) => mail.isDraft === true && !mail.sentAt)
     } else if (filterBy.txt) {
       const regex = new RegExp(filterBy.txt, 'i')
       mails = mails.filter((mail) => (regex.test(mail.subject) || regex.test(mail.from)) && mail.removedAt === null)
