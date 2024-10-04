@@ -11,7 +11,7 @@ export function SideMenu({ filterBy, onSetFilterBy }) {
         <span className='material-symbols-outlined'>edit</span>
       </Link>
 
-      <button title='inbox' className='btn inbox-btn' onClick={() => handleFilterChange('')}>
+      <button title='inbox' className='btn inbox-btn' onClick={() => handleFilterChange('in:inbox')}>
         <span className='material-symbols-outlined'>inbox</span>
       </button>
 
