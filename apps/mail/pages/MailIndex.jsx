@@ -1,10 +1,12 @@
 import { AppLoader } from '../../../cmps/AppLoader.jsx'
 import { MailFilter } from '../cmps/MailFilter.jsx'
+import { MailHeader } from '../cmps/MailHeader.jsx'
 import { MailList } from '../cmps/MailList.jsx'
+import { SideMenu } from '../cmps/SideMenu.jsx'
 import { mailSevice } from '../services/mail.service.js'
 
 const { useState, useEffect } = React
-const { Link, useSearchParams } = ReactRouterDOM
+const { Link, useSearchParams, Outlet } = ReactRouterDOM
 
 export function MailIndex() {
   const [mails, setMails] = useState([])
@@ -39,16 +41,31 @@ export function MailIndex() {
     })
   }
 
-  function onSetFilterBy(filterBy) {
-    setFilterBy(filterBy)
+  function onSetFilterBy(updatedFilter) {
+    setFilterBy((prevFilterBy) => ({
+      ...prevFilterBy,
+      ...updatedFilter
+    }))
+  }
+  function onRemoveMail(mailId) {
+    mailSevice.remove(mailId).then(() => {
+      setMails(mails.filter((mail) => mail.id !== mailId))
+    })
   }
 
   if (!mails) return <AppLoader />
 
   return (
-    <section className='mail-index'>
-      <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-      <MailList mails={mails} onToggleStarred={onToggleStarred} />
-    </section>
+    <React.Fragment>
+      <MailHeader>
+        <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
+      </MailHeader>
+
+      <section className='mail-index'>
+        <SideMenu filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
+        <MailList mails={mails} onToggleStarred={onToggleStarred} onRemoveMail={onRemoveMail} />
+        <Outlet />
+      </section>
+    </React.Fragment>
   )
 }

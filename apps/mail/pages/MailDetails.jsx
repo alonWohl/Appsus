@@ -44,9 +44,7 @@ export function MailDetails() {
 
         <section className='btn-group'>
           <button className='btn back-btn' onClick={() => navigate('/mail')}>
-            <svg height='24px' viewBox='0 -960 960 960' width='24px' fill='#e8eaed'>
-              <path d='m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z' />
-            </svg>
+            <span class='material-symbols-outlined'>arrow_back</span>
           </button>
         </section>
       </div>

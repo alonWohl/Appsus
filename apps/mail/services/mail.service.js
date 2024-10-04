@@ -15,17 +15,27 @@ export const mailSevice = {
   get,
   remove,
   save,
-  getFilterFromSearchParams
+  getFilterFromSearchParams,
+  getEmptyMail,
+  loggedinUser
 }
 
 function query(filterBy = {}) {
   return storageService.query(MAIL_KEY).then((mails) => {
-    if (filterBy.txt) {
+    if (filterBy.txt === 'is:starred') {
+      mails = mails.filter((mail) => mail.isStarred === true)
+    } else if (filterBy.txt === 'in:trash') {
+      mails = mails.filter((mail) => mail.removedAt !== null)
+    } else if (filterBy.txt === 'in:sent') {
+      mails = mails.filter((mail) => mail.sentAt && mail.from === loggedinUser.mail)
+    } else if (filterBy.txt === 'in:inbox' || '') {
+      mails = mails.filter((mail) => mail.to === 'user@appsus.com' && mail.removedAt === null)
+    } else if (filterBy.txt) {
+    } else if (filterBy.txt) {
       const regex = new RegExp(filterBy.txt, 'i')
-      mails = mails.filter((mail) => regex.test(mail.subject) || regex.test(mail.from))
-    }
-    if (filterBy.createdAt) {
-      mails = mails.filter((mail) => mail.createdAt >= filterBy.createdAt)
+      mails = mails.filter((mail) => (regex.test(mail.subject) || regex.test(mail.from)) && mail.removedAt === null)
+    } else {
+      mails = mails.filter((mail) => mail.removedAt === null)
     }
     return mails
   })
@@ -36,7 +46,14 @@ function get(mailId) {
 }
 
 function remove(mailId) {
-  return storageService.remove(MAIL_KEY, mailId)
+  return storageService.get(MAIL_KEY, mailId).then((mail) => {
+    if (!mail.removedAt) {
+      mail.removedAt = Date.now()
+      return storageService.put(MAIL_KEY, mail)
+    } else {
+      return storageService.remove(MAIL_KEY, mailId)
+    }
+  })
 }
 
 function save(mail) {
@@ -92,7 +109,7 @@ function _createInboxMails() {
 
     const fromAddresses = ['momo@momo.com', 'jane@doe.com', 'john@company.com', 'support@service.com', 'info@website.com']
 
-    const mails = []
+    mails = []
     for (let i = 0; i < 10; i++) {
       const mail = {
         id: utilService.makeId(),
@@ -104,7 +121,7 @@ function _createInboxMails() {
         sentAt: utilService.getRandomTimestamp(),
         removedAt: null,
         from: fromAddresses[utilService.getRandomIntInclusive(0, 4)],
-        to: 'user@appsus.com'
+        to: loggedinUser.mail
       }
       mails.push(mail)
     }
@@ -113,11 +130,11 @@ function _createInboxMails() {
 }
 
 function getFilterFromSearchParams(searchParams) {
-  const status = searchParams.get('status') || ''
   const txt = searchParams.get('txt') || ''
-  const isRead = searchParams.get('isRead')
-  const isStarred = searchParams.get('isStarred')
-  const labels = searchParams.get('labels')
 
-  return { status, txt, isRead, isStarred, labels }
+  return { txt }
+}
+
+function getEmptyMail(createdAt = Date.now(), subject = '', body = '', sentAt = Date.now(), from = loggedinUser.mail, to = '') {
+  return { createdAt, subject, body, sentAt, from, to }
 }

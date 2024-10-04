@@ -40,7 +40,13 @@ button {
 }
 
 .btn {
-  padding: 0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+
+  color: var(--mail-secondary-color);
+  font-size: 0.875rem;
   border: none;
   background: none;
 }

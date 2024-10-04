@@ -4,36 +4,22 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
   const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
 
   useEffect(() => {
-    onSetFilterBy(filterByToEdit)
-  }, [filterByToEdit])
+    setFilterByToEdit({ ...filterBy })
+  }, [filterBy])
 
   function handleChange({ target }) {
     const field = target.name
-    let value = target.value
-
-    switch (target.type) {
-      case 'number':
-      case 'range':
-        value = +value
-        break
-
-      case 'checkbox':
-        value = target.checked
-        break
-    }
+    const value = target.value
     setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }))
+    onSetFilterBy({ [field]: value })
   }
 
-  function onSubmit(ev) {
-    ev.preventDefault()
-    onSetFilterBy(filterByToEdit)
-  }
-
-  const { status, txt, isRead, isStarred, labels } = filterByToEdit
+  const { txt } = filterByToEdit
 
   return (
-    <form onSubmit={onSubmit}>
-      <input value={txt} onChange={handleChange} type='txt' name='txt' id='txt' placeholder='Search mail' />
+    <form className='mail-search-wrapper'>
+      <input className='mail-search-input' value={txt || ''} onChange={handleChange} type='text' name='txt' id='txt' placeholder='Search mail' />
+      <span className='material-symbols-outlined mail-search-icon'>search</span>
     </form>
   )
 }

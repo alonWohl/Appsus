@@ -11,6 +11,8 @@
 
 /* Pages */
 @import './pages/home.css';
+@import './apps/mail/pages/MailIndex.css';
+@import './apps/mail/pages/MailCompose.css';
 
 /* @import './apps/note/pages/NoteIndex.css'; */
 
@@ -20,6 +22,8 @@
 @import './cmps/AppHeader.css';
 @import './cmps/AppLoader.css';
 
-@import './apps/mail/pages/MailIndex.css';
+@import '../css/apps/mail/cmps/MailHeader.css';
+@import '../css/apps/mail/cmps/SideMenu.css';
+@import '../css/apps/mail/cmps/MailList.css';
 @import '../css/apps/mail/cmps/MailPreview.css';
 @import '../css/apps/mail/pages/MailDetails.css';
