@@ -5,7 +5,7 @@ export function MailHeader({ children }) {
         <span className='material-symbols-outlined'>menu</span>
       </button>
       <div className='logo'>
-        <img src='../../../assets/img/mail-logo.png' alt='logo' />
+        <img src='/assets/img/mail-logo.png' alt='logo' />
       </div>
       {children}
     </header>
