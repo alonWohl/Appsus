@@ -79,6 +79,6 @@
   fill: #1e1e1e;
 }
 
-.star-btn svg.starred {
-  fill: yellow;
+.star-btn span.starred {
+  color: yellow;
 }

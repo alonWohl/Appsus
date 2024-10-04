@@ -1,0 +1,44 @@
+.mail-header {
+  background-color: var(--main-mail-bg-color);
+
+  border-radius: 1em;
+}
+
+.mail-header .logo {
+  max-width: 110px;
+  margin-inline-end: 90px;
+}
+
+.mail-search-input {
+  width: 100%;
+  max-width: 600px;
+  padding: 10px 50px 10px 20px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 24px;
+  background-color: #f1f3f4;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  outline: none;
+}
+
+.mail-search-input:focus {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Increase shadow on focus */
+  background-color: #fff;
+}
+
+.mail-search-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.mail-search-icon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #5f6368; /* Similar icon color to Gmail */
+  cursor: pointer;
+  font-size: 20px; /* Adjust icon size */
+}
