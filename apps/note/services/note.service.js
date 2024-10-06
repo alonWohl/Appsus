@@ -2,9 +2,16 @@
 import { utilService } from '../../../services/util.service.js'
 import { storageService } from '../../../services/async-storage.service.js'
 
-
+export const noteService = {
+    query,
+    get,
+    remove,
+    save
+}
 
 const NOTE_KEY = 'noteDb'
+_createNotes()
+
 
 function query() {
     return storageService.query(NOTE_KEY)
@@ -42,7 +49,7 @@ function _createNotes() {
             'NoteTodos'
         ]
         notes = []
-        for(let i = 0; i < 0; i++) {
+        for(let i = 0; i < 10; i++) {
             const note = {
                 id: utilService.makeId(),
                 createdAt: Date.now(),
@@ -52,6 +59,7 @@ function _createNotes() {
                     backgroundColor: utilService.getRandomColor()
                 },
                 info: {
+                    header: utilService.makeLorem(2),
                     txt: utilService.makeLorem(50)
                 }
             }
