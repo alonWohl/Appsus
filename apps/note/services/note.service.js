@@ -6,7 +6,8 @@ export const noteService = {
     query,
     get,
     remove,
-    save
+    save,
+    getEmptyNote
 }
 
 const NOTE_KEY = 'noteDb'
@@ -69,3 +70,21 @@ function _createNotes() {
     }
 }
 
+
+function getEmptyNote() {
+    const emptyNote = {
+        id: utilService.makeId(),
+        createdAt: Date.now(),
+        type: '',
+        isPinned: false,
+        style: {
+            backgroundColor: utilService.getRandomColor()
+        },
+        info: {
+            header: '',
+            txt: ''
+        }
+    }
+
+    // return { id, createdAt, type, isPinned, style, info} = emptyNote
+}
