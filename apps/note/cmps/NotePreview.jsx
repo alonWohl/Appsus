@@ -8,7 +8,7 @@ export function NotePreview({ note }) {
     const { info, style, type, isPinned } = note
 
     return (
-        <li className={`note-preview ${isPinned ? 'pinned' : ''}`}>
+        <li className={`note-preview ${isPinned ? 'pinned' : ''}`} style={{backgroundColor: `${style.backgroundColor}`}}>
             <article className='note-content'>
                 <span className='note-preview-header'>{info.header}</span>
                 <button className='pin-btn'>Pin</button>

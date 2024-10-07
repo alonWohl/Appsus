@@ -1,6 +1,7 @@
 
 .note-preview {
     grid-auto-flow: column;
-    width: 20%;
     height: fit-content;
+
+    border: 1px black solid;
 }
