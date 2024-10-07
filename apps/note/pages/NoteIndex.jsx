@@ -11,6 +11,8 @@ const { useState, useEffect } = React
 export function NoteIndex() {
     const [notes, setNotes] = useState([])
     const [inputClick, onInputclick] = useState(null)
+    const [newNoteType, setNoteType] = useState(null) 
+
 
     useEffect( () => {
         loadNotes()
@@ -25,18 +27,19 @@ export function NoteIndex() {
               })
     }
     
-    function handleFormClick() {
+    function handleFormClick(type) { 
+        setNoteType(type)
         onInputclick(1)
     }
 
     function onCancleNewNote() {
         onInputclick(null)
     }
-
+    
     return (
         <section className='note-index'>
             <NoteHeader />
-            {inputClick ? <NoteCompose onCancle={onCancleNewNote}/> : <NoteForm onFormClick={handleFormClick}/>}
+            {inputClick ? <NoteCompose onCancle={onCancleNewNote} noteType={newNoteType}/> : <NoteForm onFormClick={handleFormClick}/>}
             <NoteList notes={notes}/>
             <NoteSideMenu />
         </section>

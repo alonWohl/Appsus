@@ -4,7 +4,7 @@ import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.servic
 const { useState, useEffect } = React
 const { useNavigate } = ReactRouterDOM
 
-export function NoteCompose({onCancle}) {
+export function NoteCompose({onCancle, noteType}) {
     
     const [note, setNote] = useState(noteService.getEmptyNote())
     const navigate = useNavigate()
@@ -24,6 +24,11 @@ export function NoteCompose({onCancle}) {
     
     return (
         <form className='note-compose'>
+            <input type="text" id='title' placeholder='Title'/>
+            {noteType === 'text' && <input type="text" id='text' placeholder='Take a note...'/>}
+            {noteType === 'list' && <input type="text" id='list' placeholder='List item'/>}
+            {noteType === 'draw' && <input type="text" id='list' placeholder='draw'/>}
+            {noteType === 'image' && <input type="image" id='image'/>}
             <button onClick={onCancle}>cancle</button>
         </form>
     )
