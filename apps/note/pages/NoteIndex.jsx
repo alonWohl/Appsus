@@ -1,6 +1,7 @@
 import { noteService } from '../services/note.service.js'
 import { NoteList } from '../cmps/NoteList.jsx'
 import { NoteSideMenu } from '../cmps/NoteSideMenu.jsx'
+import { NoteHeader } from '../cmps/NoteHeader.jsx'
 
 const { useState, useEffect } = React
 
@@ -22,6 +23,7 @@ export function NoteIndex() {
     
     return (
         <section className='note-index'>
+            <NoteHeader />
             <NoteList notes={notes}/>
             <NoteSideMenu />
         </section>
