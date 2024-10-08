@@ -1,7 +1,9 @@
 .mail-index {
   position: relative;
+  color: var(--mail-gray-color);
 }
 
 .mail-main-content {
   margin-inline-start: 72px;
+  max-height: 80vh;
 }

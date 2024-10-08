@@ -26,16 +26,13 @@ export function MailPreview({ mail, onToggleStarred, onRemoveMail, onToggleRead 
 
       <article onClick={() => navigate(`/mail/${mail.id}`)} className='preview-content'>
         <span className='preview-sender'>{contactName}</span>
-        <div className='inner-content'>
-          <span className='preview-subject'>
-            <LongText limit={50}>{subject}</LongText>
-          </span>
-
-          <p className='preview-body'>
-            <LongText limit={100}>{body}</LongText>
-          </p>
-        </div>
-
+        <span className='preview-subject'>
+          <LongText limit={50}>{subject}</LongText>
+        </span>
+        -
+        <p className='preview-body'>
+          <LongText limit={100}>{body}</LongText>
+        </p>
         <div className='preview-date'>{convertTimestamp(sentAt)}</div>
       </article>
 

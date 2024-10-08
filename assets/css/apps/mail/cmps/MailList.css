@@ -1,8 +1,10 @@
 .mail-list {
   display: flex;
   flex-direction: column;
-  flex-grow: 2;
   margin: 0;
+  flex-grow: 1;
 
-  overflow: scroll;
+  border-radius: 10px;
+  overflow: hidden;
+  overflow-y: scroll;
 }
