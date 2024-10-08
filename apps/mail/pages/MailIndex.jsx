@@ -54,7 +54,7 @@ export function MailIndex() {
   return (
     <main className='mail-index'>
       <MailHeader filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-      <section className='main-mail-content flex'>
+      <section className='mail-main-content flex'>
         <SideMenu filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
         <MailList mails={mails} onToggleStarred={onToggleStarred} onRemoveMail={onRemoveMail} />
         <Outlet />

@@ -1,10 +1,11 @@
 .mail-header {
   background-color: var(--main-mail-bg-color);
-}
+  font-size: 13px;
 
-.mail-header .logo {
-  max-width: 110px;
-  margin-inline-end: 90px;
+  padding-bottom: 4px;
+  padding-left: 8px;
+  padding-right: 4px;
+  padding-top: 4px;
 }
 
 .mail-search-input {
@@ -38,4 +39,24 @@
   color: #5f6368;
   cursor: pointer;
   font-size: 20px;
+}
+
+.mail-header .logo img {
+  object-fit: contain;
+  height: 40px;
+  width: 110px;
+  margin-block-end: 4px;
+}
+
+.logo-hamburger {
+  display: flex;
+  padding-inline-end: 30px;
+}
+
+.btn.hamburger {
+  height: 48px;
+  width: 48px;
+  padding: 12px;
+  border-radius: 50%;
+  margin: 0 4px;
 }

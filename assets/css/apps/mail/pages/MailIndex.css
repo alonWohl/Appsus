@@ -4,3 +4,7 @@
 
   border-radius: 1em;
 }
+
+.mail-main-content {
+  margin-inline-start: 72px;
+}
