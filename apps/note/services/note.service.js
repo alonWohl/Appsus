@@ -34,20 +34,20 @@ function remove(noteId) {
 }
 
 function save(note) {
-    if (note.id) {
-      return storageService.put(NOTE_KEY, note)
-    } else {
-      return storageService.post(NOTE_KEY, note)
-    }
+    // if (note.id) {
+        // return storageService.put(NOTE_KEY, note)
+    // } else {
+        return storageService.post(NOTE_KEY, note)
+    // }
 }
 
 function _createNotes() {
     let notes = utilService.loadFromStorage(NOTE_KEY)
     if(!notes || !notes.length) {
         const types = [
-            'NoteTxt',
-            'NoteImg',
-            'NoteTodos'
+            'text',
+            'image',
+            'list'
         ]
         notes = []
         for(let i = 0; i < 10; i++) {
@@ -73,7 +73,6 @@ function _createNotes() {
 
 function getEmptyNote() {
     const emptyNote = {
-        id: utilService.makeId(),
         createdAt: Date.now(),
         type: '',
         isPinned: false,
@@ -86,7 +85,7 @@ function getEmptyNote() {
         }
     }
 
-    const { id, createdAt, type, isPinned, style, info} = emptyNote
+    const {createdAt, type, isPinned, style, info} = emptyNote
 
-    return { id, createdAt, type, isPinned, style, info} 
+    return {createdAt, type, isPinned, style, info} 
 }
