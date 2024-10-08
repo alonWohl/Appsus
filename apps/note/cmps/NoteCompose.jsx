@@ -9,6 +9,11 @@ export function NoteCompose({onCancle, noteType}) {
     const [note, setNote] = useState(noteService.getEmptyNote())
     const navigate = useNavigate()
 
+    useEffect(() =>{
+        setNote({...note, type: noteType})
+    }, [])
+
+
     function onSaveNote(ev) {
         ev.preventDefault()
         noteService
@@ -22,6 +27,9 @@ export function NoteCompose({onCancle, noteType}) {
 
     }
     
+    console.log(note)
+    
+
     return (
         <form className='note-compose'>
             <input type="text" id='title' placeholder='Title'/>

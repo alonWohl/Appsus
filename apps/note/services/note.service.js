@@ -86,5 +86,7 @@ function getEmptyNote() {
         }
     }
 
-    // return { id, createdAt, type, isPinned, style, info} = emptyNote
+    const { id, createdAt, type, isPinned, style, info} = emptyNote
+
+    return { id, createdAt, type, isPinned, style, info} 
 }
