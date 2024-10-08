@@ -2,7 +2,7 @@ import { LongText } from '../../../cmps/LongText.jsx'
 
 const { useNavigate } = ReactRouterDOM
 
-export function MailPreview({ mail, onToggleStarred, onRemoveMail }) {
+export function MailPreview({ mail, onToggleStarred, onRemoveMail, onToggleRead }) {
   const navigate = useNavigate()
   const { createdAt, subject, body, isRead, sentAt, removedAt, from, to, isStarred } = mail
 
@@ -14,6 +14,7 @@ export function MailPreview({ mail, onToggleStarred, onRemoveMail }) {
 
   const contactName = from.split('@')[0]
   const isStarredDynamicClass = isStarred ? 'starred' : ''
+  const isReadBtnIcon = isRead ? <span className='material-symbols-outlined'>mail</span> : <span className='material-symbols-outlined'>drafts</span>
 
   return (
     <li className={`mail-preview ${isRead ? 'read' : 'unread'}`}>
@@ -38,9 +39,12 @@ export function MailPreview({ mail, onToggleStarred, onRemoveMail }) {
         <div className='preview-date'>{convertTimestamp(sentAt)}</div>
       </article>
 
-      <section className='preview-action'>
+      <section className='preview-actions flex align center'>
         <button onClick={() => onRemoveMail(mail.id)} className='btn remove-btn'>
           <span className='material-symbols-outlined'>delete</span>
+        </button>
+        <button className='btn toggle-read-btn' onClick={() => onToggleRead(mail.id)}>
+          {isReadBtnIcon}
         </button>
       </section>
     </li>

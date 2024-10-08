@@ -7,8 +7,7 @@
   min-width: 72px;
   position: fixed;
   left: 0;
-  height: 100vh;
-  z-index: 1;
+  height: 100%;
 
   background-color: var(--main-mail-bg-color);
 }

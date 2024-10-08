@@ -118,7 +118,7 @@ function _createInboxMails() {
     const fromAddresses = ['momo@momo.com', 'jane@doe.com', 'john@company.com', 'support@service.com', 'info@website.com']
 
     mails = []
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 50; i++) {
       const mail = {
         id: utilService.makeId(),
         createdAt: Date.now(),
