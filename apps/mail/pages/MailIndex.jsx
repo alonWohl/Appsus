@@ -49,14 +49,23 @@ export function MailIndex() {
     })
   }
 
+  function onToggleRead(mailId) {
+    setMails((prevMails) => prevMails.map((mail) => (mail.id === mailId ? { ...mail, isRead: !mail.isRead } : mail)))
+    mailSevice.get(mailId).then((mail) => {
+      mail.isRead = !mail.isRead
+
+      return mailSevice.save(mail)
+    })
+  }
+
   if (!mails) return <AppLoader />
 
   return (
     <main className='mail-index'>
       <MailHeader filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-      <section className='main-mail-content flex'>
+      <section className='mail-main-content flex'>
         <SideMenu filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-        <MailList mails={mails} onToggleStarred={onToggleStarred} onRemoveMail={onRemoveMail} />
+        <MailList mails={mails} onToggleRead={onToggleRead} onToggleStarred={onToggleStarred} onRemoveMail={onRemoveMail} />
         <Outlet />
       </section>
     </main>

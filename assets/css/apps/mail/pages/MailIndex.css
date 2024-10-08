@@ -1,6 +1,9 @@
 .mail-index {
   position: relative;
-  background-color: white;
+  color: var(--mail-gray-color);
+}
 
-  border-radius: 1em;
+.mail-main-content {
+  background-color: var(--main-mail-bg-color);
+  margin-inline-start: 72px;
 }

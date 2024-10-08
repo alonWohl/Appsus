@@ -1,3 +1,9 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
 html {
   font-size: 1rem;
 }
@@ -5,6 +11,9 @@ html {
 body {
   font-family: Roboto, Arial, Helvetica, sans-serif;
   margin: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 h1,
@@ -50,20 +59,20 @@ button {
   background: none;
 }
 
-.btn.star-btn::before {
+.btn::before {
   opacity: 0;
   content: '';
   position: absolute;
-  height: 20px;
-  width: 20px;
+  height: 40px;
+  width: 40px;
   padding: 10px;
   z-index: -1;
 
   border-radius: 50%;
-  transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: var(--mail-hover-bg);
 }
 
-.btn.star-btn:hover::before {
+.btn:hover::before {
   opacity: 1;
 }

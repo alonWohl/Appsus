@@ -1,7 +1,17 @@
-.mail-list {
-  flex-grow: 2;
-  width: 100%;
-  margin: 0;
+.mail-list-container {
+  padding: 1em 0;
+  flex-grow: 1;
+  background-color: white;
+  border-radius: 1em;
 
+  height: 720px;
+  overflow: hidden;
   overflow-y: scroll;
+}
+
+.mail-list {
+  display: flex;
+  flex-direction: column;
+
+  margin: 0;
 }
