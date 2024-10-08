@@ -71,7 +71,7 @@ export function NoteCompose({onCancle, noteType}) {
             <input type="text" id='title' placeholder='Title' onChange={handleTitleInput}/>
             {noteType === 'text' && <input type="text" id='text' placeholder='Take a note...' onChange={() => handleInput(event, noteType)}/>}
             {noteType === 'list' && <input type="text" id='list' placeholder='List item' onChange={() => handleInput(ev, noteType)}/>}
-            {noteType === 'draw' && <input type="text" id='list' placeholder='draw' onChange={() => handleInput(ev, noteType)}/>}
+            {noteType === 'draw' && <input type="text" id='draw' placeholder='draw' onChange={() => handleInput(ev, noteType)}/>}
             {noteType === 'image' && <input type="image" id='image' onChange={() => handleInput(ev, noteType)}/>}
             <button onClick={onCancle}>cancle</button>
             <button type='submit' onClick={onSaveNote}>Submit</button>

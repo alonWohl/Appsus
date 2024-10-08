@@ -36,11 +36,18 @@ export function NoteIndex() {
         onInputclick(null)
     }
     
+    function onRemoveNote(noteId) {
+        noteService
+            .remove(noteId)
+            .then(setNotes(notes.filter((note) => note.id !== noteId)))
+            .finally(console.log('Note removed!'))
+    }
+
     return (
         <section className='note-index'>
             <NoteHeader />
             {inputClick ? <NoteCompose onCancle={onCancleNewNote} noteType={newNoteType}/> : <NoteForm onFormClick={handleFormClick}/>}
-            <NoteList notes={notes}/>
+            <NoteList notes={notes} onRemoveNote={onRemoveNote}/>
             <NoteSideMenu />
         </section>
     )
