@@ -1,7 +1,5 @@
 .mail-header {
   background-color: var(--main-mail-bg-color);
-
-  border-radius: 1em;
 }
 
 .mail-header .logo {

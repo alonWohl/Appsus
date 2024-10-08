@@ -4,8 +4,7 @@ const { useNavigate } = ReactRouterDOM
 
 export function MailPreview({ mail, onToggleStarred, onRemoveMail }) {
   const navigate = useNavigate()
-
-  const { createdAt, subject, body, isRead, sentAt, removedAt, from, to } = mail
+  const { createdAt, subject, body, isRead, sentAt, removedAt, from, to, isStarred } = mail
 
   function convertTimestamp(timestamp) {
     const date = new Date(timestamp)
@@ -14,31 +13,32 @@ export function MailPreview({ mail, onToggleStarred, onRemoveMail }) {
   }
 
   const contactName = from.split('@')[0]
-  const isStarredDynamicClass = mail.isStarred ? 'starred' : ''
+  const isStarredDynamicClass = isStarred ? 'starred' : ''
 
   return (
     <li className={`mail-preview ${isRead ? 'read' : 'unread'}`}>
       <button className='btn star-btn' onClick={() => onToggleStarred(mail.id)}>
-        <span className={`material-symbols-outlined ${isStarredDynamicClass}`}>star</span>
+        <span title={isStarred ? 'Starred' : 'Not Starred'} className={`material-symbols-outlined ${isStarredDynamicClass}`}>
+          star
+        </span>
       </button>
 
-      <article onClick={() => navigate(`/mail/${mail.id}`)} className='mail-content'>
-        <span className='mail-sender'>{contactName}</span>
-
+      <article onClick={() => navigate(`/mail/${mail.id}`)} className='preview-content'>
+        <span className='preview-sender'>{contactName}</span>
         <div className='inner-content'>
-          <span className='mail-subject'>
+          <span className='preview-subject'>
             <LongText limit={50}>{subject}</LongText>
           </span>
 
-          <p className='mail-body'>
+          <p className='preview-body'>
             <LongText limit={100}>{body}</LongText>
           </p>
         </div>
 
-        <div className='mail-date'>{convertTimestamp(sentAt)}</div>
+        <div className='preview-date'>{convertTimestamp(sentAt)}</div>
       </article>
 
-      <section className='mail-action'>
+      <section className='preview-action'>
         <button onClick={() => onRemoveMail(mail.id)} className='btn remove-btn'>
           <span className='material-symbols-outlined'>delete</span>
         </button>

@@ -1,6 +1,6 @@
 import { MailPreview } from './MailPreview.jsx'
 
-export function MailList({ mails, onToggleStarred, onRemoveMail, children }) {
+export function MailList({ mails, onToggleStarred, onRemoveMail }) {
   return (
     <ul className='mail-list'>
       {mails.map((mail) => (

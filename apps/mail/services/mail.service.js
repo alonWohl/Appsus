@@ -11,13 +11,14 @@ const MAIL_KEY = 'mailsDb'
 _createInboxMails()
 
 export const mailSevice = {
+  loggedinUser,
   query,
   get,
   remove,
   save,
   getFilterFromSearchParams,
   getEmptyMail,
-  loggedinUser
+  toggleStarred
 }
 
 function query(filterBy = {}) {
@@ -43,6 +44,13 @@ function query(filterBy = {}) {
 
 function get(mailId) {
   return storageService.get(MAIL_KEY, mailId)
+}
+function toggleStarred(mailId) {
+  return get(mailId).then((mail) => {
+    mail.isStarred = !mail.isStarred
+
+    return save(mail)
+  })
 }
 
 function remove(mailId) {
