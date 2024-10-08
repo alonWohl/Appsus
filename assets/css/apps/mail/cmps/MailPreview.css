@@ -4,8 +4,7 @@
 
   position: relative;
 
-  padding: 10px 0;
-  font-size: 14px;
+  font-size: 0.875rem;
 
   box-shadow: inset 0 -1px 0 0 rgba(100, 121, 143, 0.12);
   cursor: pointer;
@@ -18,38 +17,40 @@
 }
 
 .star-btn {
-  margin-inline-end: 15px;
+  padding-inline-start: 13px;
   flex-shrink: 0;
 }
 
-.mail-content {
+.preview-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-width: 0; /* Ensure overflow behavior works properly */
+
+  padding-inline-start: 10px;
+  min-width: 0;
   flex-grow: 1;
 }
 .inner-content {
   display: flex;
   align-items: center;
-  min-width: 0; /* Ensure overflow behavior works properly */
+  min-width: 0;
 }
 
-.mail-sender {
+.preview-sender {
   font-weight: bold;
   white-space: nowrap;
 
-  margin-inline-end: 80px;
+  padding-inline-end: 80px;
 }
 
-.mail-subject {
+.preview-subject {
   font-weight: normal;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.mail-body {
+.preview-body {
   color: #5f6368;
   font-size: 12px;
   white-space: nowrap;
@@ -57,7 +58,7 @@
   text-overflow: ellipsis;
 }
 
-.mail-date {
+.preview-date {
   white-space: nowrap;
   margin-left: 20px;
   flex-shrink: 0;
@@ -69,14 +70,6 @@
 .read {
   font-weight: 400;
   background-color: #f2f6fc;
-}
-
-.star-btn svg {
-  fill: #e8eaed;
-  transition: fill 0.3s ease;
-}
-.star-btn:hover svg:not(.starred) {
-  fill: #1e1e1e;
 }
 
 .star-btn span.starred {

@@ -11,39 +11,46 @@ const MAIL_KEY = 'mailsDb'
 _createInboxMails()
 
 export const mailSevice = {
+  loggedinUser,
   query,
   get,
   remove,
   save,
   getFilterFromSearchParams,
   getEmptyMail,
-  loggedinUser
+  toggleStarred
 }
 
 function query(filterBy = {}) {
   return storageService.query(MAIL_KEY).then((mails) => {
-    if (filterBy.txt === 'is:starred') {
-      mails = mails.filter((mail) => mail.isStarred === true)
-    } else if (filterBy.txt === 'in:trash') {
-      mails = mails.filter((mail) => mail.removedAt !== null)
-    } else if (filterBy.txt === 'in:sent') {
-      mails = mails.filter((mail) => mail.sentAt && mail.from === loggedinUser.mail)
-    } else if (filterBy.txt === 'in:inbox' || filterBy.txt === '') {
-      mails = mails.filter((mail) => mail.to === loggedinUser.mail && mail.removedAt === null)
-    } else if (filterBy.txt === 'in:drafts') {
-      mails = mails.filter((mail) => mail.isDraft === true && !mail.sentAt)
-    } else if (filterBy.txt) {
-      const regex = new RegExp(filterBy.txt, 'i')
-      mails = mails.filter((mail) => (regex.test(mail.subject) || regex.test(mail.from)) && mail.removedAt === null)
-    } else {
-      mails = mails.filter((mail) => mail.removedAt === null)
+    switch (filterBy.txt) {
+      case 'is:starred':
+        return mails.filter((mail) => mail.isStarred === true)
+      case 'in:trash':
+        return mails.filter((mail) => mail.removedAt !== null)
+      case 'in:sent':
+        return mails.filter((mail) => mail.sentAt && mail.from === loggedinUser.mail)
+      case 'in:inbox':
+      case '':
+        return mails.filter((mail) => mail.to === loggedinUser.mail && mail.removedAt === null)
+      case 'in:drafts':
+        return mails.filter((mail) => mail.isDraft === true && !mail.sentAt)
+      default:
+        const regex = new RegExp(filterBy.txt, 'i')
+        return mails.filter((mail) => (regex.test(mail.subject) || regex.test(mail.from)) && mail.removedAt === null)
     }
-    return mails
   })
 }
 
 function get(mailId) {
   return storageService.get(MAIL_KEY, mailId)
+}
+function toggleStarred(mailId) {
+  return get(mailId).then((mail) => {
+    mail.isStarred = !mail.isStarred
+
+    return save(mail)
+  })
 }
 
 function remove(mailId) {

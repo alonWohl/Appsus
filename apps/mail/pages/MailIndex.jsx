@@ -1,5 +1,4 @@
 import { AppLoader } from '../../../cmps/AppLoader.jsx'
-import { MailFilter } from '../cmps/MailFilter.jsx'
 import { MailHeader } from '../cmps/MailHeader.jsx'
 import { MailList } from '../cmps/MailList.jsx'
 import { SideMenu } from '../cmps/SideMenu.jsx'
@@ -26,18 +25,15 @@ export function MailIndex() {
         console.log(err, 'Cant Get Mails')
       })
   }
-
   function onToggleStarred(mailId) {
-    mailSevice.get(mailId).then((mail) => {
-      const updatedMail = { ...mail, isStarred: !mail.isStarred }
-      mailSevice
-        .save(updatedMail)
-        .then(() => {
-          setMails((prevMails) => [...prevMails.map((m) => (m.id === mailId ? updatedMail : m))].sort((a, b) => b.isStarred - a.isStarred))
-        })
-        .catch((err) => {
-          console.error('Failed to update mail:', err)
-        })
+    setMails((prevMails) => prevMails.map((mail) => (mail.id === mailId ? { ...mail, isStarred: !mail.isStarred } : mail)))
+
+    const previousMails = mails.map((mail) => ({ ...mail }))
+
+    mailSevice.toggleStarred(mailId).catch((err) => {
+      console.log('Failed to toggle starred status:', err)
+
+      setMails(previousMails)
     })
   }
 
@@ -56,16 +52,13 @@ export function MailIndex() {
   if (!mails) return <AppLoader />
 
   return (
-    <React.Fragment>
-      <MailHeader>
-        <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-      </MailHeader>
-
-      <section className='mail-index'>
+    <main className='mail-index'>
+      <MailHeader filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
+      <section className='main-mail-content flex'>
         <SideMenu filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
         <MailList mails={mails} onToggleStarred={onToggleStarred} onRemoveMail={onRemoveMail} />
         <Outlet />
       </section>
-    </React.Fragment>
+    </main>
   )
 }
