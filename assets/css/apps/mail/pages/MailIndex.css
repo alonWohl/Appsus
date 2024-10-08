@@ -4,6 +4,6 @@
 }
 
 .mail-main-content {
+  background-color: var(--main-mail-bg-color);
   margin-inline-start: 72px;
-  max-height: 80vh;
 }
