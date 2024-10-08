@@ -27,6 +27,8 @@
   align-items: center;
   flex-grow: 1;
   padding-inline-start: 10px;
+
+  overflow: hidden;
 }
 
 .preview-sender {
