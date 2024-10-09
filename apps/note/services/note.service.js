@@ -20,7 +20,15 @@ function query(filterBy) {
             notes = notes.filter((note) => note.isRemoved === false)
         } else if(filterBy === 'in:bin') {
             notes = notes.filter((note) => note.isRemoved === true)
-        }
+        } else if(filterBy === 'reminders') {
+            notes = notes.filter((note) => note.label === 'reminders' && note.isRemoved === false)
+        } else if(filterBy === 'personal') {
+            notes = notes.filter((note) => note.label === 'personal' && note.isRemoved === false)
+        } else if(filterBy === 'inspiration') {
+            notes = notes.filter((note) => note.label === 'inspiration' && note.isRemoved === false)
+        } else if(filterBy === 'work') {
+            notes = notes.filter((note) => note.label === 'work' && note.isRemoved === false)
+        } 
         return notes
     })
 }
@@ -55,7 +63,8 @@ function _createNotes() {
         const types = [
             'text',
             'image',
-            'list'
+            'list',
+            'draw'
         ]
         const labels = [
             'personal',
@@ -82,6 +91,7 @@ function _createNotes() {
                 id: utilService.makeId(),
                 createdAt: Date.now(),
                 type: types[utilService.getRandomIntInclusive(0,3)],
+                label: labels[utilService.getRandomIntInclusive(0,3)],
                 isPinned: false,
                 isRemoved: false,
                 style: {
@@ -116,6 +126,7 @@ function getEmptyNote() {
     const emptyNote = {
         createdAt: Date.now(),
         type: '',
+        label: '',
         isPinned: false,
         isRemoved: false,
         style: {
@@ -127,7 +138,7 @@ function getEmptyNote() {
         }
     }
 
-    const {createdAt, type, isPinned, isRemoved, style, info} = emptyNote
+    const {createdAt, type, label, isPinned, isRemoved, style, info} = emptyNote
 
-    return {createdAt, type, isPinned, isRemoved, style, info} 
+    return {createdAt, type, label, isPinned, isRemoved, style, info} 
 }

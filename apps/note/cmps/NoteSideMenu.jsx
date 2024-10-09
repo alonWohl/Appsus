@@ -13,19 +13,19 @@ export function NoteSideMenu({ filterBy, onSetFilterBy, notes}) {
                 <span>Notes</span>
             </button>
 
-            <button title='reminders' className='reminders-btn'>
+            <button title='reminders' className='reminders-btn' onClick={() => onSetFilter('reminders')}>
                 <span>Reminders</span>
             </button>
 
-            <button title='personal' className='personal-btn'>
+            <button title='personal' className='personal-btn' onClick={() => onSetFilter('personal')}>
                 <span>Personal</span>
             </button>
 
-            <button title='inspiration' className='inspiration-btn'>
+            <button title='inspiration' className='inspiration-btn' onClick={() => onSetFilter('inspiration')}>
                 <span>Inspiration</span>
             </button>
 
-            <button title='work' className='work-btn'>
+            <button title='work' className='work-btn' onClick={() => onSetFilter('work')}>
                 <span>Work</span>
             </button>
 
