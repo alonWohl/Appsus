@@ -8,6 +8,7 @@ import { MailIndex } from './apps/mail/pages/MailIndex.jsx'
 import { NoteIndex } from './apps/note/pages/NoteIndex.jsx'
 import { MailDetails } from './apps/mail/pages/MailDetails.jsx'
 import { MailCompose } from './apps/mail/pages/MailCompose.jsx'
+import { UserMsg } from './cmps/UserMsg.jsx'
 
 export function App() {
   return (
@@ -19,11 +20,12 @@ export function App() {
           <Route path='/about' element={<About />} />
           <Route path='/mail' element={<MailIndex />}>
             <Route path='/mail/compose' element={<MailCompose />} />
+            <Route path='/mail/:mailId' element={<MailDetails />} />
           </Route>
-          <Route path='/mail/:mailId' element={<MailDetails />} />
           <Route path='/note' element={<NoteIndex />} />
         </Routes>
       </main>
+      <UserMsg />
     </Router>
   )
 }

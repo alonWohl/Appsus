@@ -45,6 +45,18 @@ export function MailCompose() {
 
   function onSendMail(ev) {
     ev.preventDefault()
+
+    const emailRegex = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,6}$/
+    if (!emailRegex.test(mailToSend.to)) {
+      showErrorMsg('Invalid email address')
+      return
+    }
+
+    if (!mailToSend.subject) {
+      showErrorMsg('Subject is required')
+      return
+    }
+
     mailSevice
       .save(mailToSend)
       .then(() => showSuccessMsg('Mail Sent Successfully'))
@@ -69,13 +81,17 @@ export function MailCompose() {
       </div>
       <div className='from'>From : {fromAddress}</div>
 
-      <label htmlFor='to'>To</label>
-      <input onChange={handleChange} type='text' name='to' id='to' />
+      <label htmlFor='to'>
+        To
+        <input onChange={handleChange} type='text' name='to' id='to' />
+      </label>
 
-      <label htmlFor='subject'>subject</label>
-      <input onChange={handleChange} type='text' name='subject' id='subject' />
+      <label htmlFor='subject'>
+        Subject
+        <input onChange={handleChange} type='text' name='subject' id='subject' />
+      </label>
 
-      <textarea onChange={handleChange} name='body' id='body'></textarea>
+      <textarea className='mail-compose-body' onChange={handleChange} name='body' id='body'></textarea>
 
       <button className='send-btn'>send</button>
     </form>

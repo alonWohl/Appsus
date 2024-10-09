@@ -1,16 +1,21 @@
 import { AppLoader } from '../../../cmps/AppLoader.jsx'
+import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service.js'
 import { MailHeader } from '../cmps/MailHeader.jsx'
 import { MailList } from '../cmps/MailList.jsx'
 import { SideMenu } from '../cmps/SideMenu.jsx'
 import { mailSevice } from '../services/mail.service.js'
+import { MailDetails } from './MailDetails.jsx'
 
 const { useState, useEffect } = React
-const { Link, useSearchParams, Outlet } = ReactRouterDOM
+const { useSearchParams, Outlet, useParams, useNavigate } = ReactRouterDOM
 
 export function MailIndex() {
   const [mails, setMails] = useState([])
   const [searchPrms, setSearchPrms] = useSearchParams()
+  const [isExpand, setIsExpand] = useState(false)
   const [filterBy, setFilterBy] = useState(mailSevice.getFilterFromSearchParams(searchPrms))
+  const { mailId } = useParams()
+  const navigate = useNavigate()
 
   useEffect(() => {
     loadMails()
@@ -43,13 +48,26 @@ export function MailIndex() {
       ...updatedFilter
     }))
   }
-  function onRemoveMail(mailId) {
-    mailSevice.remove(mailId).then(() => {
-      setMails(mails.filter((mail) => mail.id !== mailId))
-    })
+  function onRemoveMail(ev, mailId) {
+    ev.stopPropagation()
+    setMails(mails.filter((mail) => mail.id !== mailId))
+
+    const previousMails = mails.map((mail) => ({ ...mail }))
+
+    mailSevice
+      .remove(mailId)
+      .then(showSuccessMsg('Mail removed successfully'))
+      .catch((err) => {
+        console.error(err)
+        showErrorMsg('Cannot remove Mail')
+        setMails(previousMails)
+      })
+      .finally(navigate('/mail'))
   }
 
-  function onToggleRead(mailId) {
+  function onToggleRead(ev, mailId) {
+    ev.stopPropagation()
+
     setMails((prevMails) => prevMails.map((mail) => (mail.id === mailId ? { ...mail, isRead: !mail.isRead } : mail)))
     mailSevice.get(mailId).then((mail) => {
       mail.isRead = !mail.isRead
@@ -58,16 +76,25 @@ export function MailIndex() {
     })
   }
 
+  function onToggleHamburger() {
+    setIsExpand((prevIsExpand) => !prevIsExpand)
+    console.log(isExpand)
+  }
+
   if (!mails) return <AppLoader />
 
   return (
     <main className='mail-index'>
-      <MailHeader filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-      <section className='mail-main-content flex'>
+      <MailHeader filterBy={filterBy} onSetFilterBy={onSetFilterBy} onToggleHamburger={onToggleHamburger} isExpand={isExpand} />
+      <section className={`mail-main-content flex ${isExpand ? 'expanded' : ''}`}>
         <SideMenu filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-        <MailList mails={mails} onToggleRead={onToggleRead} onToggleStarred={onToggleStarred} onRemoveMail={onRemoveMail} />
-        <Outlet />
+        {mailId ? (
+          <MailDetails onRemoveMail={onRemoveMail} />
+        ) : (
+          <MailList mails={mails} onToggleRead={onToggleRead} onToggleStarred={onToggleStarred} onRemoveMail={onRemoveMail} />
+        )}
       </section>
+      <Outlet />
     </main>
   )
 }

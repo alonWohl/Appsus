@@ -11,9 +11,8 @@ html {
 body {
   font-family: Roboto, Arial, Helvetica, sans-serif;
   margin: 0;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
+  min-height: 100vh;
+  overflow-y: hidden;
 }
 
 h1,
@@ -50,10 +49,11 @@ button {
 
 .btn {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
   position: relative;
+  cursor: pointer;
   color: var(--mail-secondary-color);
   border: none;
   background: none;
@@ -63,6 +63,9 @@ button {
   opacity: 0;
   content: '';
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   height: 40px;
   width: 40px;
   padding: 10px;
