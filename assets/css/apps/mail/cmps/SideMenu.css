@@ -7,6 +7,15 @@
   background-color: var(--main-mail-bg-color);
   color: var(--mail-text-color);
   z-index: 50;
+  transition: width 0.3s ease; /* Smooth expansion */
+}
+
+.sidebar.expanded {
+  width: 256px;
+}
+
+.sidebar:hover {
+  width: 256px;
 }
 
 .sidebar-links {
@@ -19,6 +28,7 @@
   align-items: center;
   padding: 0 12px 0 26px;
   cursor: pointer;
+  transition: padding 0.3s ease;
 }
 
 .link-icon {
@@ -36,24 +46,21 @@
   min-height: 56px;
   min-width: 56px;
   max-width: 56px;
-
   padding: 0;
   text-align: center;
-
   border-radius: 1em;
   background-color: rgb(194, 231, 255);
+  transition: padding 0.3s ease;
 }
 
-.sidebar:hover {
-  width: 256px;
-}
-
-.sidebar:hover .link.compose-link {
+.sidebar:hover .link.compose-link,
+.sidebar.expanded .link.compose-link {
   padding-inline-end: 24px;
   max-width: none;
 }
 
-.sidebar:hover .hidden {
+.sidebar:hover .hidden,
+.sidebar.expanded .hidden {
   display: block;
 }
 
@@ -67,11 +74,11 @@
   background-color: #d3e3fd;
   border-radius: 50%;
   z-index: -1;
-
-  transition: 0.3s;
+  transition: width 0.3s ease, border-radius 0.3s ease;
 }
 
-.sidebar:hover .link.active::before {
+.sidebar:hover .link.active::before,
+.sidebar.expanded .link.active::before {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-top-right-radius: 1em;

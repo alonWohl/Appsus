@@ -30,14 +30,15 @@ export function MailIndex() {
         console.log(err, 'Cant Get Mails')
       })
   }
-  function onToggleStarred(mailId) {
+  function onToggleStarred(ev, mailId) {
+    ev.stopPropagation()
+
     setMails((prevMails) => prevMails.map((mail) => (mail.id === mailId ? { ...mail, isStarred: !mail.isStarred } : mail)))
 
     const previousMails = mails.map((mail) => ({ ...mail }))
 
     mailSevice.toggleStarred(mailId).catch((err) => {
       console.log('Failed to toggle starred status:', err)
-
       setMails(previousMails)
     })
   }
@@ -87,7 +88,7 @@ export function MailIndex() {
     <main className='mail-index'>
       <MailHeader filterBy={filterBy} onSetFilterBy={onSetFilterBy} onToggleHamburger={onToggleHamburger} isExpand={isExpand} />
       <section className={`mail-main-content flex ${isExpand ? 'expanded' : ''}`}>
-        <SideMenu filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
+        <SideMenu isExpand={isExpand} filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
         {mailId ? (
           <MailDetails onRemoveMail={onRemoveMail} />
         ) : (

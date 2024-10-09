@@ -1,6 +1,6 @@
 const { Link, useNavigate } = ReactRouterDOM
 
-export function SideMenu({ filterBy, onSetFilterBy }) {
+export function SideMenu({ filterBy, onSetFilterBy, isExpand }) {
   const navigate = useNavigate()
 
   function handleFilterChange(txt) {
@@ -13,7 +13,7 @@ export function SideMenu({ filterBy, onSetFilterBy }) {
   }
 
   return (
-    <aside className='sidebar'>
+    <aside className={`sidebar ${isExpand ? 'expanded' : ''}`}>
       <ul className='sidebar-links flex column'>
         <div className='compose-wrapper'>
           <Link className='link compose-link' title='compose' to='/mail/compose'>

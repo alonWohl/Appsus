@@ -7,3 +7,7 @@
   background-color: var(--main-mail-bg-color);
   margin-inline-start: 72px;
 }
+
+.mail-main-content.expanded {
+  margin-inline-start: 256px;
+}
