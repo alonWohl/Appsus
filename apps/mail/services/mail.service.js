@@ -143,6 +143,6 @@ function getFilterFromSearchParams(searchParams) {
   return { txt }
 }
 
-function getEmptyMail(createdAt = Date.now(), subject = '', body = '', sentAt = Date.now(), from = loggedinUser.mail, to = '') {
-  return { createdAt, subject, body, sentAt, from, to }
+function getEmptyMail(createdAt = Date.now(), subject = '', body = '', sentAt = Date.now(), from = loggedinUser.mail, to = '', removedAt = null) {
+  return { createdAt, subject, body, sentAt, from, to, removedAt }
 }

@@ -1,4 +1,5 @@
 import { AppLoader } from '../../../cmps/AppLoader.jsx'
+import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service.js'
 import { MailHeader } from '../cmps/MailHeader.jsx'
 import { MailList } from '../cmps/MailList.jsx'
 import { SideMenu } from '../cmps/SideMenu.jsx'
@@ -10,6 +11,7 @@ const { Link, useSearchParams, Outlet } = ReactRouterDOM
 export function MailIndex() {
   const [mails, setMails] = useState([])
   const [searchPrms, setSearchPrms] = useSearchParams()
+  const [isExpand, setIsExpand] = useState(false)
   const [filterBy, setFilterBy] = useState(mailSevice.getFilterFromSearchParams(searchPrms))
 
   useEffect(() => {
@@ -44,9 +46,18 @@ export function MailIndex() {
     }))
   }
   function onRemoveMail(mailId) {
-    mailSevice.remove(mailId).then(() => {
-      setMails(mails.filter((mail) => mail.id !== mailId))
-    })
+    setMails(mails.filter((mail) => mail.id !== mailId))
+
+    const previousMails = mails.map((mail) => ({ ...mail }))
+
+    mailSevice
+      .remove(mailId)
+      .then(showSuccessMsg('Mail Removed'))
+      .catch((err) => {
+        console.error(err)
+        showErrorMsg('Cannot remove Mail')
+        setMails(previousMails)
+      })
   }
 
   function onToggleRead(mailId) {
@@ -58,12 +69,17 @@ export function MailIndex() {
     })
   }
 
+  function onToggleHamburger() {
+    setIsExpand((prevIsExpand) => !prevIsExpand)
+    console.log(isExpand)
+  }
+
   if (!mails) return <AppLoader />
 
   return (
     <main className='mail-index'>
-      <MailHeader filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-      <section className='mail-main-content flex'>
+      <MailHeader filterBy={filterBy} onSetFilterBy={onSetFilterBy} onToggleHamburger={onToggleHamburger} isExpand={isExpand} />
+      <section className={`mail-main-content flex ${isExpand ? 'expanded' : ''}`}>
         <SideMenu filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
         <MailList mails={mails} onToggleRead={onToggleRead} onToggleStarred={onToggleStarred} onRemoveMail={onRemoveMail} />
         <Outlet />

@@ -1,10 +1,10 @@
 import { MailFilter } from './MailFilter.jsx'
 
-export function MailHeader({ filterBy, onSetFilterBy }) {
+export function MailHeader({ filterBy, onSetFilterBy, onToggleHamburger, isExpand }) {
   return (
-    <header className='mail-header flex align-center space-between'>
+    <header className='mail-header flex align-center '>
       <section className='logo-hamburger'>
-        <button className='btn hamburger'>
+        <button onClick={onToggleHamburger} aria-expanded={isExpand} className='btn hamburger'>
           <span className='material-symbols-outlined'>menu</span>
         </button>
         <div className='logo'>
