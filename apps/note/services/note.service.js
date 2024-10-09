@@ -14,8 +14,15 @@ const NOTE_KEY = 'noteDb'
 _createNotes()
 
 
-function query() {
-    return storageService.query(NOTE_KEY)
+function query(filterBy) {
+    return storageService.query(NOTE_KEY).then((notes) => {
+        if(filterBy === '') {
+            notes = notes.filter((note) => note.isRemoved === false)
+        } else if(filterBy === 'in:bin') {
+            notes = notes.filter((note) => note.isRemoved === true)
+        }
+        return notes
+    })
 }
 
 function get(noteId) {
@@ -26,6 +33,7 @@ function remove(noteId) {
     return storageService.get(NOTE_KEY, noteId).then((note) => {
       if (!note.removedAt) {
         note.removedAt = Date.now()
+        note.isRemoved = true
         return storageService.put(NOTE_KEY, note)
       } else {
         return storageService.remove(NOTE_KEY, noteId)
@@ -34,11 +42,11 @@ function remove(noteId) {
 }
 
 function save(note) {
-    // if (note.id) {
-        // return storageService.put(NOTE_KEY, note)
-    // } else {
+    if (note.id) {
+        return storageService.put(NOTE_KEY, note)
+    } else {
         return storageService.post(NOTE_KEY, note)
-    // }
+    }
 }
 
 function _createNotes() {
@@ -48,6 +56,12 @@ function _createNotes() {
             'text',
             'image',
             'list'
+        ]
+        const labels = [
+            'personal',
+            'inspiration',
+            'work',
+            'reminders',
         ]
         const colors =[
             '#e2f6d3',
@@ -69,6 +83,7 @@ function _createNotes() {
                 createdAt: Date.now(),
                 type: types[utilService.getRandomIntInclusive(0,3)],
                 isPinned: false,
+                isRemoved: false,
                 style: {
                     backgroundColor: colors[utilService.getRandomIntInclusive(0,10)]
                 },
@@ -89,6 +104,7 @@ function getEmptyNote() {
         createdAt: Date.now(),
         type: '',
         isPinned: false,
+        isRemoved: false,
         style: {
             backgroundColor: utilService.getRandomColor()
         },

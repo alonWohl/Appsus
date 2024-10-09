@@ -1,11 +1,15 @@
 const { Link } = ReactRouterDOM
 
 
-export function NoteSideMenu({ filterBy, onSetFilterBy}) {
+export function NoteSideMenu({ filterBy, onSetFilterBy, notes}) {
+
+    function onSetFilter(filter) {
+        onSetFilterBy(filter)
+    }
 
     return (
         <section className='note-side-menu'>
-            <button title='notes' className='notes-btn'>
+            <button title='notes' className='notes-btn' onClick={() => onSetFilter('')}>
                 <span>Notes</span>
             </button>
 
@@ -33,7 +37,7 @@ export function NoteSideMenu({ filterBy, onSetFilterBy}) {
                 <span>Archive</span>
             </button>
 
-            <button title='bin' className='bin-btn'>
+            <button title='bin' className='bin-btn' onClick={() => onSetFilter('in:bin')}>
                 <span>Bin</span>
             </button>
         </section>
