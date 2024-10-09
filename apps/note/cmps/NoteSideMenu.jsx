@@ -33,7 +33,7 @@ export function NoteSideMenu({ filterBy, onSetFilterBy, notes}) {
                 <span>Edit lables</span>
             </button>
 
-            <button title='archive' className='archive-btn'>
+            <button title='archive' className='archive-btn' onClick={() => onSetFilter('archive')}>
                 <span>Archive</span>
             </button>
 

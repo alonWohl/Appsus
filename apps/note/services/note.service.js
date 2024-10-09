@@ -28,6 +28,8 @@ function query(filterBy) {
             notes = notes.filter((note) => note.label === 'inspiration' && note.isRemoved === false)
         } else if(filterBy === 'work') {
             notes = notes.filter((note) => note.label === 'work' && note.isRemoved === false)
+        } else if(filterBy === 'archive') {
+            notes = notes.filter((note) => note.isArchive === true && note.isRemoved === false)
         } 
         return notes
     })
@@ -94,6 +96,7 @@ function _createNotes() {
                 label: labels[utilService.getRandomIntInclusive(0,3)],
                 isPinned: false,
                 isRemoved: false,
+                isArchive: false,
                 style: {
                     backgroundColor: colors[utilService.getRandomIntInclusive(0,10)]
                 },
@@ -129,6 +132,7 @@ function getEmptyNote() {
         label: '',
         isPinned: false,
         isRemoved: false,
+        isArchive: false,
         style: {
             backgroundColor: colors[utilService.getRandomIntInclusive(0,10)]
         },
@@ -138,7 +142,7 @@ function getEmptyNote() {
         }
     }
 
-    const {createdAt, type, label, isPinned, isRemoved, style, info} = emptyNote
+    const {createdAt, type, label, isPinned, isRemoved, isArchive, style, info} = emptyNote
 
-    return {createdAt, type, label, isPinned, isRemoved, style, info} 
+    return {createdAt, type, label, isPinned, isRemoved, isArchive, style, info} 
 }

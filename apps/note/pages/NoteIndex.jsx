@@ -44,6 +44,14 @@ export function NoteIndex() {
             .finally(console.log('Note removed!'))
     }
 
+    function onArchiveNote(noteId) {
+        const note = notes.find((note) => note.id === noteId)
+        note.isArchive = true
+        noteService
+            .save(note)
+            .finally(console.log('Note is in archive!'))
+    }
+
     function onSetFilterBy(filter) {
         setFilterBy(filter)
     }
@@ -52,7 +60,7 @@ export function NoteIndex() {
         <section className='note-index'>
             <NoteHeader />
             {inputClick ? <NoteCompose onCancle={onCancleNewNote} noteType={newNoteType}/> : <NoteForm onFormClick={handleFormClick}/>}
-            <NoteList notes={notes} onRemoveNote={onRemoveNote}/>
+            <NoteList notes={notes} onRemoveNote={onRemoveNote} onArchiveNote={onArchiveNote}/>
             <NoteSideMenu notes={notes} onSetFilterBy={onSetFilterBy}/>
         </section>
     )
