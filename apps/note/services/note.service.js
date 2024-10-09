@@ -100,13 +100,26 @@ function _createNotes() {
 
 
 function getEmptyNote() {
+    const colors =[
+        '#e2f6d3',
+        '#faafa8',
+        '#f39f76',
+        '#fff8b8',
+        '#b4ddd3',
+        '#d4e4ed',
+        '#aeccdc',
+        '#d3bfdb',
+        '#f6e2dd',
+        '#e9e3d4',
+        '#efeff1'
+    ]
     const emptyNote = {
         createdAt: Date.now(),
         type: '',
         isPinned: false,
         isRemoved: false,
         style: {
-            backgroundColor: utilService.getRandomColor()
+            backgroundColor: colors[utilService.getRandomIntInclusive(0,10)]
         },
         info: {
             header: '',
@@ -114,7 +127,7 @@ function getEmptyNote() {
         }
     }
 
-    const {createdAt, type, isPinned, style, info} = emptyNote
+    const {createdAt, type, isPinned, isRemoved, style, info} = emptyNote
 
-    return {createdAt, type, isPinned, style, info} 
+    return {createdAt, type, isPinned, isRemoved, style, info} 
 }
