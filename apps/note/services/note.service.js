@@ -17,7 +17,7 @@ _createNotes()
 function query(filterBy) {
     return storageService.query(NOTE_KEY).then((notes) => {
         if(filterBy === '') {
-            notes = notes.filter((note) => note.isRemoved === false)
+            notes = notes.filter((note) => note.isRemoved === false && note.isArchive === false)
         } else if(filterBy === 'in:bin') {
             notes = notes.filter((note) => note.isRemoved === true)
         } else if(filterBy === 'reminders') {

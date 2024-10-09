@@ -17,7 +17,7 @@ export function NoteIndex() {
 
     useEffect( () => {
         loadNotes()
-    },[filterBy])
+    },[filterBy, notes])
 
     function loadNotes() {
         noteService
@@ -46,10 +46,19 @@ export function NoteIndex() {
 
     function onArchiveNote(noteId) {
         const note = notes.find((note) => note.id === noteId)
-        note.isArchive = true
-        noteService
+        if(!note.isArchive) {
+            note.isArchive = true
+            noteService
+                .save(note)
+                .finally(console.log('Note is in archive!'))
+        } else if(note.isArchive) {
+            note.isArchive = false
+            noteService
             .save(note)
             .finally(console.log('Note is in archive!'))
+        }
+
+
     }
 
     function onSetFilterBy(filter) {
