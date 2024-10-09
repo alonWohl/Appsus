@@ -30,8 +30,8 @@ function query(filterBy = {}) {
         return mails.filter((mail) => mail.removedAt !== null)
       case 'in:sent':
         return mails.filter((mail) => mail.sentAt && mail.from === loggedinUser.mail)
-      case 'in:inbox':
       case '':
+      case 'in:inbox':
         return mails.filter((mail) => mail.to === loggedinUser.mail && mail.removedAt === null)
       case 'in:drafts':
         return mails.filter((mail) => mail.isDraft === true && !mail.sentAt)

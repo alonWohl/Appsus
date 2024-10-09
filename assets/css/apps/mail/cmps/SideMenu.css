@@ -9,21 +9,28 @@
   left: 0;
   height: 100%;
 
-  background-color: var(--main-mail-bg-color);
-}
+  z-index: 3;
 
-.side-menu button {
-  /* margin: 0 18px 0 0; */
+  background-color: var(--main-mail-bg-color);
+  transition: min-width 0.5s;
 }
 
 .compose-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
   height: 56px;
   width: 56px;
-  border: none;
+}
+
+.btn-wrapper {
+  height: 2em;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.compose-btn-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: #c2e7ff;
   border-radius: 1em;
   background-color: #c2e7ff;
 
@@ -32,4 +39,43 @@
 
 .compose-btn :hover {
   transition: box-shadow 0.08s linear, min-width 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.side-menu:hover {
+  color: black;
+
+  min-width: 256px;
+  z-index: 100;
+}
+
+.side-menu:hover .btn-wrapper {
+  width: 100%;
+  padding-inline-start: 26px;
+  padding-inline-end: 12px;
+}
+
+.btn-wrapper.active {
+  border-radius: 2em;
+  background-color: rgb(211, 227, 253);
+}
+
+.btn-wrapper.active:hover {
+  border-top-right-radius: 2em;
+  border-bottom-right-radius: 2em;
+  background-color: rgb(211, 227, 253);
+}
+
+.side-menu:hover .compose-btn-wrapper {
+  min-width: 200px;
+  margin-block-start: 8px;
+  margin-block-end: 16px;
+  padding-inline-end: 24px;
+}
+
+.side-menu:hover .hidden {
+  display: block;
+}
+
+.side-menu:hover .btn {
+  margin-inline-end: 18px;
 }
