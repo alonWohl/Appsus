@@ -20,8 +20,8 @@ export function App() {
           <Route path='/about' element={<About />} />
           <Route path='/mail' element={<MailIndex />}>
             <Route path='/mail/compose' element={<MailCompose />} />
+            <Route path='/mail/:mailId' element={<MailDetails />} />
           </Route>
-          <Route path='/mail/:mailId' element={<MailDetails />} />
           <Route path='/note' element={<NoteIndex />} />
         </Routes>
       </main>

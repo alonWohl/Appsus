@@ -2,9 +2,9 @@ import { AppLoader } from '../../../cmps/AppLoader.jsx'
 import { mailSevice } from '../services/mail.service.js'
 
 const { useState, useEffect } = React
-const { useParams, useNavigate, Link } = ReactRouterDOM
+const { useParams, useNavigate } = ReactRouterDOM
 
-export function MailDetails() {
+export function MailDetails({ onRemoveMail }) {
   const [mail, setMail] = useState(null)
   const { mailId } = useParams()
 
@@ -42,9 +42,13 @@ export function MailDetails() {
       <div className='details-header'>
         <h2>{subject}</h2>
 
-        <section className='btn-group'>
+        <section className='btn-group flex'>
           <button className='btn back-btn' onClick={() => navigate('/mail')}>
             <span className='material-symbols-outlined'>arrow_back</span>
+          </button>
+
+          <button onClick={(ev) => onRemoveMail(ev, mail.id)} className='btn remove-btn'>
+            <span className='material-symbols-outlined link-icon'>delete</span>
           </button>
         </section>
       </div>

@@ -1,14 +1,24 @@
 .mail-preview {
   display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
   align-items: center;
+  box-shadow: inset 0 -1px 0 0 rgba(100, 121, 143, 0.12);
+  border-color: inherit;
+
   position: relative;
   font-size: 0.875em;
   line-height: 20px;
-  padding: 10px 0;
-  box-shadow: inset 0 -1px 0 0 rgba(100, 121, 143, 0.12);
-  width: 100%;
+
   cursor: pointer;
   transition: background-color 0.2s ease;
+}
+.preview-sender {
+  display: flex;
+  padding-inline-end: 2em;
+
+  flex-basis: 168px;
+  align-items: center;
 }
 
 .mail-preview:hover {
@@ -16,44 +26,40 @@
   z-index: 2;
 }
 
-.btn.star-btn:not(.starred) {
-  opacity: 0.32;
-  padding-inline-start: 13px;
+.btn.star-btn {
+  padding-inline-end: 10px;
 }
 
 .preview-content {
-  display: flex;
+  /* display: flex;
   align-items: center;
-  justify-content: space-between;
-
-  flex-grow: 1;
-  width: 90%;
-  padding-inline-start: 10px;
+  justify-content: space-between; */
+  width: 100%;
+  /* width: 90%; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .preview-inner-content {
-  overflow: hidden;
-}
-
-.preview-sender {
-  white-space: nowrap;
-  padding-inline-end: 32px;
+  /* overflow: hidden; */
 }
 
 .preview-subject {
-  white-space: nowrap;
+  /* white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis; */
 }
 
 .preview-body {
-  white-space: nowrap;
+  /* white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis; */
 }
 
 .preview-date {
-  flex: 0 0 auto;
+  flex-basis: 56px;
+  padding-inline-end: 20px;
   white-space: nowrap;
 }
 
@@ -94,6 +100,6 @@
 }
 
 .starred {
-  font-weight: bold;
+  content: '⭐️';
   color: rgb(232, 232, 34);
 }

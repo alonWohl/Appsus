@@ -17,33 +17,35 @@ export function MailPreview({ mail, onToggleStarred, onRemoveMail, onToggleRead 
   const isReadBtnIcon = isRead ? <span className='material-symbols-outlined'>mail</span> : <span className='material-symbols-outlined'>drafts</span>
 
   return (
-    <li className={`mail-preview ${isRead ? 'read' : 'unread'}`}>
+    <li className={`mail-preview ${isRead ? 'read' : 'unread'}`} onClick={() => navigate(`/mail/${mail.id}`)}>
       <button className='btn star-btn' onClick={() => onToggleStarred(mail.id)}>
         <span title={isStarred ? 'Starred' : 'Not Starred'} className={`material-symbols-outlined ${isStarredDynamicClass}`}>
           star
         </span>
       </button>
 
-      <article onClick={() => navigate(`/mail/${mail.id}`)} className='preview-content'>
-        <span className='preview-sender'>{contactName}</span>
+      <div className='preview-sender'>
+        <span>{contactName}</span>
+      </div>
 
-        <div className='preview-inner-content flex align-center'>
-          <span className='preview-subject'>
-            <LongText limit={50}>{subject}</LongText>
-          </span>
-          -
-          <span className='preview-body'>
-            <LongText limit={100}>{body}</LongText>
-          </span>
-        </div>
+      <div className='preview-content'>
+        <span className='preview-subject'>
+          <LongText limit={50}>{subject}</LongText>
+        </span>
+        -
+        <span className='preview-body'>
+          <LongText limit={100}>{body}</LongText>
+        </span>
+      </div>
+      <div>
         <div className='preview-date'>{convertTimestamp(sentAt)}</div>
-      </article>
+      </div>
 
-      <section className='preview-actions flex align center'>
-        <button onClick={() => onRemoveMail(mail.id)} className='btn remove-btn'>
+      <section className='preview-actions flex  align center'>
+        <button onClick={(ev) => onRemoveMail(ev, mail.id)} className='btn remove-btn'>
           <span className='material-symbols-outlined'>delete</span>
         </button>
-        <button className='btn toggle-read-btn' onClick={() => onToggleRead(mail.id)}>
+        <button className='btn toggle-read-btn' onClick={(ev) => onToggleRead(ev, mail.id)}>
           {isReadBtnIcon}
         </button>
       </section>
