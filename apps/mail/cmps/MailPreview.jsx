@@ -18,7 +18,7 @@ export function MailPreview({ mail, onToggleStarred, onRemoveMail, onToggleRead 
 
   return (
     <li className={`mail-preview ${isRead ? 'read' : 'unread'}`} onClick={() => navigate(`/mail/${mail.id}`)}>
-      <button className='btn star-btn' onClick={() => onToggleStarred(mail.id)}>
+      <button className='btn star-btn' onClick={(ev) => onToggleStarred(ev, mail.id)}>
         <span title={isStarred ? 'Starred' : 'Not Starred'} className={`material-symbols-outlined ${isStarredDynamicClass}`}>
           star
         </span>
