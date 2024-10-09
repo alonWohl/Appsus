@@ -49,6 +49,19 @@ function _createNotes() {
             'image',
             'list'
         ]
+        const colors =[
+            '#e2f6d3',
+            '#faafa8',
+            '#f39f76',
+            '#fff8b8',
+            '#b4ddd3',
+            '#d4e4ed',
+            '#aeccdc',
+            '#d3bfdb',
+            '#f6e2dd',
+            '#e9e3d4',
+            '#efeff1'
+        ]
         notes = []
         for(let i = 0; i < 10; i++) {
             const note = {
@@ -57,7 +70,7 @@ function _createNotes() {
                 type: types[utilService.getRandomIntInclusive(0,3)],
                 isPinned: false,
                 style: {
-                    backgroundColor: utilService.getRandomColor()
+                    backgroundColor: colors[utilService.getRandomIntInclusive(0,10)]
                 },
                 info: {
                     header: utilService.makeLorem(2),
