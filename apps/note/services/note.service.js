@@ -95,6 +95,7 @@ function _createNotes() {
                 type: types[utilService.getRandomIntInclusive(0,3)],
                 label: labels[utilService.getRandomIntInclusive(0,3)],
                 isPinned: false,
+                isOpen: false,
                 isRemoved: false,
                 isArchive: false,
                 style: {
@@ -131,6 +132,7 @@ function getEmptyNote() {
         type: '',
         label: '',
         isPinned: false,
+        isOpen: false,
         isRemoved: false,
         isArchive: false,
         style: {
@@ -142,7 +144,7 @@ function getEmptyNote() {
         }
     }
 
-    const {createdAt, type, label, isPinned, isRemoved, isArchive, style, info} = emptyNote
+    const {createdAt, type, label, isPinned, isRemoved, isOpen, isArchive, style, info} = emptyNote
 
-    return {createdAt, type, label, isPinned, isRemoved, isArchive, style, info} 
+    return {createdAt, type, label, isPinned, isRemoved, isOpen, isArchive, style, info} 
 }
