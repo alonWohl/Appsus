@@ -85,14 +85,29 @@ export function MailIndex() {
   if (!mails) return <AppLoader />
 
   return (
-    <main className='mail-index'>
-      <MailHeader navigate={navigate} filterBy={filterBy} onSetFilterBy={onSetFilterBy} onToggleHamburger={onToggleHamburger} isExpand={isExpand} />
+    <main className="mail-index">
+      <MailHeader
+        navigate={navigate}
+        filterBy={filterBy}
+        onSetFilterBy={onSetFilterBy}
+        onToggleHamburger={onToggleHamburger}
+        isExpand={isExpand}
+      />
       <section className={`mail-main-content flex ${isExpand ? 'expanded' : ''}`}>
-        <SideMenu isExpand={isExpand} filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
+        <SideMenu
+          isExpand={isExpand}
+          filterBy={filterBy}
+          onSetFilterBy={onSetFilterBy}
+        />
         {mailId ? (
           <MailDetails onRemoveMail={onRemoveMail} />
         ) : (
-          <MailList mails={mails} onToggleRead={onToggleRead} onToggleStarred={onToggleStarred} onRemoveMail={onRemoveMail} />
+          <MailList
+            mails={mails}
+            onToggleRead={onToggleRead}
+            onToggleStarred={onToggleStarred}
+            onRemoveMail={onRemoveMail}
+          />
         )}
       </section>
       {!mailId && <Outlet />}
