@@ -15,6 +15,7 @@ export function NoteIndex() {
     const [newNoteType, setNoteType] = useState(null)
     const [filterBy, setFilterBy] = useState('')
     const [noteModal, setNoteModal] = useState(false)
+    const [noteToOpen, setNoteToOpen] = useState({})
 
 
     useEffect( () => {
@@ -66,21 +67,13 @@ export function NoteIndex() {
     }
 
 
-    function onNoteClick(noteToOpen) {
-        console.log('hey from notetoclick index');
-        const note = notes.find((note) => note.id === noteToOpen.id)
-        note.isOpen = true
-        noteService
-        .save(note)
-        .then(setNoteModal(!noteModal))
+    function onNoteClick(noteToFind) {
+        setNoteToOpen(notes.find((note) => note.id === noteToFind.id))
+        setNoteModal(!noteModal)
     }
 
-    function onCloseModal(noteToClose) {
-        const note = notes.find((note) => note.id === noteToClose.id)
-        note.isOpen = false
-        noteService
-        .save(note)
-        .then(setNoteModal(!noteModal))
+    function onCloseModal() {
+        setNoteModal(!noteModal)
     }
 
     return (
@@ -89,7 +82,7 @@ export function NoteIndex() {
             {inputClick ? <NoteCompose onCancle={onCancleNewNote} noteType={newNoteType}/> : <NoteForm onFormClick={handleFormClick}/>}
             <NoteList notes={notes} onRemoveNote={onRemoveNote} onArchiveNote={onArchiveNote} onNoteClick={onNoteClick}/>
             <NoteSideMenu notes={notes} onSetFilterBy={onSetFilterBy}/>
-            {noteModal && <NoteModal notes={notes} onCloseModal={onCloseModal}/>}
+            {noteModal && <NoteModal noteToOpen={noteToOpen} onCloseModal={onCloseModal}/>}
         </section>
     )
 }

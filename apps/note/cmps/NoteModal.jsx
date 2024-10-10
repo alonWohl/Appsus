@@ -1,30 +1,27 @@
-
+import { noteService } from '../services/note.service.js'
 const { useState, useEffect} = React
 
-export function NoteModal({ notes, onCloseModal }) {
+export function NoteModal({ noteToOpen, onCloseModal }) {
     const [modal, setModal] = useState(false)
     const [note, setNote] = useState({})
 
     useEffect( () => {
-        console.log('Note modal monted');
-        
-        setNoteToOpen(notes)
+        setNote(noteToOpen)
         toggleModal()
     },[])
 
-    function onInput() {
-        console.log('hey from input');
-        
+    function onInput(from) {
+
     }
 
-    function setNoteToOpen(notes) {
-        setNote(notes.find((note) => note.isOpen === true))
-    }
 
-    function toggleModal(from) {
-        setModal(!modal)
+    function toggleModal() {
         if(modal) {
             onCloseModal(note)
+            setModal(!modal)
+            setNote({})
+        } else {
+            setModal(!modal)
         }
     }
     return (
@@ -34,8 +31,8 @@ export function NoteModal({ notes, onCloseModal }) {
                     <div className='modal-overlay' onClick={() => toggleModal('overlay')}></div>
                         <div className='modal-content'>
                             <form className='note-modal-form' style={{backgroundColor: `${note.style.backgroundColor}`}}>
-                                <input type="text" id='title' placeholder='Title' value={note.info.header} onChange={onInput}/>
-                                <input type="text" value={note.info.text} onChange={onInput}/>
+                                <input type="text" id='title' placeholder='Title' value={note.info.header} onChange={() => onInput()}/>
+                                <input type="text" value={note.info.txt} onChange={onInput}/>
                                 <button className='close-modal-btn' onClick={() => toggleModal('close btn')}>close</button>
                             </form>
                         </div>
