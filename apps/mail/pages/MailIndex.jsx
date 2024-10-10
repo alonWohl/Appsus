@@ -13,6 +13,7 @@ export function MailIndex() {
   const [mails, setMails] = useState([])
   const [searchPrms, setSearchPrms] = useSearchParams()
   const [isExpand, setIsExpand] = useState(false)
+
   const [filterBy, setFilterBy] = useState(mailSevice.getFilterFromSearchParams(searchPrms))
   const { mailId } = useParams()
   const navigate = useNavigate()
@@ -79,14 +80,13 @@ export function MailIndex() {
 
   function onToggleHamburger() {
     setIsExpand((prevIsExpand) => !prevIsExpand)
-    console.log(isExpand)
   }
 
   if (!mails) return <AppLoader />
 
   return (
     <main className='mail-index'>
-      <MailHeader filterBy={filterBy} onSetFilterBy={onSetFilterBy} onToggleHamburger={onToggleHamburger} isExpand={isExpand} />
+      <MailHeader navigate={navigate} filterBy={filterBy} onSetFilterBy={onSetFilterBy} onToggleHamburger={onToggleHamburger} isExpand={isExpand} />
       <section className={`mail-main-content flex ${isExpand ? 'expanded' : ''}`}>
         <SideMenu isExpand={isExpand} filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
         {mailId ? (
@@ -95,7 +95,7 @@ export function MailIndex() {
           <MailList mails={mails} onToggleRead={onToggleRead} onToggleStarred={onToggleStarred} onRemoveMail={onRemoveMail} />
         )}
       </section>
-      <Outlet />
+      {!mailId && <Outlet />}
     </main>
   )
 }

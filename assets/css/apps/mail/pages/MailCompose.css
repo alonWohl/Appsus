@@ -47,7 +47,6 @@
   display: block;
   font-size: 13px;
   padding: 0 10px;
-
   text-wrap: nowrap;
 }
 
@@ -83,13 +82,11 @@
 .mail-compose .send-btn {
   align-self: flex-start;
   margin: 1em;
-
   padding: 0.5em;
   font-size: 1em;
   border: none;
   background-color: #1a73e8;
   color: white;
-
   border-radius: 2em;
 }
 
@@ -98,4 +95,37 @@
   background-color: #297be6;
   outline: 1px solid transparent;
   border: none;
+}
+
+@media (max-width: 600px) {
+  .mail-compose {
+    position: fixed;
+    width: 100dvw;
+    height: 100dvh;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .compose-head {
+    padding: 15px;
+  }
+
+  .compose-head h2 {
+    font-size: 18px;
+  }
+
+  .mail-compose input[type='text'],
+  .mail-compose textarea {
+    width: 95%;
+    margin: 10px auto;
+  }
+
+  .mail-compose .send-btn {
+    align-self: center;
+    margin: 1em auto;
+  }
 }

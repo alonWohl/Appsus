@@ -137,10 +137,17 @@ function _createInboxMails() {
   }
 }
 
-function getFilterFromSearchParams(searchParams) {
-  const txt = searchParams.get('txt') || ''
-
+function getDefaultFilter(txt = '') {
   return { txt }
+}
+
+function getFilterFromSearchParams(searchParams) {
+  const defaultFilter = getDefaultFilter()
+  const filterBy = {}
+  for (const field in defaultFilter) {
+    filterBy[field] = searchParams.get(field) || ''
+  }
+  return filterBy
 }
 
 function getEmptyMail(createdAt = Date.now(), subject = '', body = '', sentAt = Date.now(), from = loggedinUser.mail, to = '', removedAt = null) {

@@ -10,8 +10,11 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
   function handleChange({ target }) {
     const field = target.name
     const value = target.value
-    setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }))
-    onSetFilterBy({ [field]: value })
+    setFilterByToEdit((prevFilter) => {
+      const updatedFilter = { ...prevFilter, [field]: value }
+      onSetFilterBy(updatedFilter) // Pass the entire updated filter object
+      return updatedFilter
+    })
   }
 
   const { txt } = filterByToEdit
