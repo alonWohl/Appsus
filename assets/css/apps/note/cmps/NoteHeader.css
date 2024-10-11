@@ -1,4 +1,15 @@
 
 .note-header {
-    display: flex;
+    font: 400 13px / 27px Roboto, Arial, sans-serif;
+    z-index: 986;
+    color: rgb(0, 0, 0);
+    min-width: 160px;
+    position: fixed;
+    transition: box-shadow 0.25s;
+    display: block;
+    /* top: 0px; */
+    width: 1397px;
+    background-color: rgb(255, 255, 255);
+
+    
 }

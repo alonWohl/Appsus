@@ -33,4 +33,5 @@
 @import '../css/apps/note/pages/NoteIndex.css';
 @import '../css/apps/note/cmps/NoteHeader.css';
 @import '../css/apps/note/cmps/NoteCompose.css';
-@import '../css/apps/note/cmps/NoteModal.css'
+@import '../css/apps/note/cmps/NoteModal.css';
+@import '../css/apps/note/cmps/NoteForm.css';
