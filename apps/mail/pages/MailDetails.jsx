@@ -1,6 +1,6 @@
 import { AppLoader } from '../../../cmps/AppLoader.jsx'
 import { showErrorMsg } from '../../../services/event-bus.service.js'
-import { mailSevice } from '../services/mail.service.js'
+import { mailService } from '../services/mail.service.js'
 
 const { useState, useEffect } = React
 const { useParams, useNavigate } = ReactRouterDOM
@@ -16,12 +16,12 @@ export function MailDetails({ onRemoveMail, onBack }) {
   }, [mailId])
 
   function loadMail() {
-    mailSevice
+    mailService
       .get(mailId)
       .then((mail) => {
         if (!mail.isRead) {
           const updatedMail = { ...mail, isRead: true }
-          mailSevice.save(updatedMail).then(() => {
+          mailService.save(updatedMail).then(() => {
             setMail(updatedMail)
           })
         } else {

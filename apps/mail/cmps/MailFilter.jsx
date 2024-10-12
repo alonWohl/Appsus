@@ -1,30 +1,22 @@
 const { useState, useEffect } = React
 
 export function MailFilter({ filterBy, onSetFilterBy }) {
-  const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
+  const [searchText, setSearchText] = useState('')
 
   useEffect(() => {
-    setFilterByToEdit({ ...filterBy })
-  }, [filterBy])
+    setSearchText(filterBy.txt || '')
+  }, [filterBy.txt])
 
   function handleChange({ target }) {
-    const field = target.name
-    const value = target.value
-
-    setFilterByToEdit((prevFilter) => {
-      const updatedFilter = { ...prevFilter, [field]: value }
-      onSetFilterBy(updatedFilter)
-      return updatedFilter
-    })
+    const { value } = target
+    setSearchText(value)
+    onSetFilterBy({ ...filterBy, txt: value })
   }
-
-  const { txt } = filterByToEdit
-
   return (
     <form className="mail-search-wrapper">
       <input
         className="mail-search-input"
-        value={txt}
+        value={searchText}
         onChange={handleChange}
         type="text"
         name="txt"

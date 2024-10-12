@@ -1,11 +1,11 @@
 import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service.js'
-import { mailSevice } from '../services/mail.service.js'
+import { mailService } from '../services/mail.service.js'
 
 const { useState, useEffect } = React
 const { useNavigate } = ReactRouterDOM
 
 export function MailCompose() {
-  const [mailToSend, setMailToSend] = useState(mailSevice.getEmptyMail())
+  const [mailToSend, setMailToSend] = useState(mailService.getEmptyMail())
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export function MailCompose() {
   function saveDraft() {
     if (!mailToSend.to && !mailToSend.subject && !mailToSend.body) return
     const draftMail = { ...mailToSend, isDraft: true, sentAt: null }
-    mailSevice
+    mailService
       .save(draftMail)
       .then(() => console.log('Draft saved'))
       .catch((err) => console.log('Error saving draft:', err))
@@ -57,7 +57,7 @@ export function MailCompose() {
       return
     }
 
-    mailSevice
+    mailService
       .save(mailToSend)
       .then(() => showSuccessMsg('Mail Sent Successfully'))
       .catch((err) => {
@@ -69,31 +69,50 @@ export function MailCompose() {
       })
   }
 
-  const fromAddress = mailSevice.loggedinUser.mail
+  const fromAddress = mailService.loggedinUser.mail
 
   return (
-    <form className='mail-compose' onSubmit={onSendMail}>
-      <div className='compose-head'>
+    <form
+      className="mail-compose"
+      onSubmit={onSendMail}>
+      <div className="compose-head">
         <h2>New Message</h2>
-        <button onClick={() => navigate('/mail')} type='button' className='btn btn-cancel'>
-          <span className='material-symbols-outlined'>close</span>
+        <button
+          onClick={() => navigate('/mail')}
+          type="button"
+          className="btn btn-cancel">
+          <span className="material-symbols-outlined">close</span>
         </button>
       </div>
-      <div className='from'>From : {fromAddress}</div>
+      <div className="from">From : {fromAddress}</div>
 
-      <label htmlFor='to'>
+      <label htmlFor="to">
         To
-        <input onChange={handleChange} type='text' name='to' id='to' />
+        <input
+          onChange={handleChange}
+          type="text"
+          name="to"
+          id="to"
+        />
       </label>
 
-      <label htmlFor='subject'>
+      <label htmlFor="subject">
         Subject
-        <input onChange={handleChange} type='text' name='subject' id='subject' />
+        <input
+          onChange={handleChange}
+          type="text"
+          name="subject"
+          id="subject"
+        />
       </label>
 
-      <textarea className='mail-compose-body' onChange={handleChange} name='body' id='body'></textarea>
+      <textarea
+        className="mail-compose-body"
+        onChange={handleChange}
+        name="body"
+        id="body"></textarea>
 
-      <button className='send-btn'>send</button>
+      <button className="send-btn">send</button>
     </form>
   )
 }
