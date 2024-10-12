@@ -25,7 +25,7 @@ export function Home() {
             <h2 className="feature-title">Keep Clone</h2>
             <p className="feature-description">Capture and organize your thoughts with our powerful note-taking tool.</p>
             <Link
-              to="/keep"
+              to="/note"
               className="feature-button">
               Open Notes
               <span className="arrow-icon">→</span>

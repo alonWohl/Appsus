@@ -34,6 +34,20 @@ export function About() {
           <li>Local Storage for data persistence</li>
         </ul>
 
+        <h2 className="about-subtitle">Meet the Developers</h2>
+        <div className="developers-grid">
+          <DeveloperCard
+            name="Alon Wohl"
+            role="Full-stack Developer"
+            description="Passionate about creating efficient and user-friendly applications."
+          />
+          <DeveloperCard
+            name="Aviv Buzglo"
+            role="Full-stack Developer"
+            description="Dedicated to building robust and scalable web solutions."
+          />
+        </div>
+
         <div className="github-button-container">
           <a
             href="https://github.com/AlonWohl/Appsus"
@@ -60,6 +74,16 @@ function FeatureCard({ icon, title, description }) {
         <h3 className="feature-title">{title}</h3>
         <p className="feature-description">{description}</p>
       </div>
+    </div>
+  )
+}
+
+function DeveloperCard({ name, role, description }) {
+  return (
+    <div className="developer-card">
+      <h3 className="developer-name">{name}</h3>
+      <p className="developer-role">{role}</p>
+      <p className="developer-description">{description}</p>
     </div>
   )
 }
