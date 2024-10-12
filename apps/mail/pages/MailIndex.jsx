@@ -31,6 +31,11 @@ export function MailIndex() {
         console.log(err, 'Cant Get Mails')
       })
   }
+
+  function handleBackNavigation() {
+    loadMails()
+    navigate('/mail')
+  }
   function onToggleStarred(ev, mailId) {
     ev.stopPropagation()
 
@@ -100,10 +105,15 @@ export function MailIndex() {
           onSetFilterBy={onSetFilterBy}
         />
         {mailId ? (
-          <MailDetails onRemoveMail={onRemoveMail} />
+          <MailDetails
+            onRemoveMail={onRemoveMail}
+            onBack={handleBackNavigation}
+          />
         ) : (
           <MailList
             mails={mails}
+            filterBy={filterBy}
+            onSetFilterBy={onSetFilterBy}
             onToggleRead={onToggleRead}
             onToggleStarred={onToggleStarred}
             onRemoveMail={onRemoveMail}

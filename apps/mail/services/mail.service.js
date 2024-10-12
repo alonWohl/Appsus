@@ -23,28 +23,48 @@ export const mailSevice = {
 
 function query(filterBy = {}) {
   return storageService.query(MAIL_KEY).then((mails) => {
+    let filteredMails = mails
+
+    switch (filterBy.isRead) {
+      case 'read':
+        filteredMails = filteredMails.filter((mail) => mail.isRead === true)
+        break
+      case 'unread':
+        filteredMails = filteredMails.filter((mail) => mail.isRead === false)
+        break
+    }
+
     switch (filterBy.txt) {
       case 'is:starred':
-        return mails.filter((mail) => mail.isStarred === true)
+        filteredMails = filteredMails.filter((mail) => mail.isStarred === true)
+        break
       case 'in:trash':
-        return mails.filter((mail) => mail.removedAt !== null)
+        filteredMails = filteredMails.filter((mail) => mail.removedAt !== null)
+        break
       case 'in:sent':
-        return mails.filter((mail) => mail.sentAt && mail.from === loggedinUser.mail)
+        filteredMails = filteredMails.filter((mail) => mail.sentAt && mail.from === loggedinUser.mail)
+        break
       case '':
-      case 'in:inbox':
-        return mails.filter((mail) => mail.to === loggedinUser.mail && mail.removedAt === null)
+        filteredMails = filteredMails.filter((mail) => mail.to === loggedinUser.mail && mail.removedAt === null)
+        break
       case 'in:drafts':
-        return mails.filter((mail) => mail.isDraft === true && !mail.sentAt)
-      default:
-        const regex = new RegExp(filterBy.txt, 'i')
-        return mails.filter((mail) => (regex.test(mail.subject) || regex.test(mail.from)) && mail.removedAt === null)
+        filteredMails = filteredMails.filter((mail) => mail.isDraft === true && !mail.sentAt)
+        break
     }
+
+    if (filterBy.txt) {
+      const regex = new RegExp(filterBy.txt, 'i')
+      filteredMails = filteredMails.filter((mail) => (regex.test(mail.subject) || regex.test(mail.from)) && mail.removedAt === null)
+    }
+
+    return filteredMails
   })
 }
 
 function get(mailId) {
   return storageService.get(MAIL_KEY, mailId)
 }
+
 function toggleStarred(mailId) {
   return get(mailId).then((mail) => {
     mail.isStarred = !mail.isStarred
@@ -137,8 +157,8 @@ function _createInboxMails() {
   }
 }
 
-function getDefaultFilter(txt = '') {
-  return { txt }
+function getDefaultFilter(txt = '', isRead) {
+  return { txt, isRead }
 }
 
 function getFilterFromSearchParams(searchParams) {

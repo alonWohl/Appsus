@@ -1,15 +1,23 @@
 const { Link, useNavigate } = ReactRouterDOM
+const { useState, useEffect } = React
 
 export function SideMenu({ filterBy, onSetFilterBy, isExpand }) {
+  const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
   const navigate = useNavigate()
 
-  function handleFilterChange(txt) {
-    onSetFilterBy({ txt })
+  useEffect(() => {
+    setFilterByToEdit({ ...filterBy })
+  }, [filterBy])
+
+  function handleFilterClick(txt) {
+    const updatedFilter = { ...filterByToEdit, txt }
+    setFilterByToEdit(updatedFilter)
+    onSetFilterBy(updatedFilter)
     navigate('/mail')
   }
 
   function isActive(txt) {
-    return filterBy.txt === txt ? 'active' : ''
+    return filterByToEdit.txt === txt ? 'active' : ''
   }
 
   return (
@@ -30,88 +38,40 @@ export function SideMenu({ filterBy, onSetFilterBy, isExpand }) {
         </div>
 
         <li
-          className={`link inbox-link ${isActive('in:inbox')}`}
-          onClick={() => handleFilterChange('in:inbox')}>
+          className={`link inbox-link ${isActive('')}`}
+          onClick={() => handleFilterClick('')}>
           <span className="material-symbols-outlined link-icon avtive">inbox</span>
           <span className="hidden">Inbox</span>
         </li>
 
         <li
           className={`link starred-link ${isActive('is:starred')}`}
-          onClick={() => handleFilterChange('is:starred')}>
+          onClick={() => handleFilterClick('is:starred')}>
           <span className="material-symbols-outlined link-icon">star</span>
           <span className="hidden">Starred</span>
         </li>
 
         <li
           className={`link sent-link ${isActive('in:sent')}`}
-          onClick={() => handleFilterChange('in:sent')}>
+          onClick={() => handleFilterClick('in:sent')}>
           <span className="material-symbols-outlined link-icon">send</span>
           <span className="hidden">Sent</span>
         </li>
 
         <li
           className={`link drafts-link ${isActive('in:drafts')}`}
-          onClick={() => handleFilterChange('in:drafts')}>
+          onClick={() => handleFilterClick('in:drafts')}>
           <span className="material-symbols-outlined link-icon">draft</span>
           <span className="hidden">Drafts</span>
         </li>
 
         <li
           className={`link trash-link ${isActive('in:trash')}`}
-          onClick={() => handleFilterChange('in:trash')}>
+          onClick={() => handleFilterClick('in:trash')}>
           <span className="material-symbols-outlined link-icon">delete</span>
           <span className="hidden">Trash</span>
         </li>
       </ul>
     </aside>
-
-    // <section className='side-menu'>
-    //   <div className='btn-group'>
-    //     <div className='compose-btn'>
-    //       <Link title='compose' to='/mail/compose'>
-    //         <div className='flex align-items center'>
-    //           <span className='material-symbols-outlined'>edit</span>
-    //           <span className='hidden'>Compose</span>
-    //         </div>
-    //       </Link>
-    //     </div>
-
-    //     <div className={`btn-wrapper ${isActive('in:inbox')}`} onClick={() => handleFilterChange('in:inbox')}>
-    //       <button title='inbox' className='btn inbox-btn'>
-    //         <span className='material-symbols-outlined'>inbox</span>
-    //       </button>
-    //       <span className='hidden'>Inbox</span>
-    //     </div>
-    //   </div>
-
-    //   <div className={`btn-wrapper ${isActive('is:starred')}`} onClick={() => handleFilterChange('is:starred')}>
-    //     <button title='starred' className='btn starred-btn'>
-    //       <span className='material-symbols-outlined'>star</span>
-    //     </button>
-    //     <span className='hidden'>Starred</span>
-    //   </div>
-
-    //   <div className={`btn-wrapper ${isActive('in:sent')}`} onClick={() => handleFilterChange('in:sent')}>
-    //     <button title='sent' className='btn sent-btn'>
-    //       <span className='material-symbols-outlined'>send</span>
-    //     </button>
-    //     <span className='hidden'>Sent</span>
-    //   </div>
-
-    //   <div className={`btn-wrapper ${isActive('in:drafts')}`} onClick={() => handleFilterChange('in:drafts')}>
-    //     <button title='drafts' className='btn drafts-btn'>
-    //       <span className='material-symbols-outlined'>draft</span>
-    //     </button>
-    //     <span className='hidden'>Drafts</span>
-    //   </div>
-
-    //   <div className={`btn-wrapper ${isActive('in:trash')}`} onClick={() => handleFilterChange('in:trash')}>
-    //     <button title='trash' className='btn trash-btn'>
-    //       <span className='material-symbols-outlined'>delete</span>
-    //     </button>
-    //     <span className='hidden'>Trash</span>
-    //   </div>
-    // </section>
   )
 }

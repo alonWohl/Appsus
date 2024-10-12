@@ -5,7 +5,7 @@ import { mailSevice } from '../services/mail.service.js'
 const { useState, useEffect } = React
 const { useParams, useNavigate } = ReactRouterDOM
 
-export function MailDetails({ onRemoveMail }) {
+export function MailDetails({ onRemoveMail, onBack }) {
   const [mail, setMail] = useState(null)
   const { mailId } = useParams()
 
@@ -29,8 +29,8 @@ export function MailDetails({ onRemoveMail }) {
         }
       })
       .catch((err) => {
-        showErrorMsg('Cannot Set Mail')
-        console.log(err, 'cannot set mail')
+        showErrorMsg('Cannot load mail')
+        console.error('Cannot load mail:', err)
         navigate('/mail')
       })
   }
@@ -48,7 +48,7 @@ export function MailDetails({ onRemoveMail }) {
         <section className="btn-group flex">
           <button
             className="btn back-btn"
-            onClick={() => navigate('/mail')}>
+            onClick={onBack}>
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
 
