@@ -4,7 +4,6 @@ export function MailSort({ filterBy, onSetFilterBy }) {
 
   useEffect(() => {
     setFilterByToEdit({ ...filterBy })
-    console.log(filterBy)
   }, [filterBy])
 
   function handleChange({ target }) {
@@ -26,9 +25,20 @@ export function MailSort({ filterBy, onSetFilterBy }) {
         value={isRead}
         name="isRead"
         id="isRead">
-        <option value="all">All</option>
+        <option value="">All</option>
         <option value="read">Read</option>
         <option value="unread">Unread</option>
+      </select>
+
+      <select
+        className="date-select-input"
+        onChange={handleChange}
+        value={date}
+        name="date"
+        id="date">
+        <option value="">No date sort</option>
+        <option value="newest">Newest first</option>
+        <option value="oldest">Oldest first</option>
       </select>
     </section>
   )

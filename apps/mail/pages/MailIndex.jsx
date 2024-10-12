@@ -3,7 +3,7 @@ import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.servic
 import { MailHeader } from '../cmps/MailHeader.jsx'
 import { MailList } from '../cmps/MailList.jsx'
 import { SideMenu } from '../cmps/SideMenu.jsx'
-import { mailSevice } from '../services/mail.service.js'
+import { mailService } from '../services/mail.service.js'
 import { MailDetails } from './MailDetails.jsx'
 
 const { useState, useEffect } = React
@@ -11,10 +11,12 @@ const { useSearchParams, Outlet, useParams, useNavigate } = ReactRouterDOM
 
 export function MailIndex() {
   const [mails, setMails] = useState([])
+  const [unreadCounts, setUnreadCounts] = useState({})
+
   const [searchPrms, setSearchPrms] = useSearchParams()
   const [isExpand, setIsExpand] = useState(false)
 
-  const [filterBy, setFilterBy] = useState(mailSevice.getFilterFromSearchParams(searchPrms))
+  const [filterBy, setFilterBy] = useState(mailService.getFilterFromSearchParams(searchPrms))
   const { mailId } = useParams()
   const navigate = useNavigate()
 
@@ -24,11 +26,15 @@ export function MailIndex() {
   }, [filterBy])
 
   function loadMails() {
-    mailSevice
+    mailService
       .query(filterBy)
-      .then(setMails)
+      .then(({ mails, unreadCounts }) => {
+        setMails(mails)
+        setUnreadCounts(unreadCounts)
+      })
       .catch((err) => {
         console.log(err, 'Cant Get Mails')
+        showErrorMsg('Failed to load mails')
       })
   }
 
@@ -43,7 +49,7 @@ export function MailIndex() {
 
     const previousMails = mails.map((mail) => ({ ...mail }))
 
-    mailSevice.toggleStarred(mailId).catch((err) => {
+    mailService.toggleStarred(mailId).catch((err) => {
       console.log('Failed to toggle starred status:', err)
       setMails(previousMails)
     })
@@ -55,13 +61,14 @@ export function MailIndex() {
       ...updatedFilter
     }))
   }
+
   function onRemoveMail(ev, mailId) {
     ev.stopPropagation()
     setMails(mails.filter((mail) => mail.id !== mailId))
 
     const previousMails = mails.map((mail) => ({ ...mail }))
 
-    mailSevice
+    mailService
       .remove(mailId)
       .then(showSuccessMsg('Mail removed successfully'))
       .catch((err) => {
@@ -76,10 +83,10 @@ export function MailIndex() {
     ev.stopPropagation()
 
     setMails((prevMails) => prevMails.map((mail) => (mail.id === mailId ? { ...mail, isRead: !mail.isRead } : mail)))
-    mailSevice.get(mailId).then((mail) => {
+    mailService.get(mailId).then((mail) => {
       mail.isRead = !mail.isRead
 
-      return mailSevice.save(mail)
+      return mailService.save(mail)
     })
   }
 
@@ -92,7 +99,7 @@ export function MailIndex() {
   return (
     <main className="mail-index">
       <MailHeader
-        navigate={navigate}
+        onBack={handleBackNavigation}
         filterBy={filterBy}
         onSetFilterBy={onSetFilterBy}
         onToggleHamburger={onToggleHamburger}
@@ -102,6 +109,7 @@ export function MailIndex() {
         <SideMenu
           isExpand={isExpand}
           filterBy={filterBy}
+          unreadCounts={unreadCounts}
           onSetFilterBy={onSetFilterBy}
         />
         {mailId ? (

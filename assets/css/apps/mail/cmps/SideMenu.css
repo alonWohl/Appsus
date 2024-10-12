@@ -61,7 +61,7 @@
 
 .sidebar:hover .hidden,
 .sidebar.expanded .hidden {
-  display: block;
+  display: inherit;
 }
 
 .link.active::before {
@@ -84,4 +84,8 @@
   border-top-right-radius: 1em;
   border-bottom-right-radius: 1em;
   width: 100%;
+}
+
+.menu-hidden-items {
+  flex: 1 1 0;
 }

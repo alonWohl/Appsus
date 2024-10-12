@@ -1,24 +1,25 @@
 const { Link, useNavigate } = ReactRouterDOM
 const { useState, useEffect } = React
 
-export function SideMenu({ filterBy, onSetFilterBy, isExpand }) {
-  const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
+export function SideMenu({ filterBy, onSetFilterBy, isExpand, unreadCounts = {} }) {
   const navigate = useNavigate()
 
-  useEffect(() => {
-    setFilterByToEdit({ ...filterBy })
-  }, [filterBy])
-
-  function handleFilterClick(txt) {
-    const updatedFilter = { ...filterByToEdit, txt }
-    setFilterByToEdit(updatedFilter)
-    onSetFilterBy(updatedFilter)
+  function handleFilterClick(status) {
+    onSetFilterBy({ ...filterBy, txt: status })
     navigate('/mail')
   }
 
-  function isActive(txt) {
-    return filterByToEdit.txt === txt ? 'active' : ''
+  function isActive(status) {
+    return filterBy.txt === status ? 'active' : ''
   }
+
+  const menuItems = [
+    { status: 'in:inbox', icon: 'inbox', label: 'Inbox', countKey: 'inbox' },
+    { status: 'is:starred', icon: 'star', label: 'Starred', countKey: 'starred' },
+    { status: 'in:sent', icon: 'send', label: 'Sent', countKey: 'sent' },
+    { status: 'in:drafts', icon: 'draft', label: 'Drafts', countKey: 'drafts' },
+    { status: 'in:trash', icon: 'delete', label: 'Trash', countKey: 'trash' }
+  ]
 
   return (
     <aside className={`sidebar ${isExpand ? 'expanded' : ''}`}>
@@ -37,40 +38,20 @@ export function SideMenu({ filterBy, onSetFilterBy, isExpand }) {
           </Link>
         </div>
 
-        <li
-          className={`link inbox-link ${isActive('')}`}
-          onClick={() => handleFilterClick('')}>
-          <span className="material-symbols-outlined link-icon avtive">inbox</span>
-          <span className="hidden">Inbox</span>
-        </li>
-
-        <li
-          className={`link starred-link ${isActive('is:starred')}`}
-          onClick={() => handleFilterClick('is:starred')}>
-          <span className="material-symbols-outlined link-icon">star</span>
-          <span className="hidden">Starred</span>
-        </li>
-
-        <li
-          className={`link sent-link ${isActive('in:sent')}`}
-          onClick={() => handleFilterClick('in:sent')}>
-          <span className="material-symbols-outlined link-icon">send</span>
-          <span className="hidden">Sent</span>
-        </li>
-
-        <li
-          className={`link drafts-link ${isActive('in:drafts')}`}
-          onClick={() => handleFilterClick('in:drafts')}>
-          <span className="material-symbols-outlined link-icon">draft</span>
-          <span className="hidden">Drafts</span>
-        </li>
-
-        <li
-          className={`link trash-link ${isActive('in:trash')}`}
-          onClick={() => handleFilterClick('in:trash')}>
-          <span className="material-symbols-outlined link-icon">delete</span>
-          <span className="hidden">Trash</span>
-        </li>
+        {menuItems.map(({ status, icon, label, countKey }) => (
+          <li
+            key={status}
+            className={`link ${label.toLowerCase()}-link ${isActive(status)}`}
+            onClick={() => handleFilterClick(status)}>
+            <span className="material-symbols-outlined link-icon">{icon}</span>
+            <div
+              className="hidden flex space-between menu-hidden-items"
+              aria-label={`${unreadCounts[countKey]} unread`}>
+              <span className="hidden">{label}</span>
+              {unreadCounts[countKey]}
+            </div>
+          </li>
+        ))}
       </ul>
     </aside>
   )
