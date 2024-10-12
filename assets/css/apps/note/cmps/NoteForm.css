@@ -19,6 +19,7 @@
 
 .note-text-input::placeholder {
     color: rgb(27, 27, 27);
+    font-weight: bold;
 }
 
 .note-form-btn {

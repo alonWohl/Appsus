@@ -1,9 +1,13 @@
-export function NoteHeader() {
+import { NoteSearch } from '../cmps/NoteSearch.jsx'
+
+export function NoteHeader({filterBy, onSetFilterBy}) {
 
     return(
         <header className='note-header'>
             <button className='side-menu-btn'><span>Menu</span></button>
-            <div className='note-logo'>Keep</div>
+            <div className='note-logo'><img src="./assets/img/keep-logo.png" alt="Keep logo" /></div>
+            <div className='note-keep'>Keep</div>
+            <NoteSearch filterBy={filterBy} onSetFilterBy={onSetFilterBy}/>
         </header>
     )
 }
