@@ -13,48 +13,66 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
+
+@media (hover: hover) and (pointer: fine) {
+  .mail-preview:hover {
+    box-shadow: inset -1px 0 0 #dadce0, inset 1px 0 0 #dadce0, 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    z-index: 2;
+  }
+
+  .mail-preview:hover .preview-date {
+    display: none;
+  }
+
+  .mail-preview:hover .preview-actions {
+    display: inherit;
+  }
+
+  .mail-preview:hover .star-icon::after {
+    opacity: 1;
+  }
+}
+
 .preview-sender {
   display: flex;
   padding-inline-end: 2em;
-
   flex-basis: 168px;
   align-items: center;
 }
 
-.mail-preview:hover {
-  box-shadow: inset -1px 0 0 #dadce0, inset 1px 0 0 #dadce0, 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-  z-index: 2;
+.star-btn {
+  display: flex;
+  align-items: center;
+
+  height: 20px;
+  width: 20px;
+
+  padding: 0 20px;
+  position: relative;
 }
 
-.btn.star-btn {
-  padding-inline-end: 10px;
+.star-icon::after {
+  position: absolute;
+  content: '';
+  inset: 0;
+  background-image: url('/assets/img/not_starred.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 20px;
+
+  opacity: 0.32;
+}
+
+.star-icon.starred::after {
+  opacity: 1;
+  background-image: url('/assets/img/starred.png');
 }
 
 .preview-content {
-  /* display: flex;
-  align-items: center;
-  justify-content: space-between; */
   width: 100%;
-  /* width: 90%; */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.preview-inner-content {
-  /* overflow: hidden; */
-}
-
-.preview-subject {
-  /* white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; */
-}
-
-.preview-body {
-  /* white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; */
 }
 
 .preview-date {
@@ -78,18 +96,6 @@
   opacity: 0.7;
 }
 
-.mail-preview:hover .preview-date {
-  display: none;
-}
-
-.mail-preview:hover .preview-actions {
-  display: inherit;
-}
-
-.mail-preview:hover .btn.star-btn {
-  opacity: 1;
-}
-
 .unread {
   background-color: white;
 }
@@ -97,9 +103,4 @@
 .read {
   font-weight: 400;
   background-color: #f2f6fc;
-}
-
-.starred {
-  content: '⭐️';
-  color: rgb(232, 232, 34);
 }
