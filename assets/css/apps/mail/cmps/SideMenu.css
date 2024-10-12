@@ -8,6 +8,8 @@
   color: var(--mail-text-color);
   z-index: 50;
   transition: width 0.3s ease;
+
+  overflow-y: hidden;
 }
 
 .sidebar.expanded {
