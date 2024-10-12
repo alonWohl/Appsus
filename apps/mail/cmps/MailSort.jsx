@@ -1,16 +1,15 @@
 const { useState, useEffect } = React
-
-export function MailFilter({ filterBy, onSetFilterBy }) {
+export function MailSort({ filterBy, onSetFilterBy }) {
   const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
 
   useEffect(() => {
     setFilterByToEdit({ ...filterBy })
+    console.log(filterBy)
   }, [filterBy])
 
   function handleChange({ target }) {
     const field = target.name
     const value = target.value
-
     setFilterByToEdit((prevFilter) => {
       const updatedFilter = { ...prevFilter, [field]: value }
       onSetFilterBy(updatedFilter)
@@ -18,20 +17,19 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
     })
   }
 
-  const { txt } = filterByToEdit
-
+  const { isRead, date } = filterByToEdit
   return (
-    <form className="mail-search-wrapper">
-      <input
-        className="mail-search-input"
-        value={txt}
+    <section className="mail-sort">
+      <select
+        className="read-select-input"
         onChange={handleChange}
-        type="text"
-        name="txt"
-        id="txt"
-        placeholder="Search mail"
-      />
-      <span className="material-symbols-outlined mail-search-icon">search</span>
-    </form>
+        value={isRead}
+        name="isRead"
+        id="isRead">
+        <option value="all">All</option>
+        <option value="read">Read</option>
+        <option value="unread">Unread</option>
+      </select>
+    </section>
   )
 }

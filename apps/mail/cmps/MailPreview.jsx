@@ -14,38 +14,48 @@ export function MailPreview({ mail, onToggleStarred, onRemoveMail, onToggleRead 
 
   const contactName = from.split('@')[0]
   const isStarredDynamicClass = isStarred ? 'starred' : ''
-  const isReadBtnIcon = isRead ? <span className='material-symbols-outlined'>mail</span> : <span className='material-symbols-outlined'>drafts</span>
+  const isReadBtnIcon = isRead ? <span className="material-symbols-outlined">mail</span> : <span className="material-symbols-outlined">drafts</span>
 
   return (
-    <li className={`mail-preview ${isRead ? 'read' : 'unread'}`} onClick={() => navigate(`/mail/${mail.id}`)}>
-      <button className='btn star-btn' onClick={(ev) => onToggleStarred(ev, mail.id)}>
-        <span title={isStarred ? 'Starred' : 'Not Starred'} className={`material-symbols-outlined ${isStarredDynamicClass}`}>
+    <li
+      className={`mail-preview ${isRead ? 'read' : 'unread'}`}
+      onClick={() => navigate(`/mail/${mail.id}`)}>
+      <button
+        className="btn star-btn"
+        onClick={(ev) => onToggleStarred(ev, mail.id)}>
+        <span
+          title={isStarred ? 'Starred' : 'Not Starred'}
+          className={`material-symbols-outlined ${isStarredDynamicClass}`}>
           star
         </span>
       </button>
 
-      <div className='preview-sender'>
+      <div className="preview-sender">
         <span>{contactName}</span>
       </div>
 
-      <div className='preview-content'>
-        <span className='preview-subject'>
+      <div className="preview-content">
+        <span className="preview-subject">
           <LongText limit={50}>{subject}</LongText>
         </span>
         -
-        <span className='preview-body'>
+        <span className="preview-body">
           <LongText limit={100}>{body}</LongText>
         </span>
       </div>
       <div>
-        <div className='preview-date'>{convertTimestamp(sentAt)}</div>
+        <div className="preview-date">{convertTimestamp(sentAt)}</div>
       </div>
 
-      <section className='preview-actions flex  align center'>
-        <button onClick={(ev) => onRemoveMail(ev, mail.id)} className='btn remove-btn'>
-          <span className='material-symbols-outlined'>delete</span>
+      <section className="preview-actions flex  align center">
+        <button
+          onClick={(ev) => onRemoveMail(ev, mail.id)}
+          className="btn remove-btn">
+          <span className="material-symbols-outlined">delete</span>
         </button>
-        <button className='btn toggle-read-btn' onClick={(ev) => onToggleRead(ev, mail.id)}>
+        <button
+          className="btn toggle-read-btn"
+          onClick={(ev) => onToggleRead(ev, mail.id)}>
           {isReadBtnIcon}
         </button>
       </section>

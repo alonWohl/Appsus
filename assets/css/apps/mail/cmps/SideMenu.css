@@ -1,13 +1,13 @@
 .sidebar {
-  height: 100vh;
+  height: 100dvh;
   position: fixed;
   text-align: left;
   left: 0;
-  min-width: 72px;
+  width: 72px;
   background-color: var(--main-mail-bg-color);
   color: var(--mail-text-color);
   z-index: 50;
-  transition: width 0.3s ease; /* Smooth expansion */
+  transition: width 0.3s ease;
 }
 
 .sidebar.expanded {
@@ -67,7 +67,7 @@
 .link.active::before {
   content: '';
   position: absolute;
-  left: 45%;
+  left: 50%;
   transform: translateX(-50%);
   height: 40px;
   width: 40px;

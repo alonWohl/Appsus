@@ -1,10 +1,11 @@
 import { AppLoader } from '../../../cmps/AppLoader.jsx'
+import { showErrorMsg } from '../../../services/event-bus.service.js'
 import { mailSevice } from '../services/mail.service.js'
 
 const { useState, useEffect } = React
 const { useParams, useNavigate } = ReactRouterDOM
 
-export function MailDetails({ onRemoveMail }) {
+export function MailDetails({ onRemoveMail, onBack }) {
   const [mail, setMail] = useState(null)
   const { mailId } = useParams()
 
@@ -28,7 +29,9 @@ export function MailDetails({ onRemoveMail }) {
         }
       })
       .catch((err) => {
-        console.log(err, 'cannot set mail')
+        showErrorMsg('Cannot load mail')
+        console.error('Cannot load mail:', err)
+        navigate('/mail')
       })
   }
 
@@ -38,28 +41,32 @@ export function MailDetails({ onRemoveMail }) {
   const contactName = from.split('@')[0]
 
   return (
-    <section className='mail-details'>
-      <div className='details-header'>
+    <section className="mail-details">
+      <div className="details-header">
         <h2>{subject}</h2>
 
-        <section className='btn-group flex'>
-          <button className='btn back-btn' onClick={() => navigate('/mail')}>
-            <span className='material-symbols-outlined'>arrow_back</span>
+        <section className="btn-group flex">
+          <button
+            className="btn back-btn"
+            onClick={onBack}>
+            <span className="material-symbols-outlined">arrow_back</span>
           </button>
 
-          <button onClick={(ev) => onRemoveMail(ev, mail.id)} className='btn remove-btn'>
-            <span className='material-symbols-outlined link-icon'>delete</span>
+          <button
+            onClick={(ev) => onRemoveMail(ev, mail.id)}
+            className="btn remove-btn">
+            <span className="material-symbols-outlined link-icon">delete</span>
           </button>
         </section>
       </div>
 
-      <div className='details-contact'>
+      <div className="details-contact">
         <h3>{contactName}</h3>
-        <span className='contact-address'>{`<${from}>`}</span>
+        <span className="contact-address">{`<${from}>`}</span>
       </div>
 
-      <div className='details-body'>
-        <p className='body-text'>{body}</p>
+      <div className="details-body">
+        <p className="body-text">{body}</p>
       </div>
     </section>
   )

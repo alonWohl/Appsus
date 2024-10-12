@@ -5,10 +5,20 @@
   overflow-x: hidden;
   overflow-y: scroll;
   padding-inline: 1em;
+  background-color: white;
 
   border-radius: 1em;
 }
 
 .expanded .mail-list {
   flex-grow: 2;
+}
+
+.mail-sort {
+  padding: 10px 0;
+}
+
+.mail-sort select {
+  padding: 3px 0;
+  border-radius: 1em;
 }
