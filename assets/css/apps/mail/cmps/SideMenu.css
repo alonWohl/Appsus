@@ -14,8 +14,31 @@
   width: 256px;
 }
 
-.sidebar:hover {
-  width: 256px;
+@media (hover: hover) and (pointer: fine) {
+  .sidebar:hover,
+  .sidebar.expanded {
+    width: 256px;
+  }
+
+  .sidebar:hover .link.compose-link,
+  .sidebar.expanded .link.compose-link {
+    padding-inline-end: 24px;
+    max-width: none;
+  }
+
+  .sidebar:hover .hidden,
+  .sidebar.expanded .hidden {
+    display: inherit;
+  }
+
+  .sidebar:hover .link.active::before,
+  .sidebar.expanded .link.active::before {
+    width: 100%;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 1em;
+    border-bottom-right-radius: 1em;
+  }
 }
 
 .sidebar-links {
@@ -53,17 +76,6 @@
   transition: padding 0.3s ease;
 }
 
-.sidebar:hover .link.compose-link,
-.sidebar.expanded .link.compose-link {
-  padding-inline-end: 24px;
-  max-width: none;
-}
-
-.sidebar:hover .hidden,
-.sidebar.expanded .hidden {
-  display: inherit;
-}
-
 .link.active::before {
   content: '';
   position: absolute;
@@ -77,15 +89,27 @@
   transition: width 0.3s ease, border-radius 0.3s ease;
 }
 
-.sidebar:hover .link.active::before,
+.menu-hidden-items {
+  flex: 1 1 0;
+}
+
+.sidebar.expanded {
+  width: 256px;
+}
+
+.sidebar.expanded .link.compose-link {
+  padding-inline-end: 24px;
+  max-width: none;
+}
+
+.sidebar.expanded .hidden {
+  display: inherit;
+}
+
 .sidebar.expanded .link.active::before {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-top-right-radius: 1em;
   border-bottom-right-radius: 1em;
   width: 100%;
-}
-
-.menu-hidden-items {
-  flex: 1 1 0;
 }
