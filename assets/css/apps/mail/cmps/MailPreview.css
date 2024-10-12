@@ -55,7 +55,7 @@
   position: absolute;
   content: '';
   inset: 0;
-  background-image: url('/assets/img/not_starred.png');
+  background-image: url(../../../../img/not_starred.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 20px;
@@ -65,7 +65,7 @@
 
 .star-icon.starred::after {
   opacity: 1;
-  background-image: url('/assets/img/starred.png');
+  background-image: url(../../../../img/starred.png);
 }
 
 .preview-content {
