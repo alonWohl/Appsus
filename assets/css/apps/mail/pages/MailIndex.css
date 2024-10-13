@@ -1,11 +1,10 @@
 .mail-index {
-  height: 100vh;
   background-color: var(--main-mail-bg-color);
   color: var(--mail-gray-color);
+  height: 100%;
 }
 
 .mail-main-content {
-  position: relative;
   margin-inline-start: 72px;
 }
 

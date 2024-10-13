@@ -13,16 +13,33 @@ import { UserMsg } from './cmps/UserMsg.jsx'
 export function App() {
   return (
     <Router>
-      <AppHeader />
-      <main className='app main-layout'>
+      <main className="app main-layout">
+        <AppHeader />
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/about' element={<About />} />
-          <Route path='/mail' element={<MailIndex />}>
-            <Route path='/mail/:mailId' element={<MailDetails />} />
-            <Route path='/mail/compose' element={<MailCompose />} />
+          <Route
+            path="/"
+            element={<Home />}
+          />
+          <Route
+            path="/about"
+            element={<About />}
+          />
+          <Route
+            path="/mail"
+            element={<MailIndex />}>
+            <Route
+              path="/mail/:mailId"
+              element={<MailDetails />}
+            />
+            <Route
+              path="/mail/compose"
+              element={<MailCompose />}
+            />
           </Route>
-          <Route path='/note' element={<NoteIndex />} />
+          <Route
+            path="/note"
+            element={<NoteIndex />}
+          />
         </Routes>
       </main>
       <UserMsg />
