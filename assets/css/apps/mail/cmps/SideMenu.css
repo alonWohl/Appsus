@@ -1,14 +1,16 @@
 .sidebar {
   height: 100%;
+  width: 72px;
+
   position: fixed;
   text-align: left;
   left: 0;
-  width: 72px;
+
   background-color: var(--main-mail-bg-color);
   color: var(--mail-text-color);
-  z-index: 50;
-  transition: width 0.3s ease;
   overflow-y: hidden;
+  transition: width 0.3s ease;
+  z-index: 50;
 }
 
 @media (hover: hover) and (pointer: fine) {

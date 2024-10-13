@@ -1,4 +1,5 @@
 .mail-header {
+  width: 100%;
   background-color: var(--main-mail-bg-color);
   font-size: 13px;
 
