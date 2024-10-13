@@ -3,9 +3,9 @@ import { showErrorMsg } from '../../../services/event-bus.service.js'
 import { mailService } from '../services/mail.service.js'
 
 const { useState, useEffect } = React
-const { useParams, useNavigate } = ReactRouterDOM
+const { useParams, useNavigate, useOutletContext } = ReactRouterDOM
 
-export function MailDetails({ onRemoveMail, onBack }) {
+export function MailDetails() {
   const [mail, setMail] = useState(null)
   const { mailId } = useParams()
 
@@ -48,7 +48,7 @@ export function MailDetails({ onRemoveMail, onBack }) {
         <section className="btn-group flex">
           <button
             className="btn back-btn"
-            onClick={onBack}>
+            onClick={() => navigate('/mail')}>
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
 

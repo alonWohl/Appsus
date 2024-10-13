@@ -35,6 +35,10 @@ export function App() {
               path="/mail/compose"
               element={<MailCompose />}
             />
+            <Route
+              path="/mail/compose/:mailId"
+              element={<MailCompose />}
+            />
           </Route>
           <Route
             path="/note"
