@@ -22,6 +22,7 @@ export function NoteSearch({ filterBy, onSetFilterBy}) {
 
     return (
         <form className="note-search-container">
+            <span class="material-symbols-outlined">search</span>
             <input type="text" id='txt' name='txt' className='note-search' placeholder='Search' value={txt || ''} onChange={handleChange}/>
         </form>
     )

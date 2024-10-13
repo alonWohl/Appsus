@@ -10,3 +10,13 @@
 .note-preview:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+
+.pin-btn, .archive-btn, .delete-btn {
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    border-radius: 50%;
+}
+
+.pin-btn:hover, .archive-btn:hover, .delete-btn:hover {
+    background-color: rgba(128, 128, 128, 0.279);
+}
