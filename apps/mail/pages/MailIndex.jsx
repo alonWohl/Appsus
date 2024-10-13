@@ -29,8 +29,8 @@ export function MailIndex() {
     mailService
       .query(filterBy)
       .then(({ mails, unreadCounts }) => {
-        setMails(mails)
         setUnreadCounts(unreadCounts)
+        setMails(mails)
       })
       .catch((err) => {
         console.log(err, 'Cant Get Mails')
@@ -47,12 +47,14 @@ export function MailIndex() {
 
     setMails((prevMails) => prevMails.map((mail) => (mail.id === mailId ? { ...mail, isStarred: !mail.isStarred } : mail)))
 
-    const previousMails = mails.map((mail) => ({ ...mail }))
-
-    mailService.toggleStarred(mailId).catch((err) => {
-      console.log('Failed to toggle starred status:', err)
-      setMails(previousMails)
-    })
+    mailService
+      .toggleStarred(mailId)
+      .then(() => {})
+      .catch((err) => {
+        console.error('Failed to toggle starred status:', err)
+        showErrorMsg('Failed to update starred status')
+        setMails((prevMails) => prevMails.map((mail) => (mail.id === mailId ? { ...mail, isStarred: !mail.isStarred } : mail)))
+      })
   }
 
   function onSetFilterBy(updatedFilter) {
@@ -70,24 +72,36 @@ export function MailIndex() {
 
     mailService
       .remove(mailId)
-      .then(showSuccessMsg('Mail removed successfully'))
+      .then(() => {
+        showSuccessMsg('Mail removed successfully')
+        navigate('/mail')
+      })
       .catch((err) => {
         console.error(err)
         showErrorMsg('Cannot remove Mail')
         setMails(previousMails)
       })
-      .finally(navigate('/mail'))
   }
 
   function onToggleRead(ev, mailId) {
     ev.stopPropagation()
 
     setMails((prevMails) => prevMails.map((mail) => (mail.id === mailId ? { ...mail, isRead: !mail.isRead } : mail)))
-    mailService.get(mailId).then((mail) => {
-      mail.isRead = !mail.isRead
 
-      return mailService.save(mail)
-    })
+    mailService
+      .get(mailId)
+      .then((mail) => {
+        mail.isRead = !mail.isRead
+        return mailService.save(mail)
+      })
+      .then(() => {
+        loadMails()
+      })
+      .catch((err) => {
+        console.error('Failed to toggle read status:', err)
+        showErrorMsg('Failed to update read status')
+        setMails((prevMails) => prevMails.map((mail) => (mail.id === mailId ? { ...mail, isRead: !mail.isRead } : mail)))
+      })
   }
 
   function onToggleHamburger() {
@@ -113,10 +127,7 @@ export function MailIndex() {
           onSetFilterBy={onSetFilterBy}
         />
         {mailId ? (
-          <MailDetails
-            onRemoveMail={onRemoveMail}
-            onBack={handleBackNavigation}
-          />
+          <Outlet />
         ) : (
           <MailList
             mails={mails}

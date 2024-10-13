@@ -2,11 +2,16 @@ import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.servic
 import { mailService } from '../services/mail.service.js'
 
 const { useState, useEffect } = React
-const { useNavigate } = ReactRouterDOM
+const { useNavigate, useParams } = ReactRouterDOM
 
 export function MailCompose() {
   const [mailToSend, setMailToSend] = useState(mailService.getEmptyMail())
   const navigate = useNavigate()
+  const { mailId } = useParams()
+
+  useEffect(() => {
+    if (mailId) loadMail()
+  }, [mailId])
 
   useEffect(() => {
     const autoSaveDraft = setInterval(() => {
@@ -15,6 +20,18 @@ export function MailCompose() {
 
     return () => clearInterval(autoSaveDraft)
   }, [mailToSend])
+
+  function loadMail() {
+    mailService
+      .get(mailId)
+      .then((loadedMail) => {
+        setMailToSend(loadedMail)
+      })
+      .catch((err) => {
+        console.log('Error loading mail:', err)
+        showErrorMsg('Failed to load draft')
+      })
+  }
 
   function saveDraft() {
     if (!mailToSend.to && !mailToSend.subject && !mailToSend.body) return
@@ -27,7 +44,6 @@ export function MailCompose() {
 
   function handleChange({ target }) {
     const field = target.name
-
     let value = target.value
 
     switch (target.type) {
@@ -35,7 +51,6 @@ export function MailCompose() {
       case 'range':
         value = +value
         break
-
       case 'checkbox':
         value = target.checked
         break
@@ -57,15 +72,16 @@ export function MailCompose() {
       return
     }
 
+    const mailToSave = { ...mailToSend, isDraft: false, sentAt: Date.now() }
     mailService
-      .save(mailToSend)
-      .then(() => showSuccessMsg('Mail Sent Successfully'))
+      .save(mailToSave)
+      .then(() => {
+        showSuccessMsg('Mail Sent Successfully')
+        navigate('/mail')
+      })
       .catch((err) => {
         console.log('err:', err)
         showErrorMsg('Couldnt Send Mail')
-      })
-      .finally(() => {
-        navigate('/mail')
       })
   }
 
@@ -76,7 +92,7 @@ export function MailCompose() {
       className="mail-compose"
       onSubmit={onSendMail}>
       <div className="compose-head">
-        <h2>New Message</h2>
+        <h2>{mailId ? 'Edit Draft' : 'New Message'}</h2>
         <button
           onClick={() => navigate('/mail')}
           type="button"
@@ -90,6 +106,7 @@ export function MailCompose() {
         To
         <input
           onChange={handleChange}
+          value={mailToSend.to}
           type="text"
           name="to"
           id="to"
@@ -100,6 +117,7 @@ export function MailCompose() {
         Subject
         <input
           onChange={handleChange}
+          value={mailToSend.subject}
           type="text"
           name="subject"
           id="subject"
@@ -109,10 +127,11 @@ export function MailCompose() {
       <textarea
         className="mail-compose-body"
         onChange={handleChange}
+        value={mailToSend.body}
         name="body"
         id="body"></textarea>
 
-      <button className="send-btn">send</button>
+      <button className="send-btn">Send</button>
     </form>
   )
 }
