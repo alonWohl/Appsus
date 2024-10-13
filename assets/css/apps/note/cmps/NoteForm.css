@@ -1,0 +1,36 @@
+
+.note-form {
+    width: 600px;
+    display: flex;
+    
+    display: flex; 
+    align-items: center; 
+    border: 1px solid #e0e0e0; 
+    border-radius: 4px; 
+    overflow: hidden;
+}
+
+.note-text-input {
+    border: none;
+    padding: 10px; 
+    flex: 1; 
+    outline: none;
+}
+
+.note-text-input::placeholder {
+    color: rgb(27, 27, 27);
+    font-weight: bold;
+}
+
+.note-form-btn {
+    background-color: #fbbd0500; 
+    border: none; 
+    color: black;
+    padding: 10px 15px; 
+    cursor: pointer; 
+    border-radius: 50%;
+}
+
+.note-form-btn:hover {
+    background-color: rgba(128, 128, 128, 0.279);
+}

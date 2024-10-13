@@ -3,7 +3,8 @@
 .note-index {
     display: grid;
     grid-template-rows: 64px 64px 1fr;
-    grid-template-columns: 64px 1fr;
+    grid-template-columns: 64px 1fr 
+    /* position: fixed; */
 }
 
 .note-header {
@@ -12,6 +13,8 @@
 
 .note-list {
     grid-column: 2/3;
+
+    margin-block-start: 170px;
 }
 
 .note-side-menu {
@@ -19,7 +22,11 @@
     grid-column: 1/2;
 }
 
-.note-form {
+.note-form, .note-compose {
+    margin-block-start: 50px;
+    
+    grid-column: 2/3;
+    grid-row: 2/3;
     align-self: center;
     justify-self: center;
 }

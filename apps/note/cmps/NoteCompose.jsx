@@ -18,7 +18,7 @@ export function NoteCompose({onCancle, noteType}) {
         switch(noteType) {
             case 'text' :
                 setNote((prevNote) => ({...prevNote, info: {
-                    text: value,
+                    txt: value,
                     header: prevNote.info.header
                 }}))
                 break
@@ -30,7 +30,7 @@ export function NoteCompose({onCancle, noteType}) {
                 break
             case 'draw' :
                 setNote((prevNote) => ({...prevNote, info: {
-                    text: value,
+                    txt: value,
                     header: prevNote.info.header
                 }}))
                 break

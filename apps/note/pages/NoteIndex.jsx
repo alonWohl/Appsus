@@ -78,7 +78,7 @@ export function NoteIndex() {
 
     return (
         <section className='note-index'>
-            <NoteHeader />
+            <NoteHeader filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
             {inputClick ? <NoteCompose onCancle={onCancleNewNote} noteType={newNoteType}/> : <NoteForm onFormClick={handleFormClick}/>}
             <NoteList notes={notes} onRemoveNote={onRemoveNote} onArchiveNote={onArchiveNote} onNoteClick={onNoteClick}/>
             <NoteSideMenu notes={notes} onSetFilterBy={onSetFilterBy}/>

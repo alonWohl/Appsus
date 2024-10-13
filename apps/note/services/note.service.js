@@ -30,7 +30,9 @@ function query(filterBy) {
             notes = notes.filter((note) => note.label === 'work' && note.isRemoved === false)
         } else if(filterBy === 'archive') {
             notes = notes.filter((note) => note.isArchive === true && note.isRemoved === false)
-        } 
+        } else if(filterBy) {
+            notes = notes.filter((note) => note.info.txt.includes(filterBy) || note.info.header.includes(filterBy) && note.removedAt === null)
+        }
         return notes
     })
 }
