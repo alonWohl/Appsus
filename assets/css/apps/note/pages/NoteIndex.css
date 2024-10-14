@@ -2,10 +2,11 @@
 
 .note-index {
     display: grid;
-    grid-template-rows: 64px 64px 1fr;
-    grid-template-columns: 64px 1fr 
-    /* position: fixed; */
-}
+    grid-template-rows: 64px 120px 1fr;
+    grid-template-columns: 64px 1fr;
+
+    height: 100dvh;
+} 
 
 .note-header {
     grid-column: 1/3;
@@ -13,8 +14,9 @@
 
 .note-list {
     grid-column: 2/3;
+    grid-row: 3;
 
-    margin-block-start: 170px;
+    margin-block-start: 2em;
 }
 
 .note-side-menu {
@@ -23,10 +25,11 @@
 }
 
 .note-form, .note-compose {
-    margin-block-start: 50px;
+    margin-block-start: 3.125rem;
     
     grid-column: 2/3;
     grid-row: 2/3;
     align-self: center;
     justify-self: center;
 }
+

@@ -16,10 +16,12 @@ export function NoteIndex() {
     const [filterBy, setFilterBy] = useState('')
     const [noteModal, setNoteModal] = useState(false)
     const [noteToOpen, setNoteToOpen] = useState({})
+    const [pinnedNotes, setPinnedNotes] = useState(checkForPinned())
 
 
     useEffect( () => {
         loadNotes()
+        setPinnedNotes(checkForPinned())
     },[filterBy, notes])
 
     function loadNotes() {
@@ -36,7 +38,7 @@ export function NoteIndex() {
         onInputclick(1)
     }
 
-    function onCancleNewNote() {
+    function onCancelNewNote() {
         onInputclick(null)
     }
     
@@ -66,6 +68,24 @@ export function NoteIndex() {
         setFilterBy(filter)
     }
 
+    function onPinNote(noteToFind) {
+        const noteToPin = notes.find((note) => note.id === noteToFind)
+        if(!noteToPin.isPinned) {
+            noteToPin.isPinned = true
+            noteService
+            .save(noteToPin)
+        }
+        else if(noteToPin.isPinned) {
+            noteToPin.isPinned = false
+            noteService
+            .save(noteToPin)
+        }
+    }
+
+    function checkForPinned() {
+        const pinnedNotes = notes.filter((note) => note.isPinned === true)
+        return pinnedNotes
+    }
 
     function onNoteClick(noteToFind) {
         setNoteToOpen(notes.find((note) => note.id === noteToFind.id))
@@ -79,8 +99,8 @@ export function NoteIndex() {
     return (
         <section className='note-index'>
             <NoteHeader filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-            {inputClick ? <NoteCompose onCancle={onCancleNewNote} noteType={newNoteType}/> : <NoteForm onFormClick={handleFormClick}/>}
-            <NoteList notes={notes} onRemoveNote={onRemoveNote} onArchiveNote={onArchiveNote} onNoteClick={onNoteClick}/>
+            {inputClick ? <NoteCompose onCancel={onCancelNewNote} noteType={newNoteType}/> : <NoteForm onFormClick={handleFormClick}/>}
+            <NoteList notes={notes} onRemoveNote={onRemoveNote} onArchiveNote={onArchiveNote} onNoteClick={onNoteClick} onPinNote={onPinNote} pinnedNotes={pinnedNotes}/>
             <NoteSideMenu notes={notes} onSetFilterBy={onSetFilterBy}/>
             {noteModal && <NoteModal noteToOpen={noteToOpen} onCloseModal={onCloseModal}/>}
         </section>
