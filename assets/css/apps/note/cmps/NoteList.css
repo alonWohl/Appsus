@@ -5,6 +5,9 @@
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 5px;
     padding: 16px;
+}
 
-    margin-block-start: 60px;
+.note{
+    max-width: 100px;
+    /* margin: 5px 10px; */
 }

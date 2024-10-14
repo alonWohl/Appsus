@@ -34,11 +34,11 @@ export function NoteSideMenu({ filterBy, onSetFilterBy, notes}) {
             </button>
 
             <button title='archive' className='archive-btn' onClick={() => onSetFilter('archive')}>
-                <span class="material-symbols-outlined">archive</span>
+                <span className="material-symbols-outlined">archive</span>
             </button>
 
             <button title='bin' className='bin-btn' onClick={() => onSetFilter('in:bin')}>
-                <span class="material-symbols-outlined">delete</span>
+                <span className="material-symbols-outlined">delete</span>
             </button>
         </section>
     )

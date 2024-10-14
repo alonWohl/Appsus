@@ -16,11 +16,12 @@ export function NoteIndex() {
     const [filterBy, setFilterBy] = useState('')
     const [noteModal, setNoteModal] = useState(false)
     const [noteToOpen, setNoteToOpen] = useState({})
+    const [pinnedNotes, setPinnedNotes] = useState(checkForPinned())
 
 
     useEffect( () => {
         loadNotes()
-    },[filterBy, notes])
+    },[filterBy, notes, pinnedNotes])
 
     function loadNotes() {
         noteService
@@ -66,6 +67,30 @@ export function NoteIndex() {
         setFilterBy(filter)
     }
 
+    function onPinNote(noteToFind) {
+        const noteToPin = notes.find((note) => note.id === noteToFind)
+        if(!noteToPin.isPinned) {
+            noteToPin.isPinned = true
+            noteService
+            .save(noteToPin)
+            .then (
+                setPinnedNotes(checkForPinned())
+            )
+        }
+        else if(noteToPin.isPinned) {
+            noteToPin.isPinned = false
+            noteService
+            .save(noteToPin)
+            .then (
+                setPinnedNotes(checkForPinned())
+            )
+        }
+    }
+
+    function checkForPinned() {
+        const pinnedNotes = notes.filter((note) => note.isPinned === true)
+        return pinnedNotes
+    }
 
     function onNoteClick(noteToFind) {
         setNoteToOpen(notes.find((note) => note.id === noteToFind.id))
@@ -80,7 +105,7 @@ export function NoteIndex() {
         <section className='note-index'>
             <NoteHeader filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
             {inputClick ? <NoteCompose onCancle={onCancleNewNote} noteType={newNoteType}/> : <NoteForm onFormClick={handleFormClick}/>}
-            <NoteList notes={notes} onRemoveNote={onRemoveNote} onArchiveNote={onArchiveNote} onNoteClick={onNoteClick}/>
+            <NoteList notes={notes} onRemoveNote={onRemoveNote} onArchiveNote={onArchiveNote} onNoteClick={onNoteClick} onPinNote={onPinNote} pinnedNotes={pinnedNotes}/>
             <NoteSideMenu notes={notes} onSetFilterBy={onSetFilterBy}/>
             {noteModal && <NoteModal noteToOpen={noteToOpen} onCloseModal={onCloseModal}/>}
         </section>

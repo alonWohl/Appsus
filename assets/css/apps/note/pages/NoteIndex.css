@@ -3,9 +3,9 @@
 .note-index {
     display: grid;
     grid-template-rows: 64px 64px 1fr;
-    grid-template-columns: 64px 1fr 
+    grid-template-columns: 64px 1fr;
     /* position: fixed; */
-}
+} 
 
 .note-header {
     grid-column: 1/3;
