@@ -38,7 +38,7 @@ export function NoteIndex() {
         onInputclick(1)
     }
 
-    function onCancleNewNote() {
+    function onCancelNewNote() {
         onInputclick(null)
     }
     
@@ -99,7 +99,7 @@ export function NoteIndex() {
     return (
         <section className='note-index'>
             <NoteHeader filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-            {inputClick ? <NoteCompose onCancle={onCancleNewNote} noteType={newNoteType}/> : <NoteForm onFormClick={handleFormClick}/>}
+            {inputClick ? <NoteCompose onCancel={onCancelNewNote} noteType={newNoteType}/> : <NoteForm onFormClick={handleFormClick}/>}
             <NoteList notes={notes} onRemoveNote={onRemoveNote} onArchiveNote={onArchiveNote} onNoteClick={onNoteClick} onPinNote={onPinNote} pinnedNotes={pinnedNotes}/>
             <NoteSideMenu notes={notes} onSetFilterBy={onSetFilterBy}/>
             {noteModal && <NoteModal noteToOpen={noteToOpen} onCloseModal={onCloseModal}/>}

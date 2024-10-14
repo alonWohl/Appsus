@@ -2,7 +2,7 @@
 .note-search {
     background: none 0% 0% / auto repeat scroll padding-box border-box rgb(241, 243, 244);
     border-radius: 8px;
-    max-width: 70%;
+    max-width: 60%;
     position: relative;
     white-space: nowrap;
     font: 400 13px / 27px Roboto, Arial, sans-serif;
@@ -17,7 +17,7 @@
 
 .note-search-container {
     background: none 0% 0% / auto repeat scroll padding-box border-box rgb(241, 243, 244);
-    max-width: 70%;
+    max-width: 60%;
     position: relative;
     display: flex;
     border-radius: 8px;

@@ -4,7 +4,7 @@ import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.servic
 const { useState, useEffect } = React
 const { useNavigate } = ReactRouterDOM
 
-export function NoteCompose({onCancle, noteType}) {
+export function NoteCompose({onCancel, noteType}) {
     
     const [note, setNote] = useState(noteService.getEmptyNote())
     const navigate = useNavigate()
@@ -47,14 +47,15 @@ export function NoteCompose({onCancle, noteType}) {
     function handleTitleInput(ev) {
         const { value } = ev.target
         setNote((prevNote => ({...prevNote, info: {
+            txt: prevNote.info.txt,
             header: value
         }})))
     }
 
     function onSaveNote(ev) {
         ev.preventDefault()
-        console.log(note);
-        
+        if(note.info.txt === '') return console.log('Cant save note, Please enter text')
+        if(note.info.header === '') return console.log('Cant save note, Please enter title')
         noteService
             .save(note)
             .then(() => showSuccessMsg('Note saved!'))
@@ -69,12 +70,15 @@ export function NoteCompose({onCancle, noteType}) {
     return (
         <form className='note-compose'>
             <input type="text" id='title' placeholder='Title' className='comp-title-input' onChange={handleTitleInput}/>
-            {noteType === 'text' && <input type="text" id='text' placeholder='Take a note...' className='comp-text-input' onChange={() => handleInput(event, noteType)}/>}
+            {/* {noteType === 'text' && <input type="text" id='text' placeholder='Take a note...' className='comp-text-input' onChange={() => handleInput(event, noteType)}/>} */}
+            {noteType === 'text' && <textarea name="text" className='comp-text-input' id="text" rows='1' placeholder='Take a note...' onChange={(event) => handleInput(event, noteType)}></textarea>}
             {noteType === 'list' && <input type="text" id='list' placeholder='List item' onChange={() => handleInput(ev, noteType)}/>}
             {noteType === 'draw' && <input type="text" id='draw' placeholder='draw' onChange={() => handleInput(ev, noteType)}/>}
             {noteType === 'image' && <input type="image" id='image' onChange={() => handleInput(ev, noteType)}/>}
-            <button onClick={onCancle}>cancle</button>
-            <button type='submit' onClick={onSaveNote}>Submit</button>
+            <div className='comp-btns'>
+                <button type='submit' className='comp-submit-btn' onClick={onSaveNote}>Submit</button>
+                <button onClick={onCancel} className='comp-cancel-btn'>Close</button>
+            </div>
         </form>
     )
 }

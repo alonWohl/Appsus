@@ -2,7 +2,7 @@
 
 .note-index {
     display: grid;
-    grid-template-rows: 64px 64px 1fr;
+    grid-template-rows: 64px 120px 1fr;
     grid-template-columns: 64px 1fr;
 
     height: 100dvh;
