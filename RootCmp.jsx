@@ -39,7 +39,7 @@ export function App() {
               element={<MailCompose />}
             />
             <Route
-              path="/mail/compose/:mailId"
+              path="/mail/compose/:draftId"
               element={<MailCompose />}
             />
           </Route>
