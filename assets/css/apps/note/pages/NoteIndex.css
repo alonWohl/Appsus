@@ -25,10 +25,11 @@
 }
 
 .note-form, .note-compose {
-    margin-block-start: 50px;
+    margin-block-start: 3.125rem;
     
     grid-column: 2/3;
     grid-row: 2/3;
     align-self: center;
     justify-self: center;
 }
+
