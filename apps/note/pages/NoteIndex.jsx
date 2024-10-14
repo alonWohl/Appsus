@@ -21,7 +21,8 @@ export function NoteIndex() {
 
     useEffect( () => {
         loadNotes()
-    },[filterBy, notes, pinnedNotes])
+        setPinnedNotes(checkForPinned())
+    },[filterBy, notes])
 
     function loadNotes() {
         noteService
@@ -73,17 +74,11 @@ export function NoteIndex() {
             noteToPin.isPinned = true
             noteService
             .save(noteToPin)
-            .then (
-                setPinnedNotes(checkForPinned())
-            )
         }
         else if(noteToPin.isPinned) {
             noteToPin.isPinned = false
             noteService
             .save(noteToPin)
-            .then (
-                setPinnedNotes(checkForPinned())
-            )
         }
     }
 
