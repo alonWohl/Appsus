@@ -4,7 +4,8 @@
     display: grid;
     grid-template-rows: 64px 64px 1fr;
     grid-template-columns: 64px 1fr;
-    /* position: fixed; */
+
+    height: 100dvh;
 } 
 
 .note-header {
@@ -13,8 +14,9 @@
 
 .note-list {
     grid-column: 2/3;
+    grid-row: 3;
 
-    margin-block-start: 170px;
+    margin-block-start: 2em;
 }
 
 .note-side-menu {
