@@ -22,7 +22,7 @@ export function NoteSearch({ filterBy, onSetFilterBy}) {
 
     return (
         <form className="note-search-container">
-            <span className="material-symbols-outlined">search</span>
+            <button className='search-btn'><span className="material-symbols-outlined">search</span></button>
             <input type="text" id='txt' name='txt' className='note-search' placeholder='Search' value={txt || ''} onChange={handleChange}/>
         </form>
     )

@@ -68,8 +68,8 @@ export function NoteCompose({onCancle, noteType}) {
 
     return (
         <form className='note-compose'>
-            <input type="text" id='title' placeholder='Title' onChange={handleTitleInput}/>
-            {noteType === 'text' && <input type="text" id='text' placeholder='Take a note...' onChange={() => handleInput(event, noteType)}/>}
+            <input type="text" id='title' placeholder='Title' className='comp-title-input' onChange={handleTitleInput}/>
+            {noteType === 'text' && <input type="text" id='text' placeholder='Take a note...' className='comp-text-input' onChange={() => handleInput(event, noteType)}/>}
             {noteType === 'list' && <input type="text" id='list' placeholder='List item' onChange={() => handleInput(ev, noteType)}/>}
             {noteType === 'draw' && <input type="text" id='draw' placeholder='draw' onChange={() => handleInput(ev, noteType)}/>}
             {noteType === 'image' && <input type="image" id='image' onChange={() => handleInput(ev, noteType)}/>}
