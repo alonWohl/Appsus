@@ -1,11 +1,66 @@
 
 
 .note-compose {
-    align-items: center;
-    justify-items: center;
-
     align-self: center;
     justify-self: center;
 
-    display: grid;
+    
+    width: 600px;
+    position: relative;
+    display: flex;
+    flex-direction: column; 
+
+    border: 1px solid #e0e0e0; 
+    border-radius: 4px; 
+    overflow: hidden;
+
+    
+    margin-block-end: calc(10px);
+}
+
+.comp-title-input {
+    border: none;
+    padding: 10px; 
+    flex: 1; 
+    outline: none;
+}
+
+.comp-text-input {
+    border: none;
+    padding: 10px; 
+    flex: 1; 
+    outline: none;
+    resize: none;
+}
+
+.comp-btns {
+    position: relative;
+    height: 3rem;
+    width: 100%;
+}
+
+.comp-submit-btn {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 7rem;
+
+    background-color: #e0e0e000;
+    border: none;
+
+    font-weight: bold;
+}
+
+.comp-cancel-btn {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 2rem;
+
+    background-color: #e0e0e000;
+    border: none;
+
+    font-weight: bold;
+}
+
+.comp-cancel-btn:hover, .comp-submit-btn:hover {
+    background-color: rgba(128, 128, 128, 0.179);
 }

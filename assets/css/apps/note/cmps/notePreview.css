@@ -5,18 +5,63 @@
     width: 240px;
     border-radius: 8px; 
     padding: 20px;
+    position: relative;
+}
+
+.note-preview:hover .opacity {
+    opacity: 1;
+
+    /* height: 24px;
+    width: 24px; */
+}
+
+.note-preview-header {
+    margin-block-end: 1rem;
 }
 
 .note-preview:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+.material-symbols-outlined.pinned {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
+}
+
 .pin-btn, .archive-btn, .delete-btn {
     background-color: rgba(255, 255, 255, 0);
     border: none;
     border-radius: 50%;
+    padding: 0;
+
+    opacity: 0;
+
+    height: 30px;
+    width: 30px;
 }
 
 .pin-btn:hover, .archive-btn:hover, .delete-btn:hover {
     background-color: rgba(128, 128, 128, 0.279);
 }
+
+
+.pin-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.note-content {
+    margin-block-end: 1rem;
+}
+
+.note-btns {
+    position: absolute;
+    bottom: 0;
+
+}
+
+

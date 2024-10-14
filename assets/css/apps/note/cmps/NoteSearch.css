@@ -2,18 +2,43 @@
 .note-search {
     background: none 0% 0% / auto repeat scroll padding-box border-box rgb(241, 243, 244);
     border-radius: 8px;
-    max-width: 720px;
+    max-width: 60%;
     position: relative;
     white-space: nowrap;
     font: 400 13px / 27px Roboto, Arial, sans-serif;
     color: rgb(0, 0, 0);
-    border: 1px solid rgba(0, 0, 0, 0);
-    flex-grow: 1;
+    border: none;
+    flex: 1;
     outline: none;
+
+    margin-inline-start: 4rem;
 }
 
+
 .note-search-container {
-    max-width: 720px;
+    background: none 0% 0% / auto repeat scroll padding-box border-box rgb(241, 243, 244);
+    max-width: 60%;
     position: relative;
     display: flex;
+    border-radius: 8px;
 }
+
+.search-btn {
+    position: absolute;
+    left: 0.5rem;
+    align-self: center;
+    z-index: 1; 
+
+    height: 40px;
+    width: 40px;
+    
+
+    border:none;
+    border-radius: 50%;
+}
+
+.search-btn:hover {
+    background-color: rgba(128, 128, 128, 0.279);
+}
+
+

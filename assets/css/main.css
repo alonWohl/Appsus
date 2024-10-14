@@ -37,6 +37,7 @@
 @import '../css/apps/note/cmps/NoteModal.css';
 @import '../css/apps/note/cmps/NoteForm.css';
 @import '../css/apps/note/cmps/NoteSearch.css';
+@import '../css/apps/note/pages/media-queries.css';
 
 @import '../css/apps/book/book-index.css';
 @import '../css/apps/book/book-preview.css';
