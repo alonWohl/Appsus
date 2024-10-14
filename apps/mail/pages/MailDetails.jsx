@@ -7,8 +7,9 @@ const { useParams, useNavigate, useOutletContext } = ReactRouterDOM
 
 export function MailDetails() {
   const [mail, setMail] = useState(null)
-  const { mailId } = useParams()
+  const { onRemoveMail, onToggleRead, onBack } = useOutletContext()
 
+  const { mailId } = useParams()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -19,25 +20,23 @@ export function MailDetails() {
     mailService
       .get(mailId)
       .then((mail) => {
+        setMail(mail)
         if (!mail.isRead) {
-          const updatedMail = { ...mail, isRead: true }
-          mailService.save(updatedMail).then(() => {
-            setMail(updatedMail)
+          return mailService.save({ ...mail, isRead: true }).then(() => {
+            setMail((prevMail) => ({ ...prevMail, isRead: true }))
           })
-        } else {
-          setMail(mail)
         }
       })
       .catch((err) => {
-        showErrorMsg('Cannot load mail')
         console.error('Cannot load mail:', err)
+        showErrorMsg('Cannot load mail')
         navigate('/mail')
       })
   }
 
   if (!mail) return <AppLoader />
 
-  const { createdAt, subject, body, isRead, sentAt, removedAt, from, to } = mail
+  const { subject, body, from } = mail
   const contactName = from.split('@')[0]
 
   return (
@@ -48,7 +47,7 @@ export function MailDetails() {
         <section className="btn-group flex">
           <button
             className="btn back-btn"
-            onClick={() => navigate('/mail')}>
+            onClick={() => onBack()}>
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
 

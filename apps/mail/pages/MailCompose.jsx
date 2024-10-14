@@ -7,11 +7,11 @@ const { useNavigate, useParams } = ReactRouterDOM
 export function MailCompose() {
   const [mailToSend, setMailToSend] = useState(mailService.getEmptyMail())
   const navigate = useNavigate()
-  const { mailId } = useParams()
+  const { draftId } = useParams()
 
   useEffect(() => {
-    if (mailId) loadMail()
-  }, [mailId])
+    if (draftId) loadMail()
+  }, [draftId])
 
   useEffect(() => {
     const autoSaveDraft = setInterval(() => {
@@ -23,7 +23,7 @@ export function MailCompose() {
 
   function loadMail() {
     mailService
-      .get(mailId)
+      .get(draftId)
       .then((loadedMail) => {
         setMailToSend(loadedMail)
       })
@@ -92,7 +92,7 @@ export function MailCompose() {
       className="mail-compose"
       onSubmit={onSendMail}>
       <div className="compose-head">
-        <h2>{mailId ? 'Edit Draft' : 'New Message'}</h2>
+        <h2>{draftId ? 'Edit Draft' : 'New Message'}</h2>
         <button
           onClick={() => navigate('/mail')}
           type="button"

@@ -129,8 +129,8 @@ function _sort(mails, filterBy) {
 }
 function _filter(mails, filterBy) {
   return mails.filter((mail) => {
-    if (!filterBy.txt) {
-      return mail.to === loggedinUser.mail && mail.removedAt === null
+    if (!filterBy.txt && filterBy.txt === 'in:inbox') {
+      return mail.to === loggedinUser.mail && mail.removedAt === null && !mail.isDraft
     }
 
     if (filterBy.txt.startsWith('is:') || filterBy.txt.startsWith('in:')) {
@@ -146,14 +146,14 @@ function _filter(mails, filterBy) {
         case 'in:sent':
           return mail.sentAt && mail.from === loggedinUser.mail && mail.removedAt === null
         case 'in:drafts':
-          return mail.isDraft && !mail.sentAt
+          return mail.isDraft && !mail.sentAt && mail.removedAt === null
         default:
           return true
       }
     }
 
     const regex = new RegExp(filterBy.txt, 'i')
-    return (regex.test(mail.subject) || regex.test(mail.from)) && mail.removedAt === null
+    return (regex.test(mail.subject) || regex.test(mail.from)) && mail.removedAt === null && !mail.isDraft
   })
 }
 
