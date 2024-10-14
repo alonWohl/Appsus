@@ -1,5 +1,5 @@
 .app-header {
-  background-color: #3730a3;
+  background-color: var(--main-bg-color);
   color: white;
   padding: 1rem;
   position: sticky;
@@ -89,7 +89,7 @@
     top: 100%;
     left: 0;
     right: 0;
-    background-color: #3730a3;
+    background-color: var(--main-bg-color);
     flex-direction: column;
     align-items: center;
     padding: 1rem;

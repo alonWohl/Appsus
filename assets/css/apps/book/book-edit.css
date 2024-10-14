@@ -1,0 +1,53 @@
+.book-edit-form {
+  display: flex;
+  flex-direction: column;
+  outline: 1px solid #ccc;
+  padding: 1em;
+  border-radius: 10px;
+  text-transform: capitalize;
+  gap: 0.5em;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px;
+}
+
+.book-edit-form input {
+  border: 1px solid #ccc;
+  padding: 0.5em;
+  border-radius: 2em;
+  transition: border-color 0.2s;
+}
+
+.book-edit-form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.book-edit-form textarea {
+  width: 100%;
+  height: 100px;
+  resize: none;
+  border: 1px solid #ccc;
+  border-radius: 2em;
+  padding: 0.5em;
+  transition: border-color 0.2s;
+}
+
+.book-edit-form textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.book-edit button {
+  align-self: flex-end;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.book-edit button:hover {
+  background-color: #0056b3;
+}

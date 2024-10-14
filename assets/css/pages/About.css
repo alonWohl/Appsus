@@ -18,7 +18,7 @@
 .about-title {
   font-size: 32px;
   font-weight: bold;
-  color: #3730a3;
+  color: var(--main-bg-color);
   text-align: center;
   margin-bottom: 24px;
 }
@@ -32,7 +32,7 @@
 .about-subtitle {
   font-size: 24px;
   font-weight: bold;
-  color: #4338ca;
+  color: var(--secondary-bg-color);
   margin-top: 32px;
   margin-bottom: 16px;
 }
@@ -65,7 +65,7 @@
 }
 
 .github-button:hover {
-  background-color: #4338ca;
+  background-color: var(--secondary-bg-color);
 }
 
 .about-footer {

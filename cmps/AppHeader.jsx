@@ -43,6 +43,11 @@ export function AppHeader() {
             onClick={toggleMenu}>
             Note
           </NavLink>
+          <NavLink
+            to="/book"
+            onClick={toggleMenu}>
+            Book
+          </NavLink>
         </nav>
       </div>
     </header>

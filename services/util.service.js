@@ -113,3 +113,44 @@ function getRandomTimestamp() {
 
   return randomTimestamp
 }
+export function getCurrencySymbol(currencyCode) {
+  const currencySymbols = {
+    USD: '$', // US Dollar
+    EUR: '€', // Euro
+    GBP: '£', // British Pound
+    JPY: '¥', // Japanese Yen
+    ILS: '₪', // Israeli Shekel
+    AUD: 'A$', // Australian Dollar
+    CAD: 'C$', // Canadian Dollar
+    CHF: 'CHF', // Swiss Franc
+    CNY: '¥', // Chinese Yuan
+    INR: '₹', // Indian Rupee
+    RUB: '₽', // Russian Ruble
+    KRW: '₩', // South Korean Won
+    ZAR: 'R' // South African Rand
+    // Add more currency codes and symbols as needed
+  }
+
+  return currencySymbols[currencyCode] || 'Unknown Currency Code'
+}
+
+export function debounce(callback, wait) {
+  let timeoutId = null
+  return (...args) => {
+    window.clearTimeout(timeoutId)
+    timeoutId = window.setTimeout(() => {
+      callback(...args)
+    }, wait)
+  }
+}
+
+export function getTruthyValues(obj) {
+  const newObj = {}
+  for (const key in obj) {
+    const value = obj[key]
+    if (value || value === 0) {
+      newObj[key] = value
+    }
+  }
+  return newObj
+}
