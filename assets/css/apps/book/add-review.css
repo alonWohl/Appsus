@@ -14,18 +14,20 @@
 
 .add-review {
   display: flex;
-  flex-direction: column;
-  max-width: 500px;
+  align-items: center;
   padding: 1em;
   border: 1px solid #ccc;
   border-radius: 1em;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 10px;
+
+  text-wrap: nowrap;
+
+  gap: 1em;
 }
 
 .reviews-list {
   display: flex;
-  flex-direction: column;
   gap: 1em;
 }
 
