@@ -1,54 +1,45 @@
-const { Link, useNavigate } = ReactRouterDOM
+const { Link, useNavigate, useParams } = ReactRouterDOM
 const { useState, useEffect } = React
 
-export function SideMenu({ filterBy, onSetFilterBy, isExpand, unreadCounts = {} }) {
+export function SideMenu({ filterBy, onSetFilterBy, isExpand, unreadCounts = {}, onComposeClick }) {
   const navigate = useNavigate()
+  const { category } = useParams()
 
   function handleFilterClick(status) {
-    onSetFilterBy({ ...filterBy, txt: status })
-    navigate('/mail')
+    onSetFilterBy({ status })
+    // navigate(`/mail/${status}`)
   }
 
   function isActive(status) {
-    return filterBy.txt === status ? 'active' : ''
+    return category === status ? 'active' : ''
   }
 
   const menuItems = [
-    { status: 'in:inbox', icon: 'inbox', label: 'Inbox', countKey: 'inbox' },
-    { status: 'is:starred', icon: 'star', label: 'Starred', countKey: 'starred' },
-    { status: 'in:sent', icon: 'send', label: 'Sent', countKey: 'sent' },
-    { status: 'in:drafts', icon: 'draft', label: 'Drafts', countKey: 'drafts' },
-    { status: 'in:trash', icon: 'delete', label: 'Trash', countKey: 'trash' }
+    { status: 'inbox', icon: 'inbox', label: 'Inbox', countKey: 'inbox' },
+    { status: 'starred', icon: 'star', label: 'Starred', countKey: 'starred' },
+    { status: 'sent', icon: 'send', label: 'Sent', countKey: 'sent' },
+    { status: 'drafts', icon: 'draft', label: 'Drafts', countKey: 'drafts' },
+    { status: 'trash', icon: 'delete', label: 'Trash', countKey: 'trash' }
   ]
 
   return (
     <aside className={`sidebar ${isExpand ? 'expanded' : ''}`}>
       <ul className="sidebar-links flex column">
         <div className="compose-wrapper">
-          <Link
-            className="link compose-link"
-            title="compose"
-            to="/mail/compose">
-            <span
-              style={{ width: '56px', justifyContent: 'center' }}
-              className="material-symbols-outlined flex align-center">
+          <button className="link compose-link" title="compose" onClick={onComposeClick}>
+            <span style={{ width: '56px', justifyContent: 'center' }} className="material-symbols-outlined flex align-center">
               edit
             </span>
             <span className="hidden">Compose</span>
-          </Link>
+          </button>
         </div>
 
         {menuItems.map(({ status, icon, label, countKey }) => (
-          <li
-            key={status}
-            className={`link ${label.toLowerCase()}-link ${isActive(status)}`}
-            onClick={() => handleFilterClick(status)}>
+          <li key={status} className={`link ${label.toLowerCase()}-link ${isActive(status)}`} onClick={() => handleFilterClick(status)}>
             <span className="material-symbols-outlined link-icon">{icon}</span>
-            <div
-              className="hidden flex space-between menu-hidden-items"
-              aria-label={`${unreadCounts[countKey]} unread`}>
+            <div className="hidden flex space-between menu-hidden-items" aria-label={`${unreadCounts[countKey] || 0} unread`}>
               <span className="hidden">{label}</span>
-              {unreadCounts[countKey]}
+              {unreadCounts[countKey] || 0}
             </div>
           </li>
         ))}

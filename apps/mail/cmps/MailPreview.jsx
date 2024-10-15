@@ -1,24 +1,27 @@
 import { LongText } from '../../../cmps/LongText.jsx'
 
-const { useNavigate } = ReactRouterDOM
+const { useNavigate, useParams, useSearchParams } = ReactRouterDOM
 
 export function MailPreview({ mail, onToggleStarred, onRemoveMail, onToggleRead }) {
   const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const { category } = useParams()
+
   const { createdAt, subject, body, isRead, sentAt, removedAt, from, to, isStarred, isDraft } = mail
 
   function convertTimestamp(timestamp) {
     const date = new Date(timestamp)
-    const options = { day: 'numeric', month: 'long' }
+    const options = { day: 'numeric', month: 'short' }
     return date.toLocaleDateString(undefined, options)
   }
-
   function onClickPreview(ev) {
     ev.stopPropagation()
 
     if (isDraft) {
-      navigate(`/mail/compose/${mail.id}`)
+      setSearchParams({ compose: 'new', draftId: mail.id })
     } else {
-      navigate(`/mail/${mail.id}`)
+      navigate(`/mail/${category}/${mail.id}`)
     }
   }
 
@@ -27,13 +30,9 @@ export function MailPreview({ mail, onToggleStarred, onRemoveMail, onToggleRead 
   const isReadBtnIcon = isRead ? <span className="material-symbols-outlined">mail</span> : <span className="material-symbols-outlined">drafts</span>
 
   return (
-    <li
-      className={`mail-preview ${isRead ? 'read' : 'unread'} ${isDraft ? 'draft' : ''}`}
-      onClick={onClickPreview}>
+    <li className={`mail-preview ${isRead ? 'read' : 'unread'} ${isDraft ? 'draft' : ''}`} onClick={onClickPreview}>
       <div className="btn star-btn">
-        <span
-          className={`star-icon ${isStarredDynamicClass}`}
-          onClick={(ev) => onToggleStarred(ev, mail.id)}></span>
+        <span className={`star-icon ${isStarredDynamicClass}`} onClick={(ev) => onToggleStarred(ev, mail.id)}></span>
       </div>
 
       <div className="preview-sender">
@@ -54,14 +53,10 @@ export function MailPreview({ mail, onToggleStarred, onRemoveMail, onToggleRead 
       </div>
 
       <section className="preview-actions flex align center">
-        <button
-          onClick={(ev) => onRemoveMail(ev, mail.id)}
-          className="btn remove-btn">
+        <button onClick={(ev) => onRemoveMail(ev, mail.id)} className="btn remove-btn">
           <span className="material-symbols-outlined">delete</span>
         </button>
-        <button
-          className="btn toggle-read-btn"
-          onClick={(ev) => onToggleRead(ev, mail.id)}>
+        <button className="btn toggle-read-btn" onClick={(ev) => onToggleRead(ev, mail.id)}>
           {isReadBtnIcon}
         </button>
         {isDraft && <span className="draft-indicator">Draft</span>}

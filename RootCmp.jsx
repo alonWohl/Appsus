@@ -9,6 +9,7 @@ import { NoteIndex } from './apps/note/pages/NoteIndex.jsx'
 import { MailDetails } from './apps/mail/pages/MailDetails.jsx'
 import { MailCompose } from './apps/mail/pages/MailCompose.jsx'
 import { UserMsg } from './cmps/UserMsg.jsx'
+import { MailList } from './apps/mail/cmps/MailList.jsx'
 
 export function App() {
   return (
@@ -16,34 +17,16 @@ export function App() {
       <main className="app main-layout">
         <AppHeader />
         <Routes>
-          <Route
-            path="/"
-            element={<Home />}
-          />
-          <Route
-            path="/about"
-            element={<About />}
-          />
-          <Route
-            path="/mail"
-            element={<MailIndex />}>
-            <Route
-              path="/mail/:mailId"
-              element={<MailDetails />}
-            />
-            <Route
-              path="/mail/compose"
-              element={<MailCompose />}
-            />
-            <Route
-              path="/mail/compose/:draftId"
-              element={<MailCompose />}
-            />
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/mail" element={<MailIndex />}>
+            <Route index element={<MailList />} />
+            <Route path=":category" element={<MailList />} />
+            <Route path=":category/:mailId" element={<MailDetails />} />
           </Route>
-          <Route
-            path="/note"
-            element={<NoteIndex />}
-          />
+          {/* <Route path="/mail/:category/:compose" element={<MailCompose />} /> */}
+          {/* <Route path="/mail/compose/:draftId" element={<MailCompose />} /> */}
+          <Route path="/note" element={<NoteIndex />} />
         </Routes>
       </main>
       <UserMsg />
