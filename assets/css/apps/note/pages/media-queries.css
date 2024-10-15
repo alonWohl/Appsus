@@ -19,4 +19,8 @@
         min-width: none;
         min-height: none;
     }
+
+    .opacity {
+        opacity: 1;
+    }
 }
