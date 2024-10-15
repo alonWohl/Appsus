@@ -1,45 +1,40 @@
 const { Link } = ReactRouterDOM
 
+export function NoteSideMenu({ filterBy, onSetFilterBy, notes, isExpand }) {
+  function onSetFilter(filter) {
+    onSetFilterBy(filter)
+  }
 
-export function NoteSideMenu({ filterBy, onSetFilterBy, notes}) {
+  function isActive(status) {
+    return filterBy === status ? 'active' : ''
+  }
 
-    function onSetFilter(filter) {
-        onSetFilterBy(filter)
-    }
+  const menuItems = [
+    { category: '', icon: 'lightbulb', label: 'Notes', countKey: 'notes' },
+    { category: 'reminders', icon: 'notifications', label: 'Reminders', countKey: 'reminders' },
+    { category: 'personal', icon: 'label', label: 'Personal', countKey: 'personal' },
+    { category: 'inspiration', icon: 'label', label: 'Inspiration', countKey: 'inspiration' },
+    { category: 'work', icon: 'label', label: 'Work', countKey: 'work' },
+    { category: 'archive', icon: 'archive', label: 'Archive', countKey: 'archive' },
+    { category: 'bin', icon: 'delete', label: 'Bin', countKey: 'bin' }
+  ]
 
-    return (
-        <section className='note-side-menu'>
-            <button title='notes' className='notes-btn side-menu-btn' onClick={() => onSetFilter('')}>
-                <span className="material-symbols-outlined">lightbulb</span>
-            </button>
-
-            <button title='reminders' className='reminders-btn side-menu-btn' onClick={() => onSetFilter('reminders')}>
-                <span className="material-symbols-outlined">notifications</span>
-            </button>
-
-            <button title='personal' className='personal-btn side-menu-btn' onClick={() => onSetFilter('personal')}>
-                <span className="material-symbols-outlined">label</span>
-            </button>
-
-            <button title='inspiration' className='inspiration-btn side-menu-btn' onClick={() => onSetFilter('inspiration')}>
-                <span className="material-symbols-outlined">label</span>
-            </button>
-
-            <button title='work' className='work-btn side-menu-btn' onClick={() => onSetFilter('work')}>
-                <span className="material-symbols-outlined">label</span>
-            </button>
-
-            <button title='edit-lables' className='edit-lables-btn side-menu-btn'>
-                <span className="material-symbols-outlined">edit</span>
-            </button>
-
-            <button title='archive' className='archive-side-btn side-menu-btn' onClick={() => onSetFilter('archive')}>
-                <span className="material-symbols-outlined">archive</span>
-            </button>
-
-            <button title='bin' className='bin-btn side-menu-btn' onClick={() => onSetFilter('in:bin')}>
-                <span className="material-symbols-outlined">delete</span>
-            </button>
-        </section>
-    )
+  return (
+    <aside className={`notes-sidebar ${isExpand ? 'expanded' : ''}`}>
+      <ul className="notes-sidebar-links flex column">
+        {menuItems.map(({ category, icon, label, countKey }) => (
+          <li
+            key={category}
+            className={`note-link ${label.toLowerCase()}-link ${isActive(category)}`}
+            onClick={() => onSetFilter(category)}>
+            <span className="material-symbols-outlined note-link-icon">{icon}</span>
+            <div className="hidden flex space-between menu-hidden-items">
+              <span className="hidden">{label}</span>
+              {/* {noteCounts[countKey]} */}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </aside>
+  )
 }

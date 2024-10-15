@@ -40,11 +40,13 @@ export function About() {
             name="Alon Wohl"
             role="Full-stack Developer"
             description="Passionate about creating efficient and user-friendly applications."
+            githubUrl="https://github.com/AlonWohl"
           />
           <DeveloperCard
             name="Aviv Buzglo"
             role="Full-stack Developer"
             description="Dedicated to building robust and scalable web solutions."
+            githubUrl="https://github.com/AvivBuzaglo"
           />
         </div>
 
@@ -78,12 +80,19 @@ function FeatureCard({ icon, title, description }) {
   )
 }
 
-function DeveloperCard({ name, role, description }) {
+function DeveloperCard({ name, role, description, githubUrl }) {
   return (
     <div className="developer-card">
       <h3 className="developer-name">{name}</h3>
       <p className="developer-role">{role}</p>
       <p className="developer-description">{description}</p>
+      <a
+        href={githubUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="github-link">
+        <GithubIcon /> GitHub Profile
+      </a>
     </div>
   )
 }

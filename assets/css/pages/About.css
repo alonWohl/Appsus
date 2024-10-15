@@ -122,6 +122,23 @@
   margin-right: 8px;
 }
 
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  color: #4338ca;
+  text-decoration: none;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.github-link:hover {
+  text-decoration: underline;
+}
+
+.github-link .github-icon {
+  margin-right: 5px;
+}
+
 @media (max-width: 640px) {
   .about-content {
     padding: 24px;

@@ -32,14 +32,28 @@ export function BookFilter({ filterBy, onSetFilterBy }) {
   const { txt, minPrice } = filterByToEdit
 
   return (
-    <fieldset className='book-filter'>
+    <fieldset className="book-filter">
       <legend>Fltering</legend>
-      <form className='form-filter' onSubmit={onSubmit}>
-        <label htmlFor='txt'>Book Name: </label>
-        <input value={txt} onChange={handleChange} type='text' id='txt' name='txt' />
-        <label htmlFor='minPrice'>Price : </label>
-        <input min='0' value={minPrice || ''} onChange={handleChange} type='number' id='minPrice' name='minPrice' />
-        <button>Submit</button>
+      <form
+        className="form-filter"
+        onSubmit={onSubmit}>
+        <label htmlFor="txt">Book Name: </label>
+        <input
+          value={txt}
+          onChange={handleChange}
+          type="text"
+          id="txt"
+          name="txt"
+        />
+        <label htmlFor="minPrice">Price : </label>
+        <input
+          min="0"
+          value={minPrice || ''}
+          onChange={handleChange}
+          type="number"
+          id="minPrice"
+          name="minPrice"
+        />
       </form>
     </fieldset>
   )
