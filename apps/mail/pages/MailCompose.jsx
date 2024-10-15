@@ -4,10 +4,9 @@ import { mailService } from '../services/mail.service.js'
 const { useState, useEffect } = React
 const { useNavigate, useParams } = ReactRouterDOM
 
-export function MailCompose() {
+export function MailCompose({ onClose, draftId, onSaveDraft }) {
   const [mailToSend, setMailToSend] = useState(mailService.getEmptyMail())
   const navigate = useNavigate()
-  const { draftId } = useParams()
 
   useEffect(() => {
     if (draftId) loadMail()
@@ -38,7 +37,10 @@ export function MailCompose() {
     const draftMail = { ...mailToSend, isDraft: true, sentAt: null }
     mailService
       .save(draftMail)
-      .then(() => console.log('Draft saved'))
+      .then((savedDraft) => {
+        console.log('Draft saved')
+        onSaveDraft(savedDraft.id)
+      })
       .catch((err) => console.log('Error saving draft:', err))
   }
 
@@ -77,7 +79,8 @@ export function MailCompose() {
       .save(mailToSave)
       .then(() => {
         showSuccessMsg('Mail Sent Successfully')
-        navigate('/mail')
+        onClose()
+        navigate('/mail/sent')
       })
       .catch((err) => {
         console.log('err:', err)
@@ -88,50 +91,30 @@ export function MailCompose() {
   const fromAddress = mailService.loggedinUser.mail
 
   return (
-    <form
-      className="mail-compose"
-      onSubmit={onSendMail}>
-      <div className="compose-head">
-        <h2>{draftId ? 'Edit Draft' : 'New Message'}</h2>
-        <button
-          onClick={() => navigate('/mail')}
-          type="button"
-          className="btn btn-cancel">
-          <span className="material-symbols-outlined">close</span>
-        </button>
-      </div>
-      <div className="from">From : {fromAddress}</div>
+    <div className="mail-compose-overlay">
+      <form className="mail-compose" onSubmit={onSendMail}>
+        <div className="compose-head">
+          <h2>{draftId ? 'Edit Draft' : 'New Message'}</h2>
+          <button onClick={onClose} type="button" className="btn btn-cancel">
+            <span className="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <div className="from">From : {fromAddress}</div>
 
-      <label htmlFor="to">
-        To
-        <input
-          onChange={handleChange}
-          value={mailToSend.to}
-          type="text"
-          name="to"
-          id="to"
-        />
-      </label>
+        <label htmlFor="to">
+          To
+          <input onChange={handleChange} value={mailToSend.to} type="text" name="to" id="to" />
+        </label>
 
-      <label htmlFor="subject">
-        Subject
-        <input
-          onChange={handleChange}
-          value={mailToSend.subject}
-          type="text"
-          name="subject"
-          id="subject"
-        />
-      </label>
+        <label htmlFor="subject">
+          Subject
+          <input onChange={handleChange} value={mailToSend.subject} type="text" name="subject" id="subject" />
+        </label>
 
-      <textarea
-        className="mail-compose-body"
-        onChange={handleChange}
-        value={mailToSend.body}
-        name="body"
-        id="body"></textarea>
+        <textarea className="mail-compose-body" onChange={handleChange} value={mailToSend.body} name="body" id="body"></textarea>
 
-      <button className="send-btn">Send</button>
-    </form>
+        <button className="send-btn">Send</button>
+      </form>
+    </div>
   )
 }

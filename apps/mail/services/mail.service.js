@@ -18,13 +18,14 @@ export const mailService = {
   save,
   getFilterFromSearchParams,
   getEmptyMail,
-  toggleStarred
+  toggleStarred,
+  getDefaultFilter
 }
 
 function query(filterBy = {}) {
   return storageService.query(MAIL_KEY).then((mails) => {
     const sortedMails = _sort(mails, filterBy)
-    const filteredMails = _filter(sortedMails, filterBy)
+    const filteredMails = _filter(sortedMails, filterBy, loggedinUser)
     const unreadCounts = getUnreadMailCounts(mails)
     return { mails: filteredMails, unreadCounts }
   })
@@ -61,8 +62,8 @@ function save(mail) {
   }
 }
 
-function getDefaultFilter(txt = '', isRead, date) {
-  return { txt, isRead, date }
+function getDefaultFilter(txt = '', status = 'inbox') {
+  return { txt, status }
 }
 
 function getFilterFromSearchParams(searchParams) {
@@ -127,33 +128,37 @@ function _sort(mails, filterBy) {
     return 0
   })
 }
-function _filter(mails, filterBy) {
+function _filter(mails, filterBy, loggedinUser) {
   return mails.filter((mail) => {
-    if (!filterBy.txt && filterBy.txt === 'in:inbox') {
-      return mail.to === loggedinUser.mail && mail.removedAt === null && !mail.isDraft
+    let categoryFilter = true
+    switch (filterBy.status) {
+      case 'inbox':
+        categoryFilter = mail.removedAt === null && mail.to === loggedinUser.mail && !mail.isDraft && mail.sentAt !== null
+        break
+      case 'starred':
+        categoryFilter = mail.isStarred === true && mail.removedAt === null
+        break
+      case 'sent':
+        categoryFilter = mail.removedAt === null && mail.from === loggedinUser.mail && !mail.isDraft && mail.sentAt !== null
+        break
+      case 'drafts':
+        categoryFilter = mail.isDraft
+        break
+      case 'trash':
+        categoryFilter = mail.removedAt !== null
+        break
+      default:
+        categoryFilter = mail.removedAt === null
+        break
     }
 
-    if (filterBy.txt.startsWith('is:') || filterBy.txt.startsWith('in:')) {
-      switch (filterBy.txt) {
-        case 'is:starred':
-          return mail.isStarred
-        case 'is:read':
-          return mail.isRead
-        case 'is:unread':
-          return !mail.isRead
-        case 'in:trash':
-          return mail.removedAt !== null
-        case 'in:sent':
-          return mail.sentAt && mail.from === loggedinUser.mail && mail.removedAt === null
-        case 'in:drafts':
-          return mail.isDraft && !mail.sentAt && mail.removedAt === null
-        default:
-          return true
-      }
+    let textFilter = true
+    if (filterBy.txt) {
+      const regex = new RegExp(filterBy.txt, 'i')
+      textFilter = regex.test(mail.subject) || regex.test(mail.body) || regex.test(mail.from) || regex.test(mail.to)
     }
 
-    const regex = new RegExp(filterBy.txt, 'i')
-    return (regex.test(mail.subject) || regex.test(mail.from)) && mail.removedAt === null && !mail.isDraft
+    return categoryFilter && textFilter
   })
 }
 

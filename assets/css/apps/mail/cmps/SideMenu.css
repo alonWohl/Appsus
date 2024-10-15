@@ -74,6 +74,7 @@
 }
 
 .link.compose-link {
+  border: none;
   min-height: 56px;
   min-width: 56px;
   max-width: 56px;
