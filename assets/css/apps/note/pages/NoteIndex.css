@@ -7,8 +7,7 @@
   grid-template-rows: 64px 120px 1fr;
   grid-template-columns: 64px 1fr; */
 
-  max-height: 90vh;
-  overflow-y: scroll;
+  height: calc(100vh - 67px);
 }
 
 .note-header {
@@ -17,6 +16,7 @@
 
 .note-main-content {
   margin-inline-start: 72px;
+  overflow-y: scroll;
 }
 
 .note-main-content.expanded {
@@ -26,7 +26,7 @@
 .note-list {
   /* grid-column: 2/3;
   grid-row: 3; */
-  margin-block-start: 2em;
+  /* margin-block-start: 2em; */
 }
 
 .note-side-menu {
