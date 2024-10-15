@@ -77,3 +77,7 @@ button {
 .btn:hover::before {
   opacity: 1;
 }
+
+.btn.note-btn::before {
+  background-color: rgb(254, 239, 195);
+}

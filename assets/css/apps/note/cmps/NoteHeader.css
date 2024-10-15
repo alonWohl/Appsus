@@ -1,55 +1,55 @@
-
 .note-header {
-    font: 400 13px / 27px Roboto, Arial, sans-serif;
-    color: rgb(0, 0, 0);
-    min-width: 160px;
-    position: fixed;
-    display: flex;
-    width: 100%;
-    background-color: rgb(255, 255, 255);
-    height: 64px;
+  font: 400 13px / 27px Roboto, Arial, sans-serif;
+  color: rgb(0, 0, 0);
+  min-width: 160px;
+  /* position: fixed; */
+  display: flex;
+  width: 100%;
+  padding: 10px 0;
+  background-color: rgb(255, 255, 255);
+  height: 64px;
 
-    z-index: 1;
+  z-index: 1;
 }
 
-.note-search-container{
-    flex-grow: 1;
+.note-search-container {
+  flex-grow: 1;
 
-    margin-inline-start: 80px;
-    margin-block-start: 8px;
-    margin-block-end: 8px;
+  margin-inline-start: 80px;
+  margin-block-start: 8px;
+  margin-block-end: 8px;
 }
 
 .side-menu-btn {
-    background-color: rgba(255, 255, 255, 0);
-    border: none;
-    border-radius: 50%;
-    
+  margin: 0 1em;
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+  border-radius: 50%;
 }
 
 .side-menu-btn .material-symbols-outlined {
-    border-radius: 50%;
-    height: 30px;
-    width: 30px;
-    font-size: 30px;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  font-size: 30px;
 }
 
 .side-menu-btn :hover {
-    background-color: rgba(128, 128, 128, 0.279);
+  background-color: rgba(128, 128, 128, 0.279);
 }
 
-.note-logo img{
-    width: 40px;
-    height: 40px;
+.note-logo img {
+  width: 40px;
+  height: 40px;
 }
 
 .note-logo {
-    align-content: center;
-    justify-content: center;
+  align-content: center;
+  justify-content: center;
 }
 
 .note-keep {
-    align-self: center;
-    font-size: 22px;
-    color: #5f6368;
+  align-self: center;
+  font-size: 22px;
+  color: #5f6368;
 }

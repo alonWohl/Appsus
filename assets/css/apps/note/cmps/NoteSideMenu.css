@@ -1,35 +1,101 @@
-.note-side-menu {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  position: fixed;
-  top: 127px;
-
+.notes-sidebar {
+  height: 100%;
   width: 72px;
-  height: 100vh;
-  margin-block-start: 20px;
 
-  background-color: white
+  position: fixed;
+  text-align: left;
+  top: 127px;
+  left: 0;
 
-}
-  
-.note-side-menu button {
-  margin-block-start: 5px;
-  margin-inline-start: 5px;
-  border-radius: 50%;
-
-  background-color: rgba(255, 255, 255, 0);
-  border: none;
-
-  height: 24px;
-  width: 24px;
-
+  background-color: white;
+  overflow-y: hidden;
+  transition: width 0.3s ease;
+  z-index: 50;
 }
 
-.side-menu-btn {
+@media (hover: hover) and (pointer: fine) {
+  .notes-sidebar:hover,
+  .notes-sidebar.expanded {
+    width: 280px;
+  }
+
+  .notes-sidebar:hover .note-link.compose-link,
+  .notes-sidebar.expanded .note-link.compose-link {
+    padding-inline-end: 24px;
+    max-width: none;
+  }
+
+  .notes-sidebar:hover .hidden,
+  .notes-sidebar.expanded .hidden {
+    display: inherit;
+  }
+
+  .notes-sidebar:hover .note-link.active::before,
+  .notes-sidebar.expanded .note-link.active::before {
+    width: 100%;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 1em;
+    border-bottom-right-radius: 1em;
+  }
+}
+
+.notes-sidebar-links {
+  margin: 0;
+  gap: 1em;
+}
+
+.note-link {
+  display: flex;
   align-items: center;
+  padding: 0 12px 0 26px;
+  cursor: pointer;
+  transition: padding 0.3s ease;
 }
 
+/* .note-link:hover {
+  background-color: #ccc;
+} */
 
-  
+.note-link-icon {
+  position: relative;
+  margin-inline-end: 18px;
+}
+
+.note-link.active::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 40px;
+  width: 40px;
+  background-color: rgb(254, 239, 195);
+  border-radius: 50%;
+  z-index: -1;
+  transition: width 0.3s ease, border-radius 0.3s ease;
+}
+
+.menu-hidden-items {
+  flex: 1 1 0;
+}
+
+.notes-sidebar.expanded {
+  width: 280px;
+}
+
+.notes-sidebar.expanded .note-link.compose-link {
+  padding-inline-end: 24px;
+  max-width: none;
+}
+
+.notes-sidebar.expanded .hidden {
+  display: inherit;
+}
+
+.notes-sidebar.expanded .note-link.active::before {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 1em;
+  border-bottom-right-radius: 1em;
+  width: 100%;
+}
