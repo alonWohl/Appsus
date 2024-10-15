@@ -110,7 +110,7 @@ export function NoteIndex() {
       ) : (
         <NoteForm onFormClick={handleFormClick} />
       )}
-      <section className={`note-main-content flex ${isExpand ? 'expanded' : ''}`}>
+      <section className={`note-main-content  ${isExpand ? 'expanded' : ''}`}>
         <NoteList
           notes={notes}
           onRemoveNote={onRemoveNote}

@@ -18,7 +18,7 @@ function query(filterBy) {
     return storageService.query(NOTE_KEY).then((notes) => {
         if(filterBy === '') {
             notes = notes.filter((note) => note.isRemoved === false && note.isArchive === false)
-        } else if(filterBy === 'in:bin') {
+        } else if(filterBy === 'bin') {
             notes = notes.filter((note) => note.isRemoved === true)
         } else if(filterBy === 'reminders') {
             notes = notes.filter((note) => note.label === 'reminders' && note.isRemoved === false)

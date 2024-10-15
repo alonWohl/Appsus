@@ -10,8 +10,8 @@
   }
   .modal-content {
     width: 10vw;
-    height: 10vh;
-    min-width: none;
+    height: fit-content;
+    min-width: 300px;
     min-height: none;
   }
   .note-modal,

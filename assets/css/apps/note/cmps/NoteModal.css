@@ -14,7 +14,7 @@
     right: 0;
     bottom: 0;
     position: fixed;
-    z-index: 2;
+    z-index: 60;
 
 }
 
@@ -32,11 +32,11 @@
     padding: 14px 28px;
     border-radius: 3px;
     max-width: 600px;
-    min-width: 300px;
+    min-width: 600px;
     max-height: 600px;
     min-height: 300px;
 
-    z-index: 3;
+    z-index: 65;
 
     display: flex;
     flex-wrap: wrap;
