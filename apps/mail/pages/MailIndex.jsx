@@ -2,11 +2,9 @@ import { AppLoader } from '../../../cmps/AppLoader.jsx'
 import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service.js'
 import { getTruthyValues } from '../../../services/util.service.js'
 import { MailHeader } from '../cmps/MailHeader.jsx'
-import { MailList } from '../cmps/MailList.jsx'
 import { SideMenu } from '../cmps/SideMenu.jsx'
 import { mailService } from '../services/mail.service.js'
 import { MailCompose } from './MailCompose.jsx'
-import { MailDetails } from './MailDetails.jsx'
 
 const { useState, useEffect } = React
 const { Outlet, useParams, useNavigate, useSearchParams } = ReactRouterDOM
@@ -51,7 +49,7 @@ export function MailIndex() {
 
   function handleBackNavigation() {
     loadMails()
-    navigate('/mail/inbox')
+    navigate(`/mail/${category}`)
   }
 
   function onToggleStarred(ev, mailId) {
@@ -82,7 +80,7 @@ export function MailIndex() {
       .remove(mailId)
       .then(() => {
         showSuccessMsg('Mail removed successfully')
-        navigate('/mail/inbox')
+        navigate(`/mail/${category}`)
       })
       .catch((err) => {
         console.error(err)
