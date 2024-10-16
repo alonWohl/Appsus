@@ -22,9 +22,8 @@ export function MailDetails() {
       .then((mail) => {
         setMail(mail)
         if (!mail.isRead) {
-          return mailService.save({ ...mail, isRead: true }).then(() => {
-            setMail((prevMail) => ({ ...prevMail, isRead: true }))
-          })
+          setMail((prevMail) => ({ ...prevMail, isRead: true }))
+          return mailService.save({ ...mail, isRead: true })
         }
       })
       .catch((err) => {
@@ -45,15 +44,11 @@ export function MailDetails() {
         <h2>{subject}</h2>
 
         <section className="btn-group flex">
-          <button
-            className="btn back-btn"
-            onClick={() => onBack()}>
+          <button className="btn back-btn" onClick={() => onBack()}>
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
 
-          <button
-            onClick={(ev) => onRemoveMail(ev, mail.id)}
-            className="btn remove-btn">
+          <button onClick={(ev) => onRemoveMail(ev, mail.id)} className="btn remove-btn">
             <span className="material-symbols-outlined link-icon">delete</span>
           </button>
         </section>

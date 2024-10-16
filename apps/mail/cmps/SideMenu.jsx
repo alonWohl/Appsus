@@ -1,17 +1,21 @@
-const { Link, useNavigate, useParams } = ReactRouterDOM
-const { useState, useEffect } = React
-
-export function SideMenu({ filterBy, onSetFilterBy, isExpand, unreadCounts = {}, onComposeClick }) {
-  const navigate = useNavigate()
-  const { category } = useParams()
-
+export function SideMenu({ filterBy, onSetFilterBy, isExpand, onComposeClick, unreadCounts = {} }) {
   function handleFilterClick(status) {
-    onSetFilterBy({ status })
-    // navigate(`/mail/${status}`)
+    const statusToTxtMap = {
+      inbox: 'in:inbox',
+      starred: 'is:starred',
+      sent: 'in:sent',
+      drafts: 'in:drafts',
+      trash: 'in:trash'
+    }
+
+    onSetFilterBy({
+      status,
+      txt: statusToTxtMap[status] || ''
+    })
   }
 
   function isActive(status) {
-    return category === status ? 'active' : ''
+    return filterBy.status === status ? 'active' : ''
   }
 
   const menuItems = [

@@ -14,14 +14,30 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
     onSetFilterBy({ ...filterBy, txt: value })
   }
 
+  function onClear() {
+    setSearchText('')
+    onSetFilterBy({ ...filterBy, txt: '' })
+  }
+
   function handleSubmit(ev) {
     ev.preventDefault()
   }
 
+  const isHidden = filterBy.txt ? '' : 'hidden'
+
   return (
-    <form onSubmit={handleSubmit} className="mail-search-wrapper">
-      <input className="mail-search-input" value={searchText} onChange={handleChange} type="text" name="txt" id="txt" placeholder="Search mail" />
-      <span className="material-symbols-outlined mail-search-icon">search</span>
-    </form>
+    <div className="mail-search-wrapper">
+      <form onSubmit={handleSubmit} className="mail-search-form">
+        <button
+          className="
+        mail-search-btn flex align-center">
+          <span className="material-symbols-outlined search-icon">search</span>
+        </button>
+        <input className="mail-search-input" value={searchText} onChange={handleChange} type="text" name="txt" id="txt" placeholder="Search mail" />
+        <button onClick={onClear} className={`mail-close-btn ${isHidden}`}>
+          <span className={`material-symbols-outlined close-icon`}>close</span>
+        </button>
+      </form>
+    </div>
   )
 }
