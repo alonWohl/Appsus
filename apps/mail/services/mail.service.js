@@ -19,15 +19,15 @@ export const mailService = {
   getFilterFromSearchParams,
   getEmptyMail,
   toggleStarred,
-  getDefaultFilter
+  getDefaultFilter,
+  getUnreadMailCounts
 }
 
 function query(filterBy = {}) {
   return storageService.query(MAIL_KEY).then((mails) => {
     const sortedMails = _sort(mails, filterBy)
     const filteredMails = _filter(sortedMails, filterBy, loggedinUser)
-    const unreadCounts = getUnreadMailCounts(mails)
-    return { mails: filteredMails, unreadCounts }
+    return filteredMails
   })
 }
 
@@ -75,36 +75,37 @@ function getFilterFromSearchParams(searchParams) {
   return filterBy
 }
 
-function getUnreadMailCounts(mails) {
-  const counts = {
-    inbox: 0,
-    starred: 0,
-    sent: 0,
-    drafts: 0,
-    trash: 0
-  }
-
-  mails.forEach((mail) => {
-    if (!mail.isRead) {
-      if (mail.to === loggedinUser.mail && mail.removedAt === null && !mail.isDraft) {
-        counts.inbox++
-      }
-      if (mail.isStarred) {
-        counts.starred++
-      }
-      if (mail.from === loggedinUser.mail && mail.sentAt) {
-        counts.sent++
-      }
-      if (mail.isDraft && !mail.sentAt) {
-        counts.drafts++
-      }
-      if (mail.removedAt !== null) {
-        counts.trash++
-      }
+function getUnreadMailCounts() {
+  return storageService.query(MAIL_KEY).then((mails) => {
+    const counts = {
+      inbox: 0,
+      starred: 0,
+      sent: 0,
+      drafts: 0,
+      trash: 0
     }
-  })
 
-  return counts
+    mails.forEach((mail) => {
+      if (!mail.isRead) {
+        if (mail.to === loggedinUser.mail && mail.removedAt === null && !mail.isDraft) {
+          counts.inbox++
+        }
+        if (mail.isStarred) {
+          counts.starred++
+        }
+        if (mail.from === loggedinUser.mail && mail.sentAt) {
+          counts.sent++
+        }
+        if (mail.isDraft && !mail.sentAt) {
+          counts.drafts++
+        }
+        if (mail.removedAt !== null) {
+          counts.trash++
+        }
+      }
+    })
+    return counts
+  })
 }
 
 function getEmptyMail(createdAt = Date.now(), subject = '', body = '', sentAt = Date.now(), from = loggedinUser.mail, to = '', removedAt = null) {
@@ -128,38 +129,43 @@ function _sort(mails, filterBy) {
     return 0
   })
 }
+
 function _filter(mails, filterBy, loggedinUser) {
-  return mails.filter((mail) => {
-    let categoryFilter = true
-    switch (filterBy.status) {
-      case 'inbox':
-        categoryFilter = mail.removedAt === null && mail.to === loggedinUser.mail && !mail.isDraft && mail.sentAt !== null
-        break
-      case 'starred':
-        categoryFilter = mail.isStarred === true && mail.removedAt === null
-        break
-      case 'sent':
-        categoryFilter = mail.removedAt === null && mail.from === loggedinUser.mail && !mail.isDraft && mail.sentAt !== null
-        break
-      case 'drafts':
-        categoryFilter = mail.isDraft
-        break
-      case 'trash':
-        categoryFilter = mail.removedAt !== null
-        break
-      default:
-        categoryFilter = mail.removedAt === null
-        break
-    }
+  const statusFilters = {
+    inbox: (mail) => mail.removedAt === null && mail.to === loggedinUser.mail && !mail.isDraft && mail.sentAt !== null,
+    starred: (mail) => mail.isStarred === true && mail.removedAt === null,
+    sent: (mail) => mail.removedAt === null && mail.from === loggedinUser.mail && !mail.isDraft && mail.sentAt !== null,
+    drafts: (mail) => mail.isDraft,
+    trash: (mail) => mail.removedAt !== null,
+    default: (mail) => mail.removedAt === null
+  }
 
-    let textFilter = true
-    if (filterBy.txt) {
+  const specialTxtFilters = {
+    'in:inbox': statusFilters.inbox,
+    'in:starred': statusFilters.starred,
+    'in:sent': statusFilters.sent,
+    'in:drafts': statusFilters.drafts,
+    'in:trash': statusFilters.trash,
+    'is:starred': (mail) => mail.isStarred === true && mail.removedAt === null,
+    'is:unread': (mail) => mail.isRead === false && mail.removedAt === null
+  }
+  let categoryFilter
+  if (filterBy.txt && filterBy.txt in specialTxtFilters) {
+    categoryFilter = specialTxtFilters[filterBy.txt]
+  } else {
+    const statusFilter = filterBy.status || 'default'
+    categoryFilter = statusFilters[statusFilter]
+  }
+
+  const textFilter = (mail) => {
+    if (filterBy.txt && !filterBy.txt.startsWith('in:') && !filterBy.txt.startsWith('is:')) {
       const regex = new RegExp(filterBy.txt, 'i')
-      textFilter = regex.test(mail.subject) || regex.test(mail.body) || regex.test(mail.from) || regex.test(mail.to)
+      return regex.test(mail.subject) || regex.test(mail.body) || regex.test(mail.from) || regex.test(mail.to)
     }
+    return true
+  }
 
-    return categoryFilter && textFilter
-  })
+  return mails.filter((mail) => categoryFilter(mail) && textFilter(mail))
 }
 
 function _createInboxMails() {

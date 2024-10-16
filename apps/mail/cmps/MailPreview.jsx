@@ -25,7 +25,13 @@ export function MailPreview({ mail, onToggleStarred, onRemoveMail, onToggleRead 
     }
   }
 
-  const contactName = isDraft ? 'Draft' : from.split('@')[0]
+  const contactName = isDraft ? (
+    <span style={{ color: 'red' }} className="draft-indicator flex align-center">
+      Draft
+    </span>
+  ) : (
+    from.split('@')[0]
+  )
   const isStarredDynamicClass = isStarred ? 'starred' : ''
   const isReadBtnIcon = isRead ? <span className="material-symbols-outlined">mail</span> : <span className="material-symbols-outlined">drafts</span>
 
@@ -59,7 +65,6 @@ export function MailPreview({ mail, onToggleStarred, onRemoveMail, onToggleRead 
         <button className="btn toggle-read-btn" onClick={(ev) => onToggleRead(ev, mail.id)}>
           {isReadBtnIcon}
         </button>
-        {isDraft && <span className="draft-indicator">Draft</span>}
       </section>
     </li>
   )

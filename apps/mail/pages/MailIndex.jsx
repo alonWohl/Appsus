@@ -1,5 +1,6 @@
 import { AppLoader } from '../../../cmps/AppLoader.jsx'
 import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service.js'
+import { getTruthyValues } from '../../../services/util.service.js'
 import { MailHeader } from '../cmps/MailHeader.jsx'
 import { MailList } from '../cmps/MailList.jsx'
 import { SideMenu } from '../cmps/SideMenu.jsx'
@@ -12,12 +13,12 @@ const { Outlet, useParams, useNavigate, useSearchParams } = ReactRouterDOM
 
 export function MailIndex() {
   const [mails, setMails] = useState([])
-  const [unreadCounts, setUnreadCounts] = useState({})
   const [isExpand, setIsExpand] = useState(false)
-  const [filterBy, setFilterBy] = useState(mailService.getDefaultFilter())
   const [searchParams, setSearchParams] = useSearchParams()
+  const [filterBy, setFilterBy] = useState(mailService.getFilterFromSearchParams(searchParams))
+  const [unreadCounts, setUnreadCounts] = useState({})
 
-  const { category, mailId } = useParams()
+  const { category } = useParams()
   const navigate = useNavigate()
 
   const isCompose = searchParams.get('compose') === 'new'
@@ -37,15 +38,16 @@ export function MailIndex() {
   function loadMails() {
     mailService
       .query(filterBy)
-      .then(({ mails, unreadCounts }) => {
-        setUnreadCounts(unreadCounts)
-        setMails(mails)
-      })
+      .then((mails) => setMails(mails))
       .catch((err) => {
         console.log(err, 'Cant Get Mails')
         showErrorMsg('Failed to load mails')
       })
   }
+
+  useEffect(() => {
+    mailService.getUnreadMailCounts().then(setUnreadCounts)
+  }, [unreadCounts])
 
   function handleBackNavigation() {
     loadMails()
@@ -55,14 +57,11 @@ export function MailIndex() {
   function onToggleStarred(ev, mailId) {
     ev.stopPropagation()
     setMails((prevMails) => prevMails.map((mail) => (mail.id === mailId ? { ...mail, isStarred: !mail.isStarred } : mail)))
-    mailService
-      .toggleStarred(mailId)
-      .then(() => {})
-      .catch((err) => {
-        console.error('Failed to toggle starred status:', err)
-        showErrorMsg('Failed to update starred status')
-        setMails((prevMails) => prevMails.map((mail) => (mail.id === mailId ? { ...mail, isStarred: !mail.isStarred } : mail)))
-      })
+    mailService.toggleStarred(mailId).catch((err) => {
+      console.error('Failed to toggle starred status:', err)
+      showErrorMsg('Failed to update starred status')
+      setMails((prevMails) => prevMails.map((mail) => (mail.id === mailId ? { ...mail, isStarred: !mail.isStarred } : mail)))
+    })
   }
 
   function onSetFilterBy(updatedFilter) {
@@ -76,7 +75,7 @@ export function MailIndex() {
   }
 
   function onRemoveMail(ev, mailId) {
-    ev.stopPropagation()
+    if (ev) ev.stopPropagation()
     setMails(mails.filter((mail) => mail.id !== mailId))
     const previousMails = mails.map((mail) => ({ ...mail }))
     mailService
@@ -91,25 +90,21 @@ export function MailIndex() {
         setMails(previousMails)
       })
   }
+  function onToggleRead(ev, mailId) {
+    ev.stopPropagation()
 
-  function onToggleRead(ev, mailIdToToggle) {
-    if (ev) ev.stopPropagation()
-    const targetMailId = mailIdToToggle || mailId
-    if (targetMailId) {
-      setMails((prevMails) => prevMails.map((mail) => (mail.id === targetMailId ? { ...mail, isRead: !mail.isRead } : mail)))
-      mailService
-        .get(targetMailId)
-        .then((mail) => {
-          mail.isRead = !mail.isRead
-          return mailService.save(mail)
-        })
-        .catch((err) => {
-          console.error('Failed to update read status:', err)
-          showErrorMsg('Failed to update read status')
-          setMails((prevMails) => prevMails.map((mail) => (mail.id === targetMailId ? { ...mail, isRead: !mail.isRead } : mail)))
-          if (!mailIdToToggle) navigate('/mail/inbox')
-        })
-    }
+    setMails((prevMails) => prevMails.map((mail) => (mail.id === mailId ? { ...mail, isRead: !mail.isRead } : mail)))
+    const previousMails = mails.map((mail) => ({ ...mail }))
+
+    mailService
+      .get(mailId)
+      .then((mail) => {
+        mail.isRead = !mail.isRead
+      })
+      .catch((err) => {
+        console.error(err, 'cant toggle read')
+        setMails(previousMails)
+      })
   }
 
   function onToggleHamburger() {
@@ -139,11 +134,12 @@ export function MailIndex() {
       />
       <section className={`mail-main-content flex ${isExpand ? 'expanded' : ''}`}>
         <SideMenu
+          filterBy={filterBy}
           isExpand={isExpand}
           currentCategory={category}
-          unreadCounts={unreadCounts}
           onComposeClick={handleComposeClick}
           onSetFilterBy={onSetFilterBy}
+          unreadCounts={unreadCounts}
         />
         <Outlet
           context={{
