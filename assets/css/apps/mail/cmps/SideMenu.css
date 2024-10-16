@@ -98,7 +98,7 @@
   transition: width 0.3s ease, border-radius 0.3s ease;
 }
 
-.link:not(.active)::after {
+.link:not(.active, .compose-link)::after {
   opacity: 0;
   content: '';
   position: absolute;
