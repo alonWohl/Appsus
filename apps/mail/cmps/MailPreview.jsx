@@ -12,9 +12,18 @@ export function MailPreview({ mail, onToggleStarred, onRemoveMail, onToggleRead 
 
   function convertTimestamp(timestamp) {
     const date = new Date(timestamp)
-    const options = { day: 'numeric', month: 'short' }
-    return date.toLocaleDateString(undefined, options)
+    const now = new Date()
+    const timeDifference = now - date
+
+    if (timeDifference < 24 * 60 * 60 * 1000) {
+      const options = { hour: '2-digit', minute: '2-digit' }
+      return date.toLocaleTimeString(undefined, options)
+    } else {
+      const options = { day: 'numeric', month: 'short' }
+      return date.toLocaleDateString(undefined, options)
+    }
   }
+
   function onClickPreview(ev) {
     ev.stopPropagation()
 
