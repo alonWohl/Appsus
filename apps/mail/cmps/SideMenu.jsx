@@ -1,30 +1,20 @@
-export function SideMenu({ filterBy, onSetFilterBy, isExpand, onComposeClick, unreadCounts = {} }) {
-  function handleFilterClick(status) {
-    const statusToTxtMap = {
-      inbox: 'in:inbox',
-      starred: 'is:starred',
-      sent: 'in:sent',
-      drafts: 'in:drafts',
-      trash: 'in:trash'
-    }
+const { NavLink, useNavigate } = ReactRouterDOM
 
-    onSetFilterBy({
-      status,
-      txt: statusToTxtMap[status] || ''
-    })
-  }
-
-  function isActive(status) {
-    return filterBy.status === status ? 'active' : ''
-  }
+export function SideMenu({ isExpand, onComposeClick, unreadCounts = {}, onSetFilterBy }) {
+  const navigate = useNavigate()
 
   const menuItems = [
-    { status: 'inbox', icon: 'inbox', label: 'Inbox', countKey: 'inbox' },
-    { status: 'starred', icon: 'star', label: 'Starred', countKey: 'starred' },
-    { status: 'sent', icon: 'send', label: 'Sent', countKey: 'sent' },
-    { status: 'drafts', icon: 'draft', label: 'Drafts', countKey: 'drafts' },
-    { status: 'trash', icon: 'delete', label: 'Trash', countKey: 'trash' }
+    { status: 'inbox', icon: 'inbox', label: 'Inbox', countKey: 'inbox', filterTxt: 'in:inbox' },
+    { status: 'starred', icon: 'star', label: 'Starred', countKey: 'starred', filterTxt: 'is:starred' },
+    { status: 'sent', icon: 'send', label: 'Sent', countKey: 'sent', filterTxt: 'in:sent' },
+    { status: 'drafts', icon: 'draft', label: 'Drafts', countKey: 'drafts', filterTxt: 'in:drafts' },
+    { status: 'trash', icon: 'delete', label: 'Trash', countKey: 'trash', filterTxt: 'in:trash' }
   ]
+
+  function handleFilterClick(status, filterTxt) {
+    onSetFilterBy({ status, txt: filterTxt })
+    navigate(`/mail/${status}`)
+  }
 
   return (
     <aside className={`sidebar ${isExpand ? 'expanded' : ''}`}>
@@ -38,13 +28,21 @@ export function SideMenu({ filterBy, onSetFilterBy, isExpand, onComposeClick, un
           </button>
         </div>
 
-        {menuItems.map(({ status, icon, label, countKey }) => (
-          <li key={status} className={`link ${label.toLowerCase()}-link ${isActive(status)}`} onClick={() => handleFilterClick(status)}>
-            <span className="material-symbols-outlined link-icon">{icon}</span>
-            <div className="hidden flex space-between menu-hidden-items" aria-label={`${unreadCounts[countKey] || 0} unread`}>
-              <span className="hidden">{label}</span>
-              {unreadCounts[countKey] || 0}
-            </div>
+        {menuItems.map(({ status, icon, label, countKey, filterTxt }) => (
+          <li key={status}>
+            <NavLink
+              to={`/mail/${status}`}
+              className={({ isActive }) => `link ${label.toLowerCase()}-link ${isActive ? 'active' : ''}`}
+              onClick={(e) => {
+                e.preventDefault()
+                handleFilterClick(status, filterTxt)
+              }}>
+              <span className="material-symbols-outlined link-icon">{icon}</span>
+              <div className="hidden flex space-between menu-hidden-items" aria-label={`${unreadCounts[countKey] || 0} unread`}>
+                <span className="hidden">{label}</span>
+                {unreadCounts[countKey] || 0}
+              </div>
+            </NavLink>
           </li>
         ))}
       </ul>
