@@ -23,10 +23,9 @@ export function MailIndex() {
   const draftId = searchParams.get('draftId')
 
   useEffect(() => {
-    const currentCategory = category || 'inbox'
-    const newFilterBy = { ...filterBy, status: currentCategory }
-    setFilterBy(newFilterBy)
-    loadMails(newFilterBy)
+    if (category && category !== filterBy.status) {
+      setFilterBy((prev) => ({ ...prev, status: category }))
+    }
   }, [category])
 
   useEffect(() => {
@@ -98,6 +97,7 @@ export function MailIndex() {
       .get(mailId)
       .then((mail) => {
         mail.isRead = !mail.isRead
+        return mailService.save(mail)
       })
       .catch((err) => {
         console.error(err, 'cant toggle read')
